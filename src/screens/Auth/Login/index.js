@@ -30,10 +30,12 @@ export default LoginScreen = (props) => {
                         <PrimaryInput
                             placeholder="Enter Password"
                         />
-                        <PrimaryButton btnText="Login" />
+                        <Block flex={false} margin={[30,0,0]}>
+                            <PrimaryButton onPress={()=> Actions.drawer_dash()} btnText="Login" />
+                        </Block>
                         <Block row center flex={false} padding={[10, 0]}>
                             <Text style={{ marginRight: 5 }} white>not a user ?</Text>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={()=> Actions.regi()}>
                                 <Text white>register here</Text>
                             </TouchableOpacity>
                         </Block>

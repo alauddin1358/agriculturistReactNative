@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         borderBottomColor:colors.white,
         width:'100%',
         color:colors.white,
-        marginVertical:20
+        marginVertical:5
     },
 });
 

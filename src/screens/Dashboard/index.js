@@ -74,7 +74,7 @@ export default Dashboard = ({ _carousel }) => {
                 <Text bold textColor style={styles.post}>{item.title}</Text>
             </TouchableOpacity>
 
-            { expand &&
+            {expand &&
                 <Block flex={false}>
                     <Text textColor size={12} style={styles.des}>{item.des}</Text>
                     <Block flex={false} row center margin={[10, 0, 0]}>
@@ -95,20 +95,7 @@ export default Dashboard = ({ _carousel }) => {
                 <Text style={styles.extext}>Click to {expand ? 'hide' : 'show'} post details</Text>
                 <MaterialCommunityIcons color={colors.primaryColor} size={25} name={expand ? "arrow-up-drop-circle-outline" : "arrow-down-drop-circle-outline"} />
             </TouchableOpacity>
-            {Math.random() < 0.2 && (
-                <Block flex={false} >
-                    <Block flex={false} style={styles.postBlock2}>
-                        <Text style={styles.title}>All posts</Text>
-                    </Block>
-                    <Carousel
-                        ref={(c) => { _carousel = c; }}
-                        data={ADS}
-                        renderItem={renderAdsItem}
-                        sliderWidth={Dimensions.get('window').width}
-                        itemWidth={170}
-                    />
-                </Block>
-            )}
+
         </Block>
     );
 
@@ -136,14 +123,20 @@ export default Dashboard = ({ _carousel }) => {
                         ListHeaderComponent={
                             <Block block >
                                 <Block flex={false} style={styles.postBlock2}>
-                                    <Text style={styles.title}>Recent posts</Text>
+                                    <Text style={styles.title}>Posts</Text>
                                 </Block>
                             </Block>
 
                         }
-                    // ListFooterComponent={
-
-                    // }
+                        ListFooterComponent={
+                            <Carousel
+                                ref={(c) => { _carousel = c; }}
+                                data={ADS}
+                                renderItem={renderAdsItem}
+                                sliderWidth={Dimensions.get('window').width}
+                                itemWidth={170}
+                            />
+                        }
                     />
                 </Block>
             </SafeAreaView>
