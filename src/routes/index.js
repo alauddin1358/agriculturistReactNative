@@ -7,6 +7,7 @@ import Friends from '../screens/Friends'
 import PostDetails from '../screens/PostDetails'
 
 import Dashboard from '../screens/Dashboard'
+import LoginScreen from '../screens/Auth/Login'
 
 
 const Routes = props => {
@@ -27,6 +28,15 @@ const Routes = props => {
     return (
         <Router backAndroidHandler={onBackPress}>
             <Scene key='root'>
+                <Scene
+                    initial
+                    key="drawer_login"
+                    drawer
+                    contentComponent={Sidebar}
+                    drawerWidth={150}
+                    hideNavBar>
+                    <Scene key="login" component={LoginScreen} hideNavBar />
+                </Scene>
                 <Scene
                     key="drawer_dash"
                     drawer
