@@ -28,15 +28,7 @@ const Routes = props => {
     return (
         <Router backAndroidHandler={onBackPress}>
             <Scene key='root'>
-                <Scene
-                    initial
-                    key="drawer_login"
-                    drawer
-                    contentComponent={Sidebar}
-                    drawerWidth={150}
-                    hideNavBar>
-                    <Scene key="login" component={LoginScreen} hideNavBar />
-                </Scene>
+                <Scene key="login" component={LoginScreen} hideNavBar />
                 <Scene
                     key="drawer_dash"
                     drawer
