@@ -69,7 +69,7 @@ export default Dashboard = ({ _carousel }) => {
 
     const renderPostsItem = ({ item, i }) => (
 
-        <Block style={styles.item} margin={[0, 0, 10, 0]}>
+        <Block style={styles.item} margin={[0, 0, 10, 0]} flex={false}>
             <TouchableOpacity onPress={() => Actions.drawer_details()}>
                 <Text bold textColor style={styles.post}>{item.title}</Text>
             </TouchableOpacity>
@@ -102,7 +102,7 @@ export default Dashboard = ({ _carousel }) => {
     const renderAdsItem = ({ item, index }) => {
 
         return (
-            <Block style={styles.slide}>
+            <Block style={styles.slide} flex={false}>
                 <Image style={styles.ads} source={item.image} />
             </Block>
         );
@@ -112,7 +112,7 @@ export default Dashboard = ({ _carousel }) => {
 
         <Block block>
             <Navbar />
-            <SafeAreaView block style={styles.container} >
+            <SafeAreaView style={styles.container} >
                 <Text textColor size={20}>Dashboard</Text>
                 <Block style={styles.block} flex={false}>
                     <FlatList
@@ -121,7 +121,7 @@ export default Dashboard = ({ _carousel }) => {
                         renderItem={renderPostsItem}
                         keyExtractor={item => item.id.toString()}
                         ListHeaderComponent={
-                            <Block block >
+                            <Block flex={false} >
                                 <Block flex={false} style={styles.postBlock2}>
                                     <Text style={styles.title}>Posts</Text>
                                 </Block>
