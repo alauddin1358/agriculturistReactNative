@@ -31,7 +31,7 @@ export default LoginScreen = (props) => {
                             placeholder="Enter Password"
                         />
                         <Block flex={false} margin={[30,0,0]}>
-                            <PrimaryButton onPress={()=> Actions.drawer_dash()} btnText="Login" />
+                            <PrimaryButton onPress={()=> Actions.drawer_dashboard()} btnText="Login" />
                         </Block>
                         <Block row center flex={false} padding={[10, 0]}>
                             <Text style={{ marginRight: 5 }} white>not a user ?</Text>

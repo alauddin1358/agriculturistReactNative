@@ -31,8 +31,9 @@ const Routes = props => {
             <Scene key='root'>
                 <Scene key="login" component={LoginScreen} hideNavBar />
                 <Scene key="regi" component={Registration} hideNavBar />
+                <Scene key="dashboard" component={Dashboard} hideNavBar />
                 <Scene
-                    key="drawer_dash"
+                    key="drawer_dashboard"
                     drawer
                     contentComponent={Sidebar}
                     drawerWidth={150}

@@ -59,7 +59,7 @@ const ADS = [
 ];
 
 
-export default Dashboard = ({ _carousel }) => {
+export default Dashboard = (props) => {
 
     const [expand, setExpand] = useState(false)
 
@@ -67,7 +67,7 @@ export default Dashboard = ({ _carousel }) => {
         setExpand(!expand)
     }
 
-    const renderPostsItem = ({ item, i }) => (
+    const renderPostsItem = ({ item }) => (
 
         <Block style={styles.item} margin={[0, 0, 10, 0]} flex={false}>
             <TouchableOpacity onPress={() => Actions.drawer_details()}>
@@ -91,7 +91,7 @@ export default Dashboard = ({ _carousel }) => {
                     </Block>
                 </Block>
             }
-            <TouchableOpacity onPress={() => expandClick(item.id)} style={styles.expandBlock}>
+            <TouchableOpacity onPress={expandClick} style={styles.expandBlock}>
                 <Text style={styles.extext}>Click to {expand ? 'hide' : 'show'} post details</Text>
                 <MaterialCommunityIcons color={colors.primaryColor} size={25} name={expand ? "arrow-up-drop-circle-outline" : "arrow-down-drop-circle-outline"} />
             </TouchableOpacity>
@@ -99,7 +99,7 @@ export default Dashboard = ({ _carousel }) => {
         </Block>
     );
 
-    const renderAdsItem = ({ item, index }) => {
+    const renderAdsItem = ({ item }) => {
 
         return (
             <Block style={styles.slide} flex={false}>
