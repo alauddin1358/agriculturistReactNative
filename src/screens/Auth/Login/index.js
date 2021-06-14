@@ -1,24 +1,43 @@
-import React, { useState } from "react"
-import { ImageBackground, SafeAreaView, Image, TouchableOpacity } from "react-native"
+import React, { useState } from 'react'
+import { ImageBackground, SafeAreaView, Image, TouchableOpacity } from 'react-native'
+import Toast from 'react-native-simple-toast'
+import { Actions } from 'react-native-router-flux'
+import { useDispatch } from 'react-redux'
 import Block from '../../../components/Block'
 import Text from '../../../components/Text'
 import styles from './styles'
-import { Actions } from "react-native-router-flux"
-import { PrimaryInput } from "../../../components/TextInput"
-import { PrimaryButton } from "../../../components/Button"
+import { PrimaryInput } from '../../../components/TextInput'
+import { PrimaryButton } from '../../../components/Button'
 import checkLoginValidation from './validate'
+import { loginService } from '../../../services/auth'
 
-
-export default LoginScreen = (props) => {
+export default LoginScreen = () => {
+    const dispatch = useDispatch()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const submitLogin = () => {
         if (checkLoginValidation(email, password)) {
-            // Actions.drawer_dashboard()
+            setIsLoading(true)
+
+            dispatch(loginService(email, password, (res, err) => {
+
+                setIsLoading(false)
+
+                if (res) {
+
+                    if (res?.result?.isError == 'false') {
+                        Actions.drawer_dashboard()
+                    } else {
+                        Toast.show(res.result?.message)
+                    }
+                }
+            }))
         }
     }
+
 
     return (
 
@@ -43,7 +62,10 @@ export default LoginScreen = (props) => {
                         />
 
                         <Block flex={false} margin={[30, 0, 0]}>
-                            <PrimaryButton onPress={submitLogin} btnText="Login" />
+                            <PrimaryButton
+                                loading={isLoading}
+                                btnText="Login"
+                                onPress={submitLogin} />
                         </Block>
 
                         <Block row center flex={false} padding={[10, 0]}>
@@ -60,5 +82,5 @@ export default LoginScreen = (props) => {
             </SafeAreaView>
         </Block>
 
-    );
+    )
 }

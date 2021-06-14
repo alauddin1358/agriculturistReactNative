@@ -1,23 +1,40 @@
-import React from "react";
-import { TouchableOpacity } from "react-native"
+import React from 'react'
+import { TouchableOpacity, ActivityIndicator } from 'react-native'
+import PropTypes from 'prop-types'
 import Text from '../Text'
 import styles from './styles'
 
 
-
-
-const PrimaryButton = ({ onPress, btnText }) => {
+export const PrimaryButton = ({ onPress, btnText, spinnerColor, spinnerSize, loading }) => {
 
     return (
-
         <TouchableOpacity onPress={onPress} style={styles.btn}>
-                {btnText && <Text center size={13} textColor>{btnText}</Text>}
-        </TouchableOpacity>
+            <Text
+                center
+                bold
+                size={16}
+                textColor
+            >
+                {btnText}
+            </Text>
 
-    );
+            {
+                loading &&
+                <ActivityIndicator
+                    color={spinnerColor}
+                    size={spinnerSize}
+                    style={styles.spinner} />
+            }
+        </TouchableOpacity>
+    )
 }
 
+PrimaryButton.propTypes = {
+    btnText: PropTypes.string,
+    loading: PropTypes.bool,
+}
 
-export {
-    PrimaryButton
+PrimaryButton.defaultProps = {
+    spinnerColor: '#000',
+    spinnerSize: 'small',
 }

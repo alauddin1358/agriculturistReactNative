@@ -1,0 +1,65 @@
+import { Config } from '../config/index'
+import httpRequest from '../utils/request'
+import auth from '../utils/auth'
+import { LOGIN_PENDING, LOGIN_SUCCESS, LOGIN_FAIL } from '../constant/authConstant'
+
+const base_url = Config.base_url
+
+/**
+ * Method: POST
+ * Login
+ * @param {* user email name} email 
+ * @param {* user valid password} password 
+ * @param {*is function that return reponse data or err in promise} callback
+ */
+
+export const loginService = (email, password, callback) => {
+
+    return async (dispatch) => {
+        dispatch({ type: LOGIN_PENDING })
+
+        try {
+            const response = await login(email, password)
+
+            dispatch({ type: LOGIN_SUCCESS, payload: response })
+
+            callback(response, null)
+
+
+        } catch (error) {
+            callback(null, error.response)
+            dispatch({
+                type: LOGIN_FAIL,
+                payload: error.response,
+            })
+        }
+    }
+}
+
+
+
+
+/**
+* Method: POST
+* login helper 
+* @param {*} email 
+* @param {*} password 
+*/
+
+const login = async (email = null, password) => {
+    let url = base_url + '/login'
+
+    let body = {
+        password,
+        email,
+    }
+
+    const response = await httpRequest.post(url, false, null, body)
+
+    if (response) {
+        await auth.setToken('accessToken', response?.data?.data?.token)
+        return response?.data
+    } else {
+        throw Error('login failed')
+    }
+}
