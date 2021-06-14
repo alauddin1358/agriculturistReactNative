@@ -32,17 +32,11 @@ const client = (token = null) => {
                 },
             }
 
-            // if (tokenNeed) {
-            //     defaultOptions.headers['Authorization'] = 'Bearer ' + token
-            // }
-
             if (tokenNeed) {
                 Object.assign(defaultOptions.headers, { Authorization: 'Bearer ' + token })
             }
 
             return axios.post(url, data, { ...defaultOptions, ...options })
-
-            // return axios.post(url, data, { defaultOptions, ...options })
 
         },
 

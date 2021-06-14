@@ -1,29 +1,31 @@
 import React, { useState } from "react"
-import { ImageBackground, ScrollView, FlatList, Image, TouchableOpacity } from "react-native"
+import { ImageBackground, ScrollView, Image, TouchableOpacity } from "react-native"
 import Block from '../../../components/Block'
 import Text from '../../../components/Text'
 import styles from './styles'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { colors } from "../../../styles/theme"
-import DropDownPicker from 'react-native-dropdown-picker';
+import DropDownPicker from 'react-native-dropdown-picker'
 import { PrimaryInput } from "../../../components/TextInput"
 import { PrimaryButton } from "../../../components/Button"
 import { Actions } from "react-native-router-flux"
+import { useDispatch } from "react-redux"
 
 
+export default Registration = () => {
+    const dispatch = useDispatch()
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
 
-
-
-export default Registration = (props) => {
-
-
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
+    const [open, setOpen] = useState(false)
+    const [value, setValue] = useState(null)
     const [items, setItems] = useState([
         { label: 'Apple', value: 'apple' },
         { label: 'Banana', value: 'banana' }
-    ]);
+    ])
+
 
     return (
 
@@ -130,14 +132,14 @@ export default Registration = (props) => {
                             />
                         </Block>
                         <Block flex={false} margin={[20, 0]}>
-                            <PrimaryButton onPress={()=> Actions.login()} btnText="Registration" />
+                            <PrimaryButton onPress={() => Actions.login()} btnText="Registration" />
                         </Block>
                         <TouchableOpacity>
                             <Text white>* marked fields are required, Please fill up this fields ?</Text>
                         </TouchableOpacity>
                         <Block row center middle flex={false} padding={[10, 0]}>
                             <Text style={{ marginRight: 5 }} white>Already have an account ?</Text>
-                            <TouchableOpacity onPress={()=> Actions.login()}>
+                            <TouchableOpacity onPress={() => Actions.login()}>
                                 <Text white>login here</Text>
                             </TouchableOpacity>
                         </Block>
@@ -146,5 +148,5 @@ export default Registration = (props) => {
             </ScrollView>
         </Block>
 
-    );
+    )
 }
