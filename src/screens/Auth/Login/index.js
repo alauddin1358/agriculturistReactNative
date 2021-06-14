@@ -69,9 +69,9 @@ export default LoginScreen = () => {
                         </Block>
 
                         <Block row center flex={false} padding={[10, 0]}>
-                            <Text style={{ marginRight: 5 }} white>not a user ?</Text>
+                            <Text style={{ marginRight: 5 }} white>Not a user ?</Text>
                             <TouchableOpacity onPress={() => Actions.regi()}>
-                                <Text white>register here</Text>
+                                <Text white>Register here</Text>
                             </TouchableOpacity>
                         </Block>
                         <TouchableOpacity>
