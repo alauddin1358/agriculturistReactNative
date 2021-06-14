@@ -6,7 +6,7 @@ import styles from './styles'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import Carousel from 'react-native-snap-carousel'
 import { colors } from "../../styles/theme"
-import { Navbar } from "../../include/NavBar"
+import { Navbar } from "../../layouts/Navbar"
 
 
 

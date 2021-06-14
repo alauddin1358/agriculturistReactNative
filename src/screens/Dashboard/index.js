@@ -8,7 +8,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Carousel from 'react-native-snap-carousel'
 import { colors } from "../../styles/theme"
-import { Navbar } from "../../include/NavBar"
+import { Navbar } from "../../layouts/Navbar"
 import { Actions } from "react-native-router-flux"
 
 

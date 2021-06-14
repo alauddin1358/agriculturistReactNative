@@ -7,7 +7,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Entypo from 'react-native-vector-icons/Entypo'
 import Carousel from 'react-native-snap-carousel'
 import { colors } from "../../styles/theme"
-import { Navbar } from "../../include/NavBar"
+import { Navbar } from "../../layouts/Navbar"
 
 const ADS = [
     {

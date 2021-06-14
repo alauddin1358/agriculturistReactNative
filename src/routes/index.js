@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Router, Scene, Stack } from 'react-native-router-flux'
 import { BackHandler } from "react-native"
-import Sidebar from '../Sidebar'
+import Sidebar from '../layouts/Sidebar'
 import Profile from '../screens/Profile'
 import Friends from '../screens/Friends'
 import PostDetails from '../screens/PostDetails'
@@ -36,6 +36,7 @@ const Routes = props => {
                     <Scene key="dashboard" component={Dashboard} hideNavBar />
                 </Scene>
                 <Scene
+                
                     key="drawer_profile"
                     drawer
                     contentComponent={Sidebar}
@@ -44,6 +45,7 @@ const Routes = props => {
                     <Scene key="profile" component={Profile} hideNavBar />
                 </Scene>
                 <Scene
+                
                     key="drawer_friends"
                     drawer
                     contentComponent={Sidebar}
@@ -52,6 +54,7 @@ const Routes = props => {
                     <Scene key="friends" component={Friends} hideNavBar />
                 </Scene>
                 <Scene
+                    
                     key="drawer_details"
                     drawer
                     contentComponent={Sidebar}

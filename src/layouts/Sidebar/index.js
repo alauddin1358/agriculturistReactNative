@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { ImageBackground, Image } from "react-native";
 import { Actions } from "react-native-router-flux";
-import Block from '../components/Block'
-import Text from '../components/Text'
+import Block from '../../components/Block'
+import Text from '../../components/Text'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import styles from './styles'
-import { colors } from '../styles/theme'
+import { colors } from '../../styles/theme'
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 
@@ -23,7 +23,7 @@ export default Sidebar = (props) => {
 
         <Block flex={1}>
             <Block flex={1} padding={[0, 5, 20, 5]} style={styles.sidebar}>
-                <Image style={styles.img} source={require('../assets/images/Social_Fish2.png')} />
+                <Image style={styles.img} source={require('../../assets/images/Social_Fish2.png')} />
                 <Text white bold size={16}>Agriculturist</Text>
 
                 <TouchableOpacity style={{ alignItems: 'center', marginTop: 40 }} onPress={()=> Actions.drawer_dash()}>
