@@ -59,7 +59,7 @@ const ADS = [
 ];
 
 
-export default Dashboard = ({ _carousel }) => {
+export default Dashboard = (props) => {
 
     const [expand, setExpand] = useState(false)
 
@@ -67,14 +67,14 @@ export default Dashboard = ({ _carousel }) => {
         setExpand(!expand)
     }
 
-    const renderPostsItem = ({ item, i }) => (
+    const renderPostsItem = ({ item }) => (
 
-        <Block style={styles.item} margin={[0, 0, 10, 0]}>
+        <Block style={styles.item} margin={[0, 0, 10, 0]} flex={false}>
             <TouchableOpacity onPress={() => Actions.drawer_details()}>
                 <Text bold textColor style={styles.post}>{item.title}</Text>
             </TouchableOpacity>
 
-            { expand &&
+            {expand &&
                 <Block flex={false}>
                     <Text textColor size={12} style={styles.des}>{item.des}</Text>
                     <Block flex={false} row center margin={[10, 0, 0]}>
@@ -91,31 +91,18 @@ export default Dashboard = ({ _carousel }) => {
                     </Block>
                 </Block>
             }
-            <TouchableOpacity onPress={() => expandClick(item.id)} style={styles.expandBlock}>
+            <TouchableOpacity onPress={expandClick} style={styles.expandBlock}>
                 <Text style={styles.extext}>Click to {expand ? 'hide' : 'show'} post details</Text>
                 <MaterialCommunityIcons color={colors.primaryColor} size={25} name={expand ? "arrow-up-drop-circle-outline" : "arrow-down-drop-circle-outline"} />
             </TouchableOpacity>
-            {Math.random() < 0.2 && (
-                <Block flex={false} >
-                    <Block flex={false} style={styles.postBlock2}>
-                        <Text style={styles.title}>All posts</Text>
-                    </Block>
-                    <Carousel
-                        ref={(c) => { _carousel = c; }}
-                        data={ADS}
-                        renderItem={renderAdsItem}
-                        sliderWidth={Dimensions.get('window').width}
-                        itemWidth={170}
-                    />
-                </Block>
-            )}
+
         </Block>
     );
 
-    const renderAdsItem = ({ item, index }) => {
+    const renderAdsItem = ({ item }) => {
 
         return (
-            <Block style={styles.slide}>
+            <Block style={styles.slide} flex={false}>
                 <Image style={styles.ads} source={item.image} />
             </Block>
         );
@@ -125,7 +112,7 @@ export default Dashboard = ({ _carousel }) => {
 
         <Block block>
             <Navbar />
-            <SafeAreaView block style={styles.container} >
+            <SafeAreaView style={styles.container} >
                 <Text textColor size={20}>Dashboard</Text>
                 <Block style={styles.block} flex={false}>
                     <FlatList
@@ -134,16 +121,22 @@ export default Dashboard = ({ _carousel }) => {
                         renderItem={renderPostsItem}
                         keyExtractor={item => item.id.toString()}
                         ListHeaderComponent={
-                            <Block block >
+                            <Block flex={false} >
                                 <Block flex={false} style={styles.postBlock2}>
-                                    <Text style={styles.title}>Recent posts</Text>
+                                    <Text style={styles.title}>Posts</Text>
                                 </Block>
                             </Block>
 
                         }
-                    // ListFooterComponent={
-
-                    // }
+                        ListFooterComponent={
+                            <Carousel
+                                ref={(c) => { _carousel = c; }}
+                                data={ADS}
+                                renderItem={renderAdsItem}
+                                sliderWidth={Dimensions.get('window').width}
+                                itemWidth={170}
+                            />
+                        }
                     />
                 </Block>
             </SafeAreaView>
