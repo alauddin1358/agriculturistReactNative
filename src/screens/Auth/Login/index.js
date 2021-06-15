@@ -29,7 +29,7 @@ export default LoginScreen = () => {
                 if (res) {
 
                     if (res?.result?.isError == 'false') {
-                        Actions.drawer_dashboard()
+                        Actions.dashboard()
                     } else {
                         Toast.show(res.result?.message)
                     }
