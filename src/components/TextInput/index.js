@@ -12,7 +12,7 @@ const PrimaryInput = ({ ...rest }) => {
 
         <TextInput
             style={styles.input}
-            placeholderTextColor="#fff"
+            placeholderTextColor="#d2d2d2"
             {...rest}
         />
 

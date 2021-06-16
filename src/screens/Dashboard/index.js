@@ -5,7 +5,7 @@ import Text from '../../components/Text'
 import styles from './styles'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import ReadMore from 'react-native-read-more-text'
 import Carousel from 'react-native-snap-carousel'
 import { colors } from "../../styles/theme"
 import { Navbar } from "../../layouts/Navbar"
@@ -70,30 +70,30 @@ export default Dashboard = (props) => {
     const renderPostsItem = ({ item }) => (
 
         <Block style={styles.item} margin={[0, 0, 10, 0]} flex={false}>
-            <TouchableOpacity onPress={() => Actions.drawer_details()}>
-                <Text bold textColor style={styles.post}>{item.title}</Text>
+            <TouchableOpacity onPress={() => Actions.details()}>
+                <Text center bold textColor style={styles.post}>{item.title}</Text>
             </TouchableOpacity>
 
-            {expand &&
-                <Block flex={false}>
-                    <Text textColor size={12} style={styles.des}>{item.des}</Text>
-                    <Block flex={false} row center margin={[10, 0, 0]}>
-                        <MaterialIcons style={{ marginRight: 5 }} name="date-range" />
-                        <Text textColor size={12}>Publish Date: {item.date}</Text>
-                    </Block>
-                    <Block flex={false} row center>
-                        <MaterialIcons style={{ marginRight: 5 }} name="person" />
-                        <Text textColor size={12}>Author: {item.author}</Text>
-                    </Block>
-                    <Block flex={false} row center>
-                        <FontAwesome style={{ marginRight: 5 }} name="comments" />
-                        <Text textColor size={12}>Comment</Text>
-                    </Block>
+            <Text textColor center size={12} numberOfLines={expand ? null : 3} style={styles.des}>{item.des}</Text>
+            <Block flex={false}>
+                <Block flex={false} row center margin={[10, 0, 0]}>
+                    <MaterialIcons style={{ marginRight: 5 }} name="date-range" />
+                    <Text textColor size={12}>Publish Date: {item.date}</Text>
                 </Block>
-            }
-            <TouchableOpacity onPress={expandClick} style={styles.expandBlock}>
-                <Text style={styles.extext}>Click to {expand ? 'hide' : 'show'} post details</Text>
-                <MaterialCommunityIcons color={colors.primaryColor} size={25} name={expand ? "arrow-up-drop-circle-outline" : "arrow-down-drop-circle-outline"} />
+                <Block flex={false} row center>
+                    <MaterialIcons style={{ marginRight: 5 }} name="person" />
+                    <Text textColor size={12}>Author: {item.author}</Text>
+                </Block>
+                <Block flex={false} row center>
+                    <FontAwesome style={{ marginRight: 5 }} name="comments" />
+                    <Text textColor size={12}>Comment</Text>
+                </Block>
+            </Block>
+
+            <TouchableOpacity onPress={expandClick}>
+                <Text style={{ color: 'blue', marginTop: 5 }}>
+                    {!expand ? 'Read more' : 'Read less'}
+                </Text>
             </TouchableOpacity>
 
         </Block>

@@ -35,7 +35,7 @@ export default Registration = () => {
                     <Block style={styles.loginBlock} flex={false}>
                         <Text size={27} bold white center>Registration</Text>
                         <Block padding={[15, 0]} flex={false}>
-                            <Text white>Name* :</Text>
+                            <Text white bold>Name* :</Text>
                             <PrimaryInput
                                 placeholder="Enter First Name"
                             />
@@ -47,11 +47,11 @@ export default Registration = () => {
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>User category* :</Text>
+                            <Text white bold>User category* :</Text>
                             <DropDownPicker
                                 style={styles.picker}
                                 dropDownContainerStyle={styles.pickerInner}
-                                textStyle={{ color: colors.white }}
+                                textStyle={{ color: '#d2d2d2' }}
                                 placeholder="Select User Category"
                                 open={open}
                                 value={value}
@@ -62,41 +62,41 @@ export default Registration = () => {
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Email* :</Text>
+                            <Text white bold>Email* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Email"
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Phone :</Text>
+                            <Text white bold>Phone :</Text>
                             <PrimaryInput
                                 placeholder="Enter Phone Number"
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Password* :</Text>
+                            <Text white bold>Password* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Password"
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Confirm Password* :</Text>
+                            <Text white bold>Confirm Password* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Password Again"
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Address :</Text>
+                            <Text white bold>Address :</Text>
                             <PrimaryInput
                                 placeholder="Enter Address"
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Country :</Text>
+                            <Text white bold>Country :</Text>
                             <DropDownPicker
                                 style={styles.picker}
                                 dropDownContainerStyle={styles.pickerInner}
-                                textStyle={{ color: colors.white }}
+                                textStyle={{ color: '#d2d2d2' }}
                                 placeholder="Select Country"
                                 open={open}
                                 value={value}
@@ -107,7 +107,7 @@ export default Registration = () => {
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Profile Picture :</Text>
+                            <Text white bold>Profile Picture :</Text>
                             <Block center middle style={styles.avatar} center bgWhite flex={false}>
                                 <Image style={{ width: 100, height: 100 }} source={require('../../../assets/images/user-profile.png')} />
                             </Block>
@@ -120,13 +120,13 @@ export default Registration = () => {
                         </Block>
                         <Text size={27} bold white center>Refered by:</Text>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Name* :</Text>
+                            <Text white bold>Name* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Name"
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Email* :</Text>
+                            <Text white bold>Email* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Email"
                             />
@@ -135,7 +135,7 @@ export default Registration = () => {
                             <PrimaryButton onPress={() => Actions.login()} btnText="Registration" />
                         </Block>
                         <TouchableOpacity>
-                            <Text white>* marked fields are required, Please fill up this fields ?</Text>
+                            <Text white bold>* marked fields are required, Please fill up this fields ?</Text>
                         </TouchableOpacity>
                         <Block row center middle flex={false} padding={[10, 0]}>
                             <Text style={{ marginRight: 5 }} white>Already have an account ?</Text>

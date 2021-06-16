@@ -79,13 +79,13 @@ const styles = StyleSheet.create({
         marginRight:10
     },
     com:{
-        backgroundColor:"#5020c8",
+        backgroundColor:"#eee",
         padding:10,
         borderRadius:10,
         width:'70%'
     },
     dot:{
-        backgroundColor:"#5020c8",
+        backgroundColor:"#eee",
         borderRadius:30,
         width:10,
         height:10,

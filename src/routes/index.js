@@ -32,13 +32,19 @@ const Routes = props => {
                 <Scene key="login" component={LoginScreen} hideNavBar />
                 <Scene key="regi" component={Registration} hideNavBar />
                 <Scene key="dashboard" component={Dashboard} hideNavBar />
-                <Scene
+                <Scene key="profile" component={Profile} hideNavBar />
+                <Scene  key="friends" component={Friends} hideNavBar />
+                <Scene key="details" component={PostDetails} hideNavBar />
+
+
+
+                {/* <Scene
                     key="drawer_dashboard"
                     drawer
                     contentComponent={Sidebar}
                     drawerWidth={150}
                     hideNavBar>
-                    <Scene key="dashboard" component={Dashboard} hideNavBar />
+                    
                 </Scene>
                 <Scene
                 
@@ -47,7 +53,6 @@ const Routes = props => {
                     contentComponent={Sidebar}
                     drawerWidth={150}
                     hideNavBar>
-                    <Scene key="profile" component={Profile} hideNavBar />
                 </Scene>
                 <Scene
                 
@@ -56,7 +61,6 @@ const Routes = props => {
                     contentComponent={Sidebar}
                     drawerWidth={150}
                     hideNavBar>
-                    <Scene key="friends" component={Friends} hideNavBar />
                 </Scene>
                 <Scene
                     
@@ -65,8 +69,7 @@ const Routes = props => {
                     contentComponent={Sidebar}
                     drawerWidth={150}
                     hideNavBar>
-                    <Scene key="details" component={PostDetails} hideNavBar />
-                </Scene>
+                </Scene> */}
             </Scene>
         </Router>
     );
