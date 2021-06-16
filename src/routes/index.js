@@ -31,9 +31,9 @@ const Routes = props => {
             <Scene key='root'>
                 <Scene key="login" component={LoginScreen} hideNavBar />
                 <Scene key="regi" component={Registration} hideNavBar />
-                <Scene key="dashboard" component={Dashboard} hideNavBar />
+                <Scene initial key="dashboard" component={Dashboard} hideNavBar />
                 <Scene key="profile" component={Profile} hideNavBar />
-                <Scene  key="friends" component={Friends} hideNavBar />
+                <Scene key="friends" component={Friends} hideNavBar />
                 <Scene key="details" component={PostDetails} hideNavBar />
 
 

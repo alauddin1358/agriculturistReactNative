@@ -28,9 +28,9 @@ const styles = StyleSheet.create({
     },
   
     ads:{
-        width:200,
+        width:'100%',
         height:200,
-        resizeMode:'contain'
+        resizeMode:'cover'
     },
     styleBlock:{
         backgroundColor:colors.white,

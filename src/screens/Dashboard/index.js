@@ -71,7 +71,7 @@ export default Dashboard = (props) => {
 
         <Block style={styles.item} margin={[0, 0, 10, 0]} flex={false}>
             <TouchableOpacity onPress={() => Actions.details()}>
-                <Text center bold textColor style={styles.post}>{item.title}</Text>
+                <Text bold textColor style={styles.post}>{item.title}</Text>
             </TouchableOpacity>
 
             <Text textColor center size={12} numberOfLines={expand ? null : 3} style={styles.des}>{item.des}</Text>
@@ -102,7 +102,7 @@ export default Dashboard = (props) => {
     const renderAdsItem = ({ item }) => {
 
         return (
-            <Block style={styles.slide} flex={false}>
+            <Block center style={styles.slide} margin={[30, 0]} flex={false}>
                 <Image style={styles.ads} source={item.image} />
             </Block>
         );
@@ -129,13 +129,15 @@ export default Dashboard = (props) => {
 
                         }
                         ListFooterComponent={
-                            <Carousel
-                                ref={(c) => { _carousel = c; }}
-                                data={ADS}
-                                renderItem={renderAdsItem}
-                                sliderWidth={Dimensions.get('window').width}
-                                itemWidth={170}
-                            />
+                            <Block flex={false} center>
+                                <Carousel
+                                    ref={(c) => { _carousel = c; }}
+                                    data={ADS}
+                                    renderItem={renderAdsItem}
+                                    sliderWidth={Dimensions.get('window').width}
+                                    itemWidth={Dimensions.get('window').width - 20}
+                                />
+                            </Block>
                         }
                     />
                 </Block>

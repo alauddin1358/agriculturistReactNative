@@ -55,58 +55,58 @@ export default Friends = props => {
                     <Block flex={false} style={styles.postBlock2}>
                         <Text style={styles.title}>People may you know</Text>
                         <Block row center style={styles.styleBlock} flex={false}>
-                            <Block flex={false}>
+                            <Block flex={false} margin={[0,20,0,0]}>
                                 <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
-                                <Text bold size={19} textColor>Md Alauddin Ali</Text>
                             </Block>
-                            <TouchableOpacity style={styles.btn}>
-                                <Text size={14} white>Add Friend</Text>
-                            </TouchableOpacity>
+                            <Block width flex={false}>
+                                <Text bold size={19} textColor>Md Alauddin Ali</Text>
+                                <TouchableOpacity style={styles.btn}>
+                                    <Text size={14} white>Add Friend</Text>
+                                </TouchableOpacity>
+                            </Block>
                         </Block>
                         <Block row center style={styles.styleBlock} flex={false}>
-                            <Block flex={false}>
+                            <Block flex={false} margin={[0,20,0,0]}>
                                 <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
-                                <Text bold size={19} textColor>Md Alauddin Ali</Text>
                             </Block>
-                            <TouchableOpacity style={styles.btn}>
-                                <Text size={14} white>Add Friend</Text>
-                            </TouchableOpacity>
+                            <Block width flex={false}>
+                                <Text bold size={19} textColor>Md Alauddin Ali</Text>
+                                <TouchableOpacity style={styles.btn}>
+                                    <Text size={14} white>Add Friend</Text>
+                                </TouchableOpacity>
+                            </Block>
                         </Block>
                         <Block row center style={styles.styleBlock} flex={false}>
-                            <Block flex={false}>
+                            <Block flex={false} margin={[0,20,0,0]}>
                                 <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
-                                <Text bold size={19} textColor>Md Alauddin Ali</Text>
                             </Block>
-                            <TouchableOpacity style={styles.btn}>
-                                <Text size={14} white>Add Friend</Text>
-                            </TouchableOpacity>
+                            <Block width flex={false}>
+                                <Text bold size={19} textColor>Md Alauddin Ali</Text>
+                                <TouchableOpacity style={styles.btn}>
+                                    <Text size={14} white>Add Friend</Text>
+                                </TouchableOpacity>
+                            </Block>
                         </Block>
                         <Block row center style={styles.styleBlock} flex={false}>
-                            <Block flex={false}>
+                            <Block flex={false} margin={[0,20,0,0]}>
                                 <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
-                                <Text bold size={19} textColor>Md Alauddin Ali</Text>
                             </Block>
-                            <TouchableOpacity style={styles.btn}>
-                                <Text size={14} white>Add Friend</Text>
-                            </TouchableOpacity>
-                        </Block>
-                        <Block row center style={styles.styleBlock} flex={false}>
-                            <Block flex={false}>
-                                <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
+                            <Block width flex={false}>
                                 <Text bold size={19} textColor>Md Alauddin Ali</Text>
+                                <TouchableOpacity style={styles.btn}>
+                                    <Text size={14} white>Add Friend</Text>
+                                </TouchableOpacity>
                             </Block>
-                            <TouchableOpacity style={styles.btn}>
-                                <Text size={14} white>Add Friend</Text>
-                            </TouchableOpacity>
                         </Block>
-                        
+
+
                     </Block>
                     <Carousel
                         ref={(c) => { _carousel = c; }}
                         data={ADS}
                         renderItem={renderAdsItem}
                         sliderWidth={Dimensions.get('window').width}
-                        itemWidth={170}
+                        itemWidth={300}
                     />
                 </Block>
             </ScrollView>

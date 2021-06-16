@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
     },
     post: {
         paddingVertical:5,
-        fontSize:15
+        fontSize:15,
+        textAlign:'justify'
     },
     block: {
         padding: 10,
@@ -92,6 +93,9 @@ const styles = StyleSheet.create({
         position:'relative',
         left:5,
         top:2,
+    },
+    des:{
+        textAlign:'justify'
     },
 });
 

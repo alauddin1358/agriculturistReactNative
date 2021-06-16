@@ -49,7 +49,7 @@ export default PostDetails = props => {
             <ScrollView block style={styles.container}>
                 <Block style={styles.block} flex={false}>
                     <Block flex={false} style={styles.item} margin={[0, 0, 10, 0]}>
-                        <Text bold textColor center style={styles.post}>Changes in Acid Invertase Activity
+                        <Text bold textColor style={styles.post}>Changes in Acid Invertase Activity
                         and Sugar Distribution in Asparagus Spears Harvested in Autumn; Authors:
                         A.K.M. Shameem ALAM, Toshiyuki MATSUI, Takao IKEUCHI Author information',
                     </Text>
@@ -65,7 +65,7 @@ export default PostDetails = props => {
                         </Block>
 
                         <Block flex={false} margin={[10, 0]}>
-                            <Text textColor size={12} style={styles.des} center>Far far away, behind the word mountains,
+                            <Text textColor size={12} style={styles.des}>Far far away, behind the word mountains,
                             far from the countries Vokalia and Consonantia, there live the blind texts. Separated they
                             live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small
                             river named Duden flows by their place and supplies it with the necessary regelialia. It is a
