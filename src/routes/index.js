@@ -1,77 +1,37 @@
-import React, { useEffect } from 'react'
-import { Router, Scene, Stack } from 'react-native-router-flux'
-import { BackHandler } from "react-native"
-import Sidebar from '../layouts/Sidebar'
-import Profile from '../screens/Profile'
-import Friends from '../screens/Friends'
-import PostDetails from '../screens/PostDetails'
+import React from 'react'
+import { createStackNavigator } from '@react-navigation/stack'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
-import Dashboard from '../screens/Dashboard'
+import Sidebar from '../layouts/Sidebar'
+
 import LoginScreen from '../screens/Auth/Login'
 import Registration from '../screens/Auth/Registration'
 
 
+import Dashboard from '../screens/Dashboard'
+import Profile from '../screens/Profile'
+import Friends from '../screens/Friends'
+import PostDetails from '../screens/PostDetails'
+
+
+const Drawer = createDrawerNavigator();
+
+
+
 const Routes = props => {
 
-    const onBackPress = () => {
-        // Do Whatever you want to do on back button click
-        // Return true to stop default back navigaton
-        BackHandler.exitApp();
-        // Return false to keep default back navigaton
-        return true;
-    };
-
-    BackHandler.addEventListener(
-        'hardwareBackPress', onBackPress
-    );
-
-
     return (
-        <Router backAndroidHandler={onBackPress}>
-            <Scene key='root'>
-                <Scene key="login" component={LoginScreen} hideNavBar />
-                <Scene key="regi" component={Registration} hideNavBar />
-                <Scene initial key="dashboard" component={Dashboard} hideNavBar />
-                <Scene key="profile" component={Profile} hideNavBar />
-                <Scene key="friends" component={Friends} hideNavBar />
-                <Scene key="details" component={PostDetails} hideNavBar />
 
 
+        <Drawer.Navigator drawerContent={props => <Sidebar {...props} />} drawerStyle={{ width: 150 }} initialRouteName="login">
+            <Drawer.Screen options={{ swipeEnabled: false }} name="login" component={LoginScreen} />
+            <Drawer.Screen options={{ swipeEnabled: false }} name="regi" component={Registration} />
+            <Drawer.Screen name="profile" component={Profile} />
+            <Drawer.Screen name="dashboard" component={Dashboard} />
+            <Drawer.Screen name="friends" component={Friends} />
+            <Drawer.Screen name="details" component={PostDetails} />
+        </Drawer.Navigator>
 
-                {/* <Scene
-                    key="drawer_dashboard"
-                    drawer
-                    contentComponent={Sidebar}
-                    drawerWidth={150}
-                    hideNavBar>
-                    
-                </Scene>
-                <Scene
-                
-                    key="drawer_profile"
-                    drawer
-                    contentComponent={Sidebar}
-                    drawerWidth={150}
-                    hideNavBar>
-                </Scene>
-                <Scene
-                
-                    key="drawer_friends"
-                    drawer
-                    contentComponent={Sidebar}
-                    drawerWidth={150}
-                    hideNavBar>
-                </Scene>
-                <Scene
-                    
-                    key="drawer_details"
-                    drawer
-                    contentComponent={Sidebar}
-                    drawerWidth={150}
-                    hideNavBar>
-                </Scene> */}
-            </Scene>
-        </Router>
     );
 }
 

@@ -7,11 +7,10 @@ import { colors } from "../../../styles/theme"
 import DropDownPicker from 'react-native-dropdown-picker'
 import { PrimaryInput } from "../../../components/TextInput"
 import { PrimaryButton } from "../../../components/Button"
-import { Actions } from "react-native-router-flux"
 import { useDispatch } from "react-redux"
 
 
-export default Registration = () => {
+export default Registration = ({ navigation }) => {
     const dispatch = useDispatch()
 
     const [email, setEmail] = useState('')
@@ -132,14 +131,14 @@ export default Registration = () => {
                             />
                         </Block>
                         <Block flex={false} margin={[20, 0]}>
-                            <PrimaryButton onPress={() => Actions.login()} btnText="Registration" />
+                            <PrimaryButton onPress={() => navigation.navigate('login')} btnText="Registration" />
                         </Block>
                         <TouchableOpacity>
                             <Text white bold>* marked fields are required, Please fill up this fields ?</Text>
                         </TouchableOpacity>
                         <Block row center middle flex={false} padding={[10, 0]}>
                             <Text style={{ marginRight: 5 }} white>Already have an account ?</Text>
-                            <TouchableOpacity onPress={() => Actions.login()}>
+                            <TouchableOpacity onPress={() => navigation.navigate('login')}>
                                 <Text white>login here</Text>
                             </TouchableOpacity>
                         </Block>

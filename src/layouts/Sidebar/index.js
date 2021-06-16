@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { ImageBackground, Image } from "react-native";
-import { Actions } from "react-native-router-flux";
 import Block from '../../components/Block'
 import Text from '../../components/Text'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -13,11 +12,36 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 
-export default Sidebar = (props) => {
+export default Sidebar = ({ navigation }) => {
 
     const [posts, setPost] = useState(false)
     const [files, setFiles] = useState(false)
     const [friends, setFriends] = useState(false)
+
+    const onPressPosts = () => {
+        setPost(!posts)
+        setFiles(false)
+        setFriends(false)
+    }
+
+    const onPressFriends = () => {
+        setPost(false)
+        setFiles(false)
+        setFriends(!friends)
+    }
+
+    const onPressFiles = () => {
+        setPost(false)
+        setFiles(!files)
+        setFriends(false)
+    }
+
+    const onPressAddFriends = () => {
+        navigation.navigate('friends')
+        setPost(false)
+        setFiles(false)
+        setFriends(false)
+    }
 
     return (
 
@@ -26,21 +50,13 @@ export default Sidebar = (props) => {
                 <Image style={styles.img} source={require('../../assets/images/Social_Fish2.png')} />
                 <Text white bold size={16}>Agriculturist</Text>
 
-                <TouchableOpacity style={{ alignItems: 'center', marginTop: 40 }} onPress={()=> Actions.drawer_dash()}>
+                <TouchableOpacity style={{ alignItems: 'center', marginTop: 40 }} onPress={() => navigation.navigate('dashboard')}>
                     <FontAwesome size={20} color="#FFF" name="dashboard" />
                     <Text white size={12}>Dashboard</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setPost(!posts)} style={{ alignItems: 'center', marginTop: 40 }}>
+                <TouchableOpacity onPress={onPressPosts} style={{ alignItems: 'center', marginTop: 40 }}>
                     <Ionicons size={20} color="#FFF" name="person-add" />
                     <Text white size={12}>Posts</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setFiles(!files)} style={{ alignItems: 'center', marginTop: 40 }}>
-                    <FontAwesome size={20} color="#FFF" name="file" />
-                    <Text white size={12}>Files</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => setFriends(!friends)} style={{ alignItems: 'center', marginTop: 40 }}>
-                    <Ionicons size={20} color="#FFF" name="people" />
-                    <Text white size={12}>Friends</Text>
                 </TouchableOpacity>
                 {posts &&
                     <Block flex={false} style={styles.posts}>
@@ -52,9 +68,17 @@ export default Sidebar = (props) => {
                         </TouchableOpacity>
                     </Block>
                 }
+                <TouchableOpacity onPress={onPressFiles} style={{ alignItems: 'center', marginTop: 40 }}>
+                    <FontAwesome size={20} color="#FFF" name="file" />
+                    <Text white size={12}>Files</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onPressFriends} style={{ alignItems: 'center', marginTop: 40 }}>
+                    <Ionicons size={20} color="#FFF" name="people" />
+                    <Text white size={12}>Friends</Text>
+                </TouchableOpacity>
                 {friends &&
                     <Block flex={false} style={styles.friends}>
-                        <TouchableOpacity style={{ padding: 5 }} onPress={() => Actions.drawer_friends()}>
+                        <TouchableOpacity style={{ padding: 5 }} onPress={onPressAddFriends}>
                             <Text textColor>Add Friends</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{ padding: 5 }}>

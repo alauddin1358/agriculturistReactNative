@@ -8,9 +8,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         color: colors.textColor,
-        paddingHorizontal: 30,
         borderRadius: 5,
-        paddingVertical: 8
+        paddingVertical: 8,
+        width:'100%'
     },
     spinner: {
         marginLeft: 10

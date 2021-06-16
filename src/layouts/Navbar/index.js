@@ -1,5 +1,5 @@
-import React from "react"
-import { TouchableOpacity, TextInput } from "react-native"
+import React, { useState } from "react"
+import { TextInput, TouchableOpacity } from "react-native"
 import Block from '../../components/Block'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -8,13 +8,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Text from '../../components/Text'
 import styles from './styles'
 import { colors } from '../../styles/theme'
-import { useState } from "react/cjs/react.development"
-import { Actions } from "react-native-router-flux"
 
 
 
 
-const Navbar = ({ onPress, title, heading, color }) => {
+const Navbar = ({ onPressDrawer, onPressProfile }) => {
 
     const [application, setApplication] = useState(false)
     const [search, setSearch] = useState(false)
@@ -25,7 +23,7 @@ const Navbar = ({ onPress, title, heading, color }) => {
         <Block flex={false}>
             <Block row spaceBetween center flex={false} style={styles.navbar}>
                 <Block row center flex={false}>
-                    <TouchableOpacity style={styles.bars} onPress={() => Actions.drawerOpen()}>
+                    <TouchableOpacity style={styles.bars} onPress={onPressDrawer}>
                         <FontAwesome color="#fff" size={15} name="bars" />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.application} onPress={() => setApplication(!application)}>
@@ -66,10 +64,12 @@ const Navbar = ({ onPress, title, heading, color }) => {
                 </Block>
             </Block>}
             {profile && <Block flex={false} style={styles.expandSea}>
-                <TouchableOpacity style={styles.devide} onPress={()=> Actions.drawer_profile()}>
-                    <Ionicons name="person-circle-sharp" color={colors.borderColor} style={{ marginRight: 5 }} size={18} />
-                    <Text textColor>Profile</Text>
-                </TouchableOpacity>
+                <Block flex={false}>
+                    <TouchableOpacity style={styles.devide} onPress={onPressProfile}>
+                        <Ionicons name="person-circle-sharp" color={colors.borderColor} style={{ marginRight: 5 }} size={18} />
+                        <Text textColor>Profile</Text>
+                    </TouchableOpacity>
+                </Block>
                 <TouchableOpacity style={{ paddingVertical: 5, flexDirection: 'row' }}>
                     <AntDesign name="logout" color={colors.borderColor} style={{ marginRight: 5 }} size={18} />
                     <Text textColor>Logout</Text>

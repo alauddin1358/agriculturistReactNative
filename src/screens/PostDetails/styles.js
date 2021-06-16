@@ -36,9 +36,9 @@ const styles = StyleSheet.create({
         borderRadius:5
     },
     ads:{
-        width:200,
+        width:'100%',
         height:200,
-        resizeMode:'contain'
+        resizeMode:'cover'
     },
     expandBlock:{
         borderWidth:1,

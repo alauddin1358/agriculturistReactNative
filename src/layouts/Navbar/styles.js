@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         marginRight: 40,
         borderRadius: 5,
         position: 'absolute',
-        zIndex: 99,
+        zIndex: 1,
         top: 50,
         width: '95%',
         left: 0
@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         position: 'absolute',
         zIndex: 99,
-        top: 55,
         width: '85%',
+        top:53,
         left: 10
     },
     input: {

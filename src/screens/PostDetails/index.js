@@ -30,7 +30,7 @@ const ADS = [
 ];
 
 
-export default PostDetails = props => {
+export default PostDetails = ({ navigation, _carousel }) => {
 
 
     const renderAdsItem = ({ item, index }) => {
@@ -45,14 +45,17 @@ export default PostDetails = props => {
     return (
 
         <Block block>
-            <Navbar />
+            <Navbar
+                onPressProfile={() => navigation.navigate('profile')}
+                onPressDrawer={() => navigation.openDrawer()}
+            />
             <ScrollView block style={styles.container}>
                 <Block style={styles.block} flex={false}>
                     <Block flex={false} style={styles.item} margin={[0, 0, 10, 0]}>
                         <Text bold textColor style={styles.post}>Changes in Acid Invertase Activity
-                        and Sugar Distribution in Asparagus Spears Harvested in Autumn; Authors:
-                        A.K.M. Shameem ALAM, Toshiyuki MATSUI, Takao IKEUCHI Author information',
-                    </Text>
+                            and Sugar Distribution in Asparagus Spears Harvested in Autumn; Authors:
+                            A.K.M. Shameem ALAM, Toshiyuki MATSUI, Takao IKEUCHI Author information',
+                        </Text>
                         <Block flex={false} row center style={{ maxWidth: 300 }}>
                             <Block flex={false} row center margin={[5, 5, 0]}>
                                 <MaterialIcons style={{ marginRight: 5 }} name="date-range" />
@@ -66,17 +69,17 @@ export default PostDetails = props => {
 
                         <Block flex={false} margin={[10, 0]}>
                             <Text textColor size={12} style={styles.des}>Far far away, behind the word mountains,
-                            far from the countries Vokalia and Consonantia, there live the blind texts. Separated they
-                            live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small
-                            river named Duden flows by their place and supplies it with the necessary regelialia. It is a
-                            paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful
-                            Pointing has no control about the blind texts it is an almost unorthographic life One day however a small
-                            line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar. The Big Oxmox
-                            advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli,
-                            but the Little Blind Text didn’t listen. She packed her seven versalia, put her initial into the belt and made
-                            herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline
-                            of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline
-                            of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then</Text>
+                                far from the countries Vokalia and Consonantia, there live the blind texts. Separated they
+                                live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small
+                                river named Duden flows by their place and supplies it with the necessary regelialia. It is a
+                                paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful
+                                Pointing has no control about the blind texts it is an almost unorthographic life One day however a small
+                                line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar. The Big Oxmox
+                                advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli,
+                                but the Little Blind Text didn’t listen. She packed her seven versalia, put her initial into the belt and made
+                                herself on the way. When she reached the first hills of the Italic Mountains, she had a last view back on the skyline
+                                of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline
+                                of her own road, the Line Lane. Pityful a rethoric question ran over her cheek, then</Text>
 
                         </Block>
                     </Block>
@@ -87,25 +90,27 @@ export default PostDetails = props => {
                             multiline={true}
                             placeholder="Enter Your Comment"
                             numberOfLines={4} />
-                            <TouchableOpacity style={styles.btn}>
-                                <Text white>Submit</Text>
-                            </TouchableOpacity>
+                        <TouchableOpacity style={styles.btn}>
+                            <Text white>Submit</Text>
+                        </TouchableOpacity>
 
-                            <Block row center flex={false} margin={[20,0,0]}>
-                                <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')}/>
-                                <Block flex={false} style={styles.dot}></Block>
-                                <Block flex={false} style={styles.com}>
-                                    <Text textColor>djfhgj</Text>
-                                </Block>
+                        <Block row center flex={false} margin={[20, 0, 0]}>
+                            <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
+                            <Block flex={false} style={styles.dot}></Block>
+                            <Block flex={false} style={styles.com}>
+                                <Text textColor>djfhgj</Text>
                             </Block>
+                        </Block>
                     </Block>
-                    <Carousel
-                        ref={(c) => { _carousel = c; }}
-                        data={ADS}
-                        renderItem={renderAdsItem}
-                        sliderWidth={Dimensions.get('window').width}
-                        itemWidth={170}
-                    />
+                    <Block flex={false} center>
+                        <Carousel
+                            ref={(c) => { _carousel = c; }}
+                            data={ADS}
+                            renderItem={renderAdsItem}
+                            sliderWidth={Dimensions.get('window').width}
+                            itemWidth={Dimensions.get('window').width - 40}
+                        />
+                    </Block>
                 </Block>
             </ScrollView>
         </Block>

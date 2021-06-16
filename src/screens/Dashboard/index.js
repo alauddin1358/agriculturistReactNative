@@ -5,11 +5,8 @@ import Text from '../../components/Text'
 import styles from './styles'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import ReadMore from 'react-native-read-more-text'
 import Carousel from 'react-native-snap-carousel'
-import { colors } from "../../styles/theme"
 import { Navbar } from "../../layouts/Navbar"
-import { Actions } from "react-native-router-flux"
 
 
 
@@ -59,7 +56,7 @@ const ADS = [
 ];
 
 
-export default Dashboard = (props) => {
+export default Dashboard = ({ navigation, carousel }) => {
 
     const [expand, setExpand] = useState(false)
 
@@ -70,7 +67,7 @@ export default Dashboard = (props) => {
     const renderPostsItem = ({ item }) => (
 
         <Block style={styles.item} margin={[0, 0, 10, 0]} flex={false}>
-            <TouchableOpacity onPress={() => Actions.details()}>
+            <TouchableOpacity onPress={() => navigation.navigate('details')}>
                 <Text bold textColor style={styles.post}>{item.title}</Text>
             </TouchableOpacity>
 
@@ -111,7 +108,10 @@ export default Dashboard = (props) => {
     return (
 
         <Block block>
-            <Navbar />
+            <Navbar
+                onPressProfile={() => navigation.navigate('profile')}
+                onPressDrawer={() => navigation.openDrawer()}
+            />
             <SafeAreaView style={styles.container} >
                 <Text textColor size={20}>Dashboard</Text>
                 <Block style={styles.block} flex={false}>
@@ -131,7 +131,7 @@ export default Dashboard = (props) => {
                         ListFooterComponent={
                             <Block flex={false} center>
                                 <Carousel
-                                    ref={(c) => { _carousel = c; }}
+                                    ref={(c) => { carousel = c; }}
                                     data={ADS}
                                     renderItem={renderAdsItem}
                                     sliderWidth={Dimensions.get('window').width}
