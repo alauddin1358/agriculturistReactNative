@@ -17,7 +17,7 @@ const Routes = () => {
         <Router>
             <Scene key='root'>
                 <Scene key="login" component={LoginScreen} hideNavBar />
-                <Scene key="regi" component={Registration} hideNavBar />
+                <Scene initial key="regi" component={Registration} hideNavBar />
                 <Scene key="dashboard" component={Dashboard} hideNavBar />
                 <Scene
                     key="drawer_dashboard"
@@ -28,7 +28,7 @@ const Routes = () => {
                     <Scene key="dashboards" component={Dashboard} hideNavBar />
                 </Scene>
                 <Scene
-                
+
                     key="drawer_profile"
                     drawer
                     contentComponent={Sidebar}
@@ -37,7 +37,7 @@ const Routes = () => {
                     <Scene key="profile" component={Profile} hideNavBar />
                 </Scene>
                 <Scene
-                
+
                     key="drawer_friends"
                     drawer
                     contentComponent={Sidebar}
@@ -46,7 +46,7 @@ const Routes = () => {
                     <Scene key="friends" component={Friends} hideNavBar />
                 </Scene>
                 <Scene
-                    
+
                     key="drawer_details"
                     drawer
                     contentComponent={Sidebar}

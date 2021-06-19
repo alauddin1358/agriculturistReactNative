@@ -14,8 +14,22 @@ import { useDispatch } from "react-redux"
 export default Registration = () => {
     const dispatch = useDispatch()
 
+    const [firstname, setFirstname] = useState('')
+    const [middlename, setMiddlename] = useState('')
+    const [lastname, setLastname] = useState('')
+    const [userCategory, setUserCategory] = useState('')
+    const [studentType, setStudentType] = useState('')
+    const [jobType, setJobType] = useState('')
+    const [specializationType, setSpecializationType] = useState('')
     const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
     const [password, setPassword] = useState('')
+    const [passwordConfirm, setPasswordConfirm] = useState('')
+    const [address, setAddress] = useState('')
+    const [country, setCountry] = useState('')
+    const [image, setImage] = useState('')
+    const [referrerName, setReferrerName] = useState('')
+    const [referrerEmail, setReferrerEmail] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
 
@@ -25,6 +39,31 @@ export default Registration = () => {
         { label: 'Apple', value: 'apple' },
         { label: 'Banana', value: 'banana' }
     ])
+
+    const submitRegister = () => {
+
+        const body = {
+            firstname,
+            middlename,
+            lastname,
+            name: `${firstname} ${middlename} ${lastname}`,
+            user_category: userCategory,
+            student_type: studentType,
+            job_type: jobType,
+            specialization_type: specializationType,
+            email,
+            phone,
+            password,
+            passwordconfirm: passwordConfirm,
+            address,
+            country,
+            image,
+            referrer_name: referrerName,
+            referrer_email: referrerEmail,
+        }
+
+        // Actions.login()
+    }
 
 
     return (
@@ -38,12 +77,18 @@ export default Registration = () => {
                             <Text white>Name* :</Text>
                             <PrimaryInput
                                 placeholder="Enter First Name"
+                                value={firstname}
+                                onChangeText={val => setFirstname(val)}
                             />
                             <PrimaryInput
                                 placeholder="Enter Middle Name"
+                                value={email}
+                                onChangeText={val => setEmail(val)}
                             />
                             <PrimaryInput
                                 placeholder="Enter Last Name"
+                                value={email}
+                                onChangeText={val => setEmail(val)}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
@@ -65,30 +110,40 @@ export default Registration = () => {
                             <Text white>Email* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Email"
+                                value={email}
+                                onChangeText={val => setEmail(val)}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
                             <Text white>Phone :</Text>
                             <PrimaryInput
                                 placeholder="Enter Phone Number"
+                                value={email}
+                                onChangeText={val => setEmail(val)}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
                             <Text white>Password* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Password"
+                                value={email}
+                                onChangeText={val => setEmail(val)}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
                             <Text white>Confirm Password* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Password Again"
+                                value={email}
+                                onChangeText={val => setEmail(val)}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
                             <Text white>Address :</Text>
                             <PrimaryInput
                                 placeholder="Enter Address"
+                                value={email}
+                                onChangeText={val => setEmail(val)}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
@@ -123,16 +178,20 @@ export default Registration = () => {
                             <Text white>Name* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Name"
+                                value={email}
+                                onChangeText={val => setEmail(val)}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
                             <Text white>Email* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Email"
+                                value={email}
+                                onChangeText={val => setEmail(val)}
                             />
                         </Block>
                         <Block flex={false} margin={[20, 0]}>
-                            <PrimaryButton onPress={() => Actions.login()} btnText="Registration" />
+                            <PrimaryButton onPress={submitRegister} btnText="Registration" />
                         </Block>
                         <TouchableOpacity>
                             <Text white>* marked fields are required, Please fill up this fields ?</Text>

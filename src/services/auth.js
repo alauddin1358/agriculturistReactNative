@@ -72,35 +72,15 @@ const postLogin = async (email, password) => {
  * Registration
  */
 
-export const registrationService = (regBody, callback) => {
+export const registrationService = (formData, callback) => {
 
     let url = base_url + '/add'
-
-    let body = {
-        firstname: regBody.firstName,
-        middlename: regBody.middleName,
-        lastname: regBody.lastName,
-        name: `${regBody.firstName} ${regBody.middleName} ${regBody.lastName}`,
-        user_category: regBody.userCategory,
-        student_type: regBody.studentType,
-        job_type: regBody.jobType,
-        specialization_type: regBody.specializationType,
-        email: regBody.email,
-        phone: regBody.phone,
-        password: regBody.password,
-        passwordconfirm: regBody.passwordConfirm,
-        address: regBody.address,
-        country: regBody.country,
-        image: regBody.avatar,
-        referrer_name: regBody.referrerName,
-        referrer_email: regBody.referrerEmail,
-    }
 
     return async (dispatch) => {
         dispatch({ type: REGISTRATION_PENDING })
 
         try {
-            const response = await httpRequest.post(url, false, null, body)
+            const response = await httpRequest.post(url, false, null, formData)
 
             dispatch({ type: REGISTRATION_SUCCESS, payload: response })
             callback(response, null)
