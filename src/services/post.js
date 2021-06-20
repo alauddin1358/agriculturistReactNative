@@ -19,7 +19,7 @@ export const fetchPostsService = (callback) => async (
 ) => {
     dispatch({ type: GET_POSTS_PENDING })
 
-    let url = base_url + '/getAllPost'
+    const url = base_url + '/getAllPost'
     const token = await auth.getToken('accessToken')
 
     try {
@@ -38,7 +38,6 @@ export const fetchPostsService = (callback) => async (
 
         callback(response, null)
     } catch (error) {
-        console.log('error', error);
         dispatch({
             type: GET_POSTS_FAIL,
             payload: error.response,

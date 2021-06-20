@@ -48,9 +48,9 @@ export const loginService = (email, password, callback) => {
 */
 
 const postLogin = async (email, password) => {
-    let url = base_url + '/login'
+    const url = base_url + '/login'
 
-    let body = {
+    const body = {
         email,
         password,
     }
@@ -74,15 +74,13 @@ const postLogin = async (email, password) => {
 
 export const registrationService = (formData, callback) => {
 
-    let url = base_url + '/add'
-
-    console.log('formData', formData);
+    const url = base_url + '/add'
 
     return async (dispatch) => {
         dispatch({ type: REGISTRATION_PENDING })
 
         try {
-            const response = await httpRequest.post(url, false, null, formData, { 'Content-Type': 'multipart/form-data' })
+            const response = await httpRequest.post(url, false, null, formData)
 
             dispatch({ type: REGISTRATION_SUCCESS, payload: response })
             callback(response, null)

@@ -16,19 +16,20 @@ import { useDispatch } from "react-redux"
 export default Registration = ({ navigation }) => {
     const dispatch = useDispatch()
 
-    const [firstname, setFirstname] = useState('Brad')
-    const [middlename, setMiddlename] = useState('To')
-    const [lastname, setLastname] = useState('Pit')
+    const [firstname, setFirstname] = useState('')
+    const [middlename, setMiddlename] = useState('')
+    const [lastname, setLastname] = useState('')
     const [userCategory, setUserCategory] = useState('')
-    const [email, setEmail] = useState('brad@email.com')
-    const [phone, setPhone] = useState('123456')
-    const [password, setPassword] = useState('123456')
-    const [passwordConfirm, setPasswordConfirm] = useState('123456')
-    const [address, setAddress] = useState('London')
-    const [country, setCountry] = useState('England')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [password, setPassword] = useState('')
+    const [passwordConfirm, setPasswordConfirm] = useState('')
+    const [address, setAddress] = useState('')
+    const [country, setCountry] = useState('')
+    const [imageFile, setImageFile] = useState('')
     const [image, setImage] = useState('')
-    const [referrerName, setReferrerName] = useState('Lutfunnaher Lata')
-    const [referrerEmail, setReferrerEmail] = useState('l.lata710@gmail.com')
+    const [referrerName, setReferrerName] = useState('')
+    const [referrerEmail, setReferrerEmail] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
 
@@ -36,40 +37,24 @@ export default Registration = ({ navigation }) => {
     const [openCountry, setOpenCountry] = useState(false)
 
 
-    const uploadAvatar = () => {
-        ImagePicker.openPicker({
+    const uploadAvatar = async () => {
+        const img = await ImagePicker.openPicker({
             width: 300,
             height: 400,
-            cropping: true
-        }).then(img => {
-            RNFS.readFile(img.path, 'base64')
-                .then(res => {
-                    setImage(res)
-                })
+            cropping: false
         })
+
+        setImageFile(img)
+
+        const res = await RNFS.readFile(img.path, 'base64')
+        setImage(res)
     }
 
 
     const submitRegister = () => {
+        setIsLoading(true)
 
-        // const formData = {
-        //     firstname,
-        //     middlename,
-        //     lastname,
-        //     name: `${firstname} ${middlename} ${lastname}`,
-        //     user_category: userCategory,
-        //     email,
-        //     phone,
-        //     password,
-        //     passwordconfirm: passwordConfirm,
-        //     address,
-        //     country,
-        //     // image,
-        //     referrer_name: referrerName,
-        //     referrer_email: referrerEmail,
-        // }
-
-        const formData = new FormData()
+        let formData = new FormData()
         formData.append('firstname', firstname)
         formData.append('middlename', middlename)
         formData.append('lastname', lastname)
@@ -84,17 +69,19 @@ export default Registration = ({ navigation }) => {
         formData.append('image', image)
         formData.append('referrer_name', referrerName)
         formData.append('referrer_email', referrerEmail)
+        formData.append('emailconfirm', false)
+        formData.append('job_type', '')
+        formData.append('student_type', '')
+        formData.append('specialization_type', '')
 
         dispatch(registrationService(formData, (res, err) => {
 
             setIsLoading(false)
 
             if (res) {
-
                 if (res?.data?.result?.isError == 'false') {
-
-                    Toast.show('Success')
-
+                    Toast.show(res?.data?.result?.message, Toast.LONG)
+                    navigation.navigate('login')
                 } else {
                     Toast.show(res?.data?.result?.message)
                 }
@@ -234,7 +221,10 @@ export default Registration = ({ navigation }) => {
                             />
                         </Block>
                         <Block flex={false} margin={[20, 0]}>
-                            <PrimaryButton onPress={submitRegister} btnText="Registration" />
+                            <PrimaryButton
+                                loading={isLoading}
+                                btnText="Registration"
+                                onPress={submitRegister} />
                         </Block>
                         <TouchableOpacity>
                             <Text white bold>* marked fields are required, Please fill up this fields ?</Text>

@@ -8,7 +8,7 @@ import styles from './styles'
 export const PrimaryButton = ({ onPress, btnText, spinnerColor, spinnerSize, loading }) => {
 
     return (
-        <TouchableOpacity onPress={onPress} style={styles.btn}>
+        <TouchableOpacity disabled={loading} onPress={onPress} style={styles.btn}>
             <Text
                 center
                 bold
