@@ -26,11 +26,8 @@ export default LoginScreen = ({ navigation }) => {
                 setIsLoading(false)
 
                 if (res) {
-
                     if (res?.result?.isError == 'false') {
-
                         navigation.navigate('dashboard')
-
                     } else {
                         Toast.show(res.result?.message)
                     }

@@ -10,14 +10,15 @@ const client = (token = null) => {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
+                    ...options
                 },
             }
 
             if (tokenNeed) {
                 Object.assign(defaultOptions.headers, { Authorization: 'Bearer ' + token })
             }
-            
-            return axios.get(url, { ...defaultOptions, ...options })
+
+            return axios.get(url, { ...defaultOptions })
         },
 
 
@@ -29,14 +30,17 @@ const client = (token = null) => {
                 headers: {
                     "Accept": 'application/json',
                     'Content-Type': 'application/json',
+                    ...options
                 },
             }
+
+            console.log('defaultOptions', defaultOptions);
 
             if (tokenNeed) {
                 Object.assign(defaultOptions.headers, { Authorization: 'Bearer ' + token })
             }
 
-            return axios.post(url, data, { ...defaultOptions, ...options })
+            return axios.post(url, data, { ...defaultOptions })
 
         },
 
@@ -49,6 +53,7 @@ const client = (token = null) => {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
+                    ...options
                 },
             }
 
@@ -57,7 +62,7 @@ const client = (token = null) => {
 
             }
 
-            return axios.put(url, data, { ...defaultOptions, ...options })
+            return axios.put(url, data, { ...defaultOptions })
         },
 
 
@@ -69,6 +74,7 @@ const client = (token = null) => {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
+                    ...options
                 },
             }
 
@@ -76,10 +82,10 @@ const client = (token = null) => {
                 Object.assign(defaultOptions.headers, { Authorization: 'Bearer ' + token })
             }
 
-            return axios.patch(url, data, { ...defaultOptions, ...options })
+            return axios.patch(url, data, { ...defaultOptions })
         },
 
-        
+
 
 
 
@@ -88,7 +94,7 @@ const client = (token = null) => {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-
+                    ...options
                 },
             }
 
@@ -96,7 +102,7 @@ const client = (token = null) => {
                 Object.assign(defaultOptions.headers, { Authorization: 'Bearer ' + token })
             }
 
-            return axios.delete(url, { ...defaultOptions, ...options })
+            return axios.delete(url, { ...defaultOptions })
         },
     }
 }

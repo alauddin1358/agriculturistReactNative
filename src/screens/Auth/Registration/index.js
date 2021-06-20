@@ -1,9 +1,12 @@
 import React, { useState } from "react"
 import { ImageBackground, ScrollView, Image, TouchableOpacity } from "react-native"
+import ImagePicker from 'react-native-image-crop-picker'
+import RNFS from 'react-native-fs'
+import Toast from 'react-native-simple-toast'
+import { registrationService } from '../../../services/auth'
 import Block from '../../../components/Block'
 import Text from '../../../components/Text'
 import styles from './styles'
-import { colors } from "../../../styles/theme"
 import DropDownPicker from 'react-native-dropdown-picker'
 import { PrimaryInput } from "../../../components/TextInput"
 import { PrimaryButton } from "../../../components/Button"
@@ -13,49 +16,90 @@ import { useDispatch } from "react-redux"
 export default Registration = ({ navigation }) => {
     const dispatch = useDispatch()
 
-    const [firstname, setFirstname] = useState('')
-    const [middlename, setMiddlename] = useState('')
-    const [lastname, setLastname] = useState('')
+    const [firstname, setFirstname] = useState('Brad')
+    const [middlename, setMiddlename] = useState('To')
+    const [lastname, setLastname] = useState('Pit')
     const [userCategory, setUserCategory] = useState('')
-    const [specializationType, setSpecializationType] = useState('')
-    const [email, setEmail] = useState('')
-    const [phone, setPhone] = useState('')
-    const [password, setPassword] = useState('')
-    const [passwordConfirm, setPasswordConfirm] = useState('')
-    const [address, setAddress] = useState('')
-    const [country, setCountry] = useState('')
+    const [email, setEmail] = useState('brad@email.com')
+    const [phone, setPhone] = useState('123456')
+    const [password, setPassword] = useState('123456')
+    const [passwordConfirm, setPasswordConfirm] = useState('123456')
+    const [address, setAddress] = useState('London')
+    const [country, setCountry] = useState('England')
     const [image, setImage] = useState('')
-    const [referrerName, setReferrerName] = useState('')
-    const [referrerEmail, setReferrerEmail] = useState('')
+    const [referrerName, setReferrerName] = useState('Lutfunnaher Lata')
+    const [referrerEmail, setReferrerEmail] = useState('l.lata710@gmail.com')
     const [isLoading, setIsLoading] = useState(false)
 
 
     const [openUserCategory, setOpenUserCategory] = useState(false)
     const [openCountry, setOpenCountry] = useState(false)
 
-    console.log('openUserCategory', openUserCategory);
+
+    const uploadAvatar = () => {
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true
+        }).then(img => {
+            RNFS.readFile(img.path, 'base64')
+                .then(res => {
+                    setImage(res)
+                })
+        })
+    }
+
 
     const submitRegister = () => {
 
-        const formData = {
-            firstname,
-            middlename,
-            lastname,
-            name: `${firstname} ${middlename} ${lastname}`,
-            user_category: userCategory,
-            specialization_type: specializationType,
-            email,
-            phone,
-            password,
-            passwordconfirm: passwordConfirm,
-            address,
-            country,
-            image,
-            referrer_name: referrerName,
-            referrer_email: referrerEmail,
-        }
+        // const formData = {
+        //     firstname,
+        //     middlename,
+        //     lastname,
+        //     name: `${firstname} ${middlename} ${lastname}`,
+        //     user_category: userCategory,
+        //     email,
+        //     phone,
+        //     password,
+        //     passwordconfirm: passwordConfirm,
+        //     address,
+        //     country,
+        //     // image,
+        //     referrer_name: referrerName,
+        //     referrer_email: referrerEmail,
+        // }
 
-        // navigation.navigate('login')
+        const formData = new FormData()
+        formData.append('firstname', firstname)
+        formData.append('middlename', middlename)
+        formData.append('lastname', lastname)
+        formData.append('name', `${firstname} ${middlename} ${lastname}`)
+        formData.append('user_category', userCategory)
+        formData.append('email', email)
+        formData.append('phone', phone)
+        formData.append('password', password)
+        formData.append('passwordconfirm', passwordConfirm)
+        formData.append('address', address)
+        formData.append('country', country)
+        formData.append('image', image)
+        formData.append('referrer_name', referrerName)
+        formData.append('referrer_email', referrerEmail)
+
+        dispatch(registrationService(formData, (res, err) => {
+
+            setIsLoading(false)
+
+            if (res) {
+
+                if (res?.data?.result?.isError == 'false') {
+
+                    Toast.show('Success')
+
+                } else {
+                    Toast.show(res?.data?.result?.message)
+                }
+            }
+        }))
     }
 
 
@@ -161,10 +205,12 @@ export default Registration = ({ navigation }) => {
                         <Block flex={false} padding={[15, 0]}>
                             <Text white bold>Profile Picture :</Text>
                             <Block center middle style={styles.avatar} center bgWhite flex={false}>
-                                <Image style={{ width: 100, height: 100 }} source={require('../../../assets/images/user-profile.png')} />
+                                <Image
+                                    style={{ width: 100, height: 100 }}
+                                    source={image ? { uri: image.path } : require('../../../assets/images/user-profile.png')} />
                             </Block>
                             <Block flex={false} margin={[20, 0, 10, 0]}>
-                                <PrimaryButton btnText="Upload Picture" />
+                                <PrimaryButton btnText="Upload Picture" onPress={uploadAvatar} />
                             </Block>
                             <TouchableOpacity>
                                 <Text center white>remove image</Text>

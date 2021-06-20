@@ -76,16 +76,19 @@ export const registrationService = (formData, callback) => {
 
     let url = base_url + '/add'
 
+    console.log('formData', formData);
+
     return async (dispatch) => {
         dispatch({ type: REGISTRATION_PENDING })
 
         try {
-            const response = await httpRequest.post(url, false, null, formData)
+            const response = await httpRequest.post(url, false, null, formData, { 'Content-Type': 'multipart/form-data' })
 
             dispatch({ type: REGISTRATION_SUCCESS, payload: response })
             callback(response, null)
 
         } catch (error) {
+            console.log('error', error);
             dispatch({
                 type: REGISTRATION_FAIL,
                 payload: error.response,

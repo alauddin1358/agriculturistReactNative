@@ -23,7 +23,7 @@ const Routes = props => {
     return (
 
 
-        <Drawer.Navigator drawerContent={props => <Sidebar {...props} />} drawerStyle={{ width: 150 }} initialRouteName="login">
+        <Drawer.Navigator drawerContent={props => <Sidebar {...props} />} drawerStyle={{ width: 150 }} initialRouteName="dashboard">
             <Drawer.Screen options={{ swipeEnabled: false }} name="login" component={LoginScreen} />
             <Drawer.Screen options={{ swipeEnabled: false }} name="regi" component={Registration} />
             <Drawer.Screen name="profile" component={Profile} />
