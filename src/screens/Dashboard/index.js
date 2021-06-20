@@ -54,8 +54,7 @@ export default Dashboard = ({ navigation, carousel }) => {
     const getPostList = () => {
         dispatch(fetchPostsService((res, err) => {
             setIsLoading(false)
-            // setPosts(res?.data?.data ? JSON.parse(res.data.data) : [])
-            setPosts([])
+            setPosts(res?.data?.data ? JSON.parse(res.data.data) : [])
         }))
     }
 
