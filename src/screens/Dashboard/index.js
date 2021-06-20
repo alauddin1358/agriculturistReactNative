@@ -11,6 +11,7 @@ import { Navbar } from "../../layouts/Navbar"
 import { fetchPostsService } from "../../services/post"
 import { dateFormat } from "../../utils/common"
 import { Loader } from "../../components/Loader"
+import EmptyData from "../../components/EmptyData"
 
 
 const ADS = [
@@ -53,8 +54,8 @@ export default Dashboard = ({ navigation, carousel }) => {
     const getPostList = () => {
         dispatch(fetchPostsService((res, err) => {
             setIsLoading(false)
-            console.log('res', JSON.parse(res?.data?.data));
-            setPosts(res?.data?.data ? JSON.parse(res.data.data) : [])
+            // setPosts(res?.data?.data ? JSON.parse(res.data.data) : [])
+            setPosts([])
         }))
     }
 
@@ -124,6 +125,9 @@ export default Dashboard = ({ navigation, carousel }) => {
                                             </Block>
                                         </Block>
 
+                                    }
+                                    ListEmptyComponent={
+                                        <EmptyData text="No Posts Found" />
                                     }
                                     ListFooterComponent={
                                         <Block flex={false} center>
