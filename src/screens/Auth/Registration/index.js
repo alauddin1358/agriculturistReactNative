@@ -7,19 +7,16 @@ import { colors } from "../../../styles/theme"
 import DropDownPicker from 'react-native-dropdown-picker'
 import { PrimaryInput } from "../../../components/TextInput"
 import { PrimaryButton } from "../../../components/Button"
-import { Actions } from "react-native-router-flux"
 import { useDispatch } from "react-redux"
 
 
-export default Registration = () => {
+export default Registration = ({ navigation }) => {
     const dispatch = useDispatch()
 
     const [firstname, setFirstname] = useState('')
     const [middlename, setMiddlename] = useState('')
     const [lastname, setLastname] = useState('')
     const [userCategory, setUserCategory] = useState('')
-    const [studentType, setStudentType] = useState('')
-    const [jobType, setJobType] = useState('')
     const [specializationType, setSpecializationType] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
@@ -33,23 +30,19 @@ export default Registration = () => {
     const [isLoading, setIsLoading] = useState(false)
 
 
-    const [open, setOpen] = useState(false)
-    const [value, setValue] = useState(null)
-    const [items, setItems] = useState([
-        { label: 'Apple', value: 'apple' },
-        { label: 'Banana', value: 'banana' }
-    ])
+    const [openUserCategory, setOpenUserCategory] = useState(false)
+    const [openCountry, setOpenCountry] = useState(false)
+
+    console.log('openUserCategory', openUserCategory);
 
     const submitRegister = () => {
 
-        const body = {
+        const formData = {
             firstname,
             middlename,
             lastname,
             name: `${firstname} ${middlename} ${lastname}`,
             user_category: userCategory,
-            student_type: studentType,
-            job_type: jobType,
             specialization_type: specializationType,
             email,
             phone,
@@ -62,7 +55,7 @@ export default Registration = () => {
             referrer_email: referrerEmail,
         }
 
-        // Actions.login()
+        // navigation.navigate('login')
     }
 
 
@@ -74,7 +67,7 @@ export default Registration = () => {
                     <Block style={styles.loginBlock} flex={false}>
                         <Text size={27} bold white center>Registration</Text>
                         <Block padding={[15, 0]} flex={false}>
-                            <Text white>Name* :</Text>
+                            <Text white bold>Name* :</Text>
                             <PrimaryInput
                                 placeholder="Enter First Name"
                                 value={firstname}
@@ -82,32 +75,34 @@ export default Registration = () => {
                             />
                             <PrimaryInput
                                 placeholder="Enter Middle Name"
-                                value={email}
-                                onChangeText={val => setEmail(val)}
+                                value={middlename}
+                                onChangeText={val => setMiddlename(val)}
                             />
                             <PrimaryInput
                                 placeholder="Enter Last Name"
-                                value={email}
-                                onChangeText={val => setEmail(val)}
+                                value={lastname}
+                                onChangeText={val => setLastname(val)}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>User category* :</Text>
+                            <Text white bold>User category* :</Text>
                             <DropDownPicker
                                 style={styles.picker}
                                 dropDownContainerStyle={styles.pickerInner}
-                                textStyle={{ color: colors.white }}
+                                textStyle={{ color: '#d2d2d2' }}
                                 placeholder="Select User Category"
-                                open={open}
-                                value={value}
-                                items={items}
-                                setOpen={setOpen}
-                                setValue={setValue}
-                                setItems={setItems}
+                                open={openUserCategory}
+                                setOpen={setOpenUserCategory}
+                                items={[
+                                    { label: 'Apple', value: 'apple' },
+                                    { label: 'Banana', value: 'banana' }
+                                ]}
+                                value={userCategory}
+                                setValue={setUserCategory}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Email* :</Text>
+                            <Text white bold>Email* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Email"
                                 value={email}
@@ -115,54 +110,56 @@ export default Registration = () => {
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Phone :</Text>
+                            <Text white bold>Phone :</Text>
                             <PrimaryInput
                                 placeholder="Enter Phone Number"
-                                value={email}
-                                onChangeText={val => setEmail(val)}
+                                value={phone}
+                                onChangeText={val => setPhone(val)}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Password* :</Text>
+                            <Text white bold>Password* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Password"
-                                value={email}
-                                onChangeText={val => setEmail(val)}
+                                value={password}
+                                onChangeText={val => setPassword(val)}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Confirm Password* :</Text>
+                            <Text white bold>Confirm Password* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Password Again"
-                                value={email}
-                                onChangeText={val => setEmail(val)}
+                                value={passwordConfirm}
+                                onChangeText={val => setPasswordConfirm(val)}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Address :</Text>
+                            <Text white bold>Address :</Text>
                             <PrimaryInput
                                 placeholder="Enter Address"
-                                value={email}
-                                onChangeText={val => setEmail(val)}
+                                value={address}
+                                onChangeText={val => setAddress(val)}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Country :</Text>
+                            <Text white bold>Country :</Text>
                             <DropDownPicker
                                 style={styles.picker}
                                 dropDownContainerStyle={styles.pickerInner}
-                                textStyle={{ color: colors.white }}
+                                textStyle={{ color: '#d2d2d2' }}
                                 placeholder="Select Country"
-                                open={open}
-                                value={value}
-                                items={items}
-                                setOpen={setOpen}
-                                setValue={setValue}
-                                setItems={setItems}
+                                open={openCountry}
+                                setOpen={setOpenCountry}
+                                items={[
+                                    { label: 'Apple', value: 'apple' },
+                                    { label: 'Banana', value: 'banana' }
+                                ]}
+                                value={country}
+                                setValue={setCountry}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Profile Picture :</Text>
+                            <Text white bold>Profile Picture :</Text>
                             <Block center middle style={styles.avatar} center bgWhite flex={false}>
                                 <Image style={{ width: 100, height: 100 }} source={require('../../../assets/images/user-profile.png')} />
                             </Block>
@@ -175,30 +172,30 @@ export default Registration = () => {
                         </Block>
                         <Text size={27} bold white center>Refered by:</Text>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Name* :</Text>
+                            <Text white bold>Name* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Name"
-                                value={email}
-                                onChangeText={val => setEmail(val)}
+                                value={referrerName}
+                                onChangeText={val => setReferrerName(val)}
                             />
                         </Block>
                         <Block flex={false} padding={[15, 0]}>
-                            <Text white>Email* :</Text>
+                            <Text white bold>Email* :</Text>
                             <PrimaryInput
                                 placeholder="Enter Email"
-                                value={email}
-                                onChangeText={val => setEmail(val)}
+                                value={referrerEmail}
+                                onChangeText={val => setReferrerEmail(val)}
                             />
                         </Block>
                         <Block flex={false} margin={[20, 0]}>
                             <PrimaryButton onPress={submitRegister} btnText="Registration" />
                         </Block>
                         <TouchableOpacity>
-                            <Text white>* marked fields are required, Please fill up this fields ?</Text>
+                            <Text white bold>* marked fields are required, Please fill up this fields ?</Text>
                         </TouchableOpacity>
                         <Block row center middle flex={false} padding={[10, 0]}>
                             <Text style={{ marginRight: 5 }} white>Already have an account ?</Text>
-                            <TouchableOpacity onPress={() => Actions.login()}>
+                            <TouchableOpacity onPress={() => navigation.navigate('login')}>
                                 <Text white>login here</Text>
                             </TouchableOpacity>
                         </Block>

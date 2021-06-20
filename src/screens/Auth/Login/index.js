@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { ImageBackground, SafeAreaView, Image, TouchableOpacity } from 'react-native'
 import Toast from 'react-native-simple-toast'
-import { Actions } from 'react-native-router-flux'
 import { useDispatch } from 'react-redux'
 import Block from '../../../components/Block'
 import Text from '../../../components/Text'
@@ -11,7 +10,7 @@ import { PrimaryButton } from '../../../components/Button'
 import checkLoginValidation from './validate'
 import { loginService } from '../../../services/auth'
 
-export default LoginScreen = () => {
+export default LoginScreen = ({ navigation }) => {
     const dispatch = useDispatch()
 
     const [email, setEmail] = useState('')
@@ -29,7 +28,9 @@ export default LoginScreen = () => {
                 if (res) {
 
                     if (res?.result?.isError == 'false') {
-                        Actions.dashboard()
+
+                        navigation.navigate('dashboard')
+
                     } else {
                         Toast.show(res.result?.message)
                     }
@@ -61,7 +62,7 @@ export default LoginScreen = () => {
                             onChangeText={val => setPassword(val)}
                         />
 
-                        <Block flex={false} margin={[30, 0, 0]}>
+                        <Block width flex={false} margin={[30, 0, 0]}>
                             <PrimaryButton
                                 loading={isLoading}
                                 btnText="Login"
@@ -70,7 +71,7 @@ export default LoginScreen = () => {
 
                         <Block row center flex={false} padding={[10, 0]}>
                             <Text style={{ marginRight: 5 }} white>Not a user ?</Text>
-                            <TouchableOpacity onPress={() => Actions.regi()}>
+                            <TouchableOpacity onPress={() => navigation.navigate('regi')}>
                                 <Text white>Register here</Text>
                             </TouchableOpacity>
                         </Block>

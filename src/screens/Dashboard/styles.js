@@ -24,7 +24,10 @@ const styles = StyleSheet.create({
     },
     post: {
         paddingVertical:5,
-        fontSize:15
+        fontSize:15,
+    },
+    des: {
+        textAlign:'justify'
     },
     block: {
         padding: 10,
@@ -35,9 +38,9 @@ const styles = StyleSheet.create({
         borderRadius:5
     },
     ads:{
-        width:200,
-        height:200,
-        resizeMode:'contain'
+        width:'100%',
+        height:150,
+        resizeMode:'cover'
     },
     expandBlock:{
         borderWidth:1,

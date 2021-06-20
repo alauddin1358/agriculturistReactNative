@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
        borderRadius:5,
        elevation:3,
        position:'absolute',
-       top:'35%',
+       top:'25%',
        left:100
    },
    friends:{
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
        borderRadius:5,
        elevation:3,
        position:'absolute',
-       top:'65%',
+       top:'48%',
        left:100
    },
    files:{
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
        borderRadius:5,
        elevation:3,
        position:'absolute',
-       top:'50%',
+       top:'37%',
        left:100
    },
 });

@@ -5,11 +5,8 @@ import Text from '../../components/Text'
 import styles from './styles'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Carousel from 'react-native-snap-carousel'
-import { colors } from "../../styles/theme"
 import { Navbar } from "../../layouts/Navbar"
-import { Actions } from "react-native-router-flux"
 
 
 
@@ -59,7 +56,7 @@ const ADS = [
 ];
 
 
-export default Dashboard = (props) => {
+export default Dashboard = ({ navigation, carousel }) => {
 
     const [expand, setExpand] = useState(false)
 
@@ -70,30 +67,30 @@ export default Dashboard = (props) => {
     const renderPostsItem = ({ item }) => (
 
         <Block style={styles.item} margin={[0, 0, 10, 0]} flex={false}>
-            <TouchableOpacity onPress={() => Actions.drawer_details()}>
+            <TouchableOpacity onPress={() => navigation.navigate('details')}>
                 <Text bold textColor style={styles.post}>{item.title}</Text>
             </TouchableOpacity>
 
-            {expand &&
-                <Block flex={false}>
-                    <Text textColor size={12} style={styles.des}>{item.des}</Text>
-                    <Block flex={false} row center margin={[10, 0, 0]}>
-                        <MaterialIcons style={{ marginRight: 5 }} name="date-range" />
-                        <Text textColor size={12}>Publish Date: {item.date}</Text>
-                    </Block>
-                    <Block flex={false} row center>
-                        <MaterialIcons style={{ marginRight: 5 }} name="person" />
-                        <Text textColor size={12}>Author: {item.author}</Text>
-                    </Block>
-                    <Block flex={false} row center>
-                        <FontAwesome style={{ marginRight: 5 }} name="comments" />
-                        <Text textColor size={12}>Comment</Text>
-                    </Block>
+            <Text textColor center size={12} numberOfLines={expand ? null : 3} style={styles.des}>{item.des}</Text>
+            <Block flex={false}>
+                <Block flex={false} row center margin={[10, 0, 0]}>
+                    <MaterialIcons style={{ marginRight: 5 }} name="date-range" />
+                    <Text textColor size={12}>Publish Date: {item.date}</Text>
                 </Block>
-            }
-            <TouchableOpacity onPress={expandClick} style={styles.expandBlock}>
-                <Text style={styles.extext}>Click to {expand ? 'hide' : 'show'} post details</Text>
-                <MaterialCommunityIcons color={colors.primaryColor} size={25} name={expand ? "arrow-up-drop-circle-outline" : "arrow-down-drop-circle-outline"} />
+                <Block flex={false} row center>
+                    <MaterialIcons style={{ marginRight: 5 }} name="person" />
+                    <Text textColor size={12}>Author: {item.author}</Text>
+                </Block>
+                <Block flex={false} row center>
+                    <FontAwesome style={{ marginRight: 5 }} name="comments" />
+                    <Text textColor size={12}>Comment</Text>
+                </Block>
+            </Block>
+
+            <TouchableOpacity onPress={expandClick}>
+                <Text style={{ color: 'blue', marginTop: 5 }}>
+                    {!expand ? 'Read more' : 'Read less'}
+                </Text>
             </TouchableOpacity>
 
         </Block>
@@ -102,7 +99,7 @@ export default Dashboard = (props) => {
     const renderAdsItem = ({ item }) => {
 
         return (
-            <Block style={styles.slide} flex={false}>
+            <Block center style={styles.slide} margin={[30, 0]} flex={false}>
                 <Image style={styles.ads} source={item.image} />
             </Block>
         );
@@ -111,7 +108,10 @@ export default Dashboard = (props) => {
     return (
 
         <Block block>
-            <Navbar />
+            <Navbar
+                onPressProfile={() => navigation.navigate('profile')}
+                onPressDrawer={() => navigation.openDrawer()}
+            />
             <SafeAreaView style={styles.container} >
                 <Text textColor size={20}>Dashboard</Text>
                 <Block style={styles.block} flex={false}>
@@ -129,13 +129,15 @@ export default Dashboard = (props) => {
 
                         }
                         ListFooterComponent={
-                            <Carousel
-                                ref={(c) => { _carousel = c; }}
-                                data={ADS}
-                                renderItem={renderAdsItem}
-                                sliderWidth={Dimensions.get('window').width}
-                                itemWidth={170}
-                            />
+                            <Block flex={false} center>
+                                <Carousel
+                                    ref={(c) => { carousel = c; }}
+                                    data={ADS}
+                                    renderItem={renderAdsItem}
+                                    sliderWidth={Dimensions.get('window').width}
+                                    itemWidth={Dimensions.get('window').width - 20}
+                                />
+                            </Block>
                         }
                     />
                 </Block>

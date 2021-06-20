@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
     },
     post: {
         paddingVertical:5,
-        fontSize:15
+        fontSize:15,
+        textAlign:'justify'
     },
     block: {
         padding: 10,
@@ -35,9 +36,9 @@ const styles = StyleSheet.create({
         borderRadius:5
     },
     ads:{
-        width:200,
+        width:'100%',
         height:200,
-        resizeMode:'contain'
+        resizeMode:'cover'
     },
     expandBlock:{
         borderWidth:1,
@@ -79,19 +80,22 @@ const styles = StyleSheet.create({
         marginRight:10
     },
     com:{
-        backgroundColor:"#5020c8",
+        backgroundColor:"#eee",
         padding:10,
         borderRadius:10,
         width:'70%'
     },
     dot:{
-        backgroundColor:"#5020c8",
+        backgroundColor:"#eee",
         borderRadius:30,
         width:10,
         height:10,
         position:'relative',
         left:5,
         top:2,
+    },
+    des:{
+        textAlign:'justify'
     },
 });
 
