@@ -74,9 +74,7 @@ export default Registration = ({ navigation }) => {
         formData.append('student_type', '')
         formData.append('specialization_type', '')
 
-        dispatch(registrationService(formData, (res, err) => {
-
-            setIsLoading(false)
+        dispatch(registrationService(formData, (res, err) => { b
 
             if (res) {
                 if (res?.data?.result?.isError == 'false') {

@@ -1,0 +1,3 @@
+export const GET_ADS_PENDING = 'GET_ADS_PENDING'
+export const GET_ADS_SUCCESS = 'GET_ADS_SUCCESS'
+export const GET_ADS_FAIL = 'GET_ADS_FAIL'

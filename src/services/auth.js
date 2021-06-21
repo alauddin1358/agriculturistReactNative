@@ -51,14 +51,18 @@ const postLogin = async (email, password) => {
     const url = base_url + '/login'
 
     const body = {
-        email,
-        password,
-    }
-
-    const response = await httpRequest.post(url, false, null, body)
+        'email' : email,
+        'password' : password,
+    };
+    const options = {
+        "Accept": 'application/json',
+        'Content-Type': 'application/json',
+    };
+    const response = await httpRequest.post(url, false, null, body, options)
 
     if (response) {
         await auth.setToken('accessToken', response?.data?.data?.token)
+        console.log('response', response);
         return response?.data
     } else {
         throw Error('login failed')

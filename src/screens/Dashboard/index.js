@@ -1,37 +1,17 @@
 import React, { useEffect, useState } from "react"
-import { Dimensions, SafeAreaView, FlatList, Image, TouchableOpacity } from "react-native"
+import { SafeAreaView, FlatList, TouchableOpacity } from "react-native"
 import { useDispatch } from 'react-redux'
 import Block from '../../components/Block'
 import Text from '../../components/Text'
 import styles from './styles'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import Carousel from 'react-native-snap-carousel'
+import AdsCarousel from '../Carousel'
 import { Navbar } from "../../layouts/Navbar"
 import { fetchPostsService } from "../../services/post"
 import { dateFormat } from "../../utils/common"
 import { Loader } from "../../components/Loader"
 import EmptyData from "../../components/EmptyData"
-
-
-const ADS = [
-    {
-        id: 1,
-        image: require('../../assets/images/download.jpeg')
-    },
-    {
-        id: 2,
-        image: require('../../assets/images/download.jpeg')
-    },
-    {
-        id: 3,
-        image: require('../../assets/images/download.jpeg')
-    },
-    {
-        id: 4,
-        image: require('../../assets/images/download.jpeg')
-    }
-];
 
 
 export default Dashboard = ({ navigation, carousel }) => {
@@ -58,10 +38,10 @@ export default Dashboard = ({ navigation, carousel }) => {
         }))
     }
 
-    const renderPostsItem = ({ item }) => (
+    const renderPostsItem = ({ item, i }) => (
 
-        <Block style={styles.item} margin={[0, 0, 10, 0]} flex={false}>
-            <TouchableOpacity onPress={() => navigation.navigate('details')}>
+        <Block key={i} style={styles.item} margin={[0, 0, 10, 0]} flex={false}>
+            <TouchableOpacity onPress={() => navigation.navigate('details', { post: item })}>
                 <Text bold textColor style={styles.post}>{item.title}</Text>
             </TouchableOpacity>
 
@@ -90,14 +70,6 @@ export default Dashboard = ({ navigation, carousel }) => {
         </Block>
     );
 
-    const renderAdsItem = ({ item }) => {
-
-        return (
-            <Block center style={styles.slide} margin={[30, 0]} flex={false}>
-                <Image style={styles.ads} source={item.image} />
-            </Block>
-        );
-    }
 
     return (
 
@@ -129,15 +101,7 @@ export default Dashboard = ({ navigation, carousel }) => {
                                         <EmptyData text="No Posts Found" />
                                     }
                                     ListFooterComponent={
-                                        <Block flex={false} center>
-                                            <Carousel
-                                                ref={(c) => { carousel = c; }}
-                                                data={ADS}
-                                                renderItem={renderAdsItem}
-                                                sliderWidth={Dimensions.get('window').width}
-                                                itemWidth={Dimensions.get('window').width - 20}
-                                            />
-                                        </Block>
+                                        <AdsCarousel />
                                     }
                                 />
                             </Block>

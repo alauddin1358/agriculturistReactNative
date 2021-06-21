@@ -26,6 +26,9 @@ const styles = StyleSheet.create({
         paddingVertical:5,
         fontSize:15,
     },
+    des: {
+        textAlign:'justify'
+    },
     block: {
         padding: 10,
         marginVertical:10,
@@ -37,7 +40,7 @@ const styles = StyleSheet.create({
     ads:{
         width:'100%',
         height:200,
-        resizeMode:'cover'
+        resizeMode:'contain'
     },
     expandBlock:{
         borderWidth:1,
@@ -52,59 +55,6 @@ const styles = StyleSheet.create({
     extext:{
         color:colors.primaryColor,
         marginRight:10
-    },
-    input:{
-        borderWidth:1,
-        borderColor:colors.borderColor,
-        height:80,
-        width:'80%',
-        borderRadius:5,
-        padding:5,
-        marginVertical:10
-    },
-    input2:{
-        borderWidth:1,
-        borderColor:colors.borderColor,
-        height:60,
-        width:'80%',
-        borderRadius:5,
-        padding:5,
-        marginRight:10,
-    },
-    comments:{
-        backgroundColor:colors.white,
-        elevation:4,
-        padding:10
-    },
-    btn:{
-        backgroundColor:colors.primaryColor,
-        alignSelf:'flex-end',
-        padding:5,
-        borderRadius:5
-    },
-    avatar:{
-        width:40,
-        height:40,
-        borderRadius:100,
-        marginRight:10
-    },
-    com:{
-        backgroundColor:"#eee",
-        padding:10,
-        borderRadius:10,
-        width:'70%'
-    },
-    dot:{
-        backgroundColor:"#eee",
-        borderRadius:30,
-        width:10,
-        height:10,
-        position:'relative',
-        left:5,
-        top:2,
-    },
-    des:{
-        textAlign:'justify'
     },
 });
 
