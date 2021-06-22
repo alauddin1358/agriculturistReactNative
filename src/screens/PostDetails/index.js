@@ -4,28 +4,31 @@ import Block from '../../components/Block'
 import Text from '../../components/Text'
 import styles from './styles'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import AntDesign from 'react-native-vector-icons/AntDesign'
 import AdsCarousel from '../Carousel'
 import { dateFormat } from "../../utils/common"
 import { Navbar } from "../../layouts/Navbar"
-import { postCommentService } from "../../services/comments"
+import { postCommentService, updateCommentService } from "../../services/comments"
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import Comments from './comments'
+import { fetchPostsService } from "../../services/post"
+
 
 
 
 export default PostDetails = (props) => {
-    const dispatch = useDispatch()
 
+    const dispatch = useDispatch()
     const navigation = useNavigation();
 
-    const post = props?.route?.params?.post;
     const postId = props?.route?.params?.post?._id?.$oid;
+    const post = props?.route?.params?.post;
 
     const [commentBody, setCommentBody] = useState('')
     const [comments, setComments] = useState()
+    const [edit, setEdit] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
+
 
     const onSubmitComment = () => {
         dispatch(postCommentService(postId, commentBody, (res, err) => {
@@ -33,8 +36,9 @@ export default PostDetails = (props) => {
             setComments(res?.data?.data ? JSON.parse(res.data.data) : [])
         }))
     }
-    console.log('comment', comments);
-    console.log('post', post);
+
+
+
 
     const renderAdsItem = ({ item, index }) => {
 
@@ -87,7 +91,7 @@ export default PostDetails = (props) => {
                         </TouchableOpacity>
 
                         {post?.comments.length > 0 && post.comments.map((item, i) => {
-                            return <Comments key={i} post={item} postId={post?._id?.$oid} />
+                            return <Comments postId={postId} post={item} key={i} />
                         })}
 
 
