@@ -23,45 +23,57 @@ export default Comments = ({ post, postId }) => {
     const commentId = post?._id?.$oid
 
     const onSubmitComment = () => {
-        dispatch(updateCommentService(postId, commentId, (res, err) => {
+        dispatch(updateCommentService(postId, commentId, commentBody, (res, err) => {
             setIsLoading(false)
-            setComments(res?.data?.data ? JSON.parse(res.data.data) : [])
+            setEdit(false)
+            // setComments(res?.data?.data ? JSON.parse(res.data.data) : [])
+            console.log(res);
         }))
     }
 
-    console.log(comments);
+    
 
     return (
 
         <Block block>
-            <Block row center flex={false} margin={[20, 0, 0]}>
-                {edit ?
-                    <TextInput
-                        style={styles.input2}
-                        multiline={true}
-                        value={commentBody}
-                        onChangeText={(value) => setCommentBody(value)}
-                        placeholder="Enter Your Comment"
-                        numberOfLines={2} /> :
-                    <Block row center flex={false} >
-                        <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
-                        <Block flex={false} style={styles.dot}></Block>
-                        <Block flex={false} style={styles.com}>
-                            <Text textColor>{post?.cmntBody}</Text>
+            <Block  flex={false} margin={[20, 0, 0]}>
+                <Block row center width flex={false}>
+                    {edit ?
+                        <Block row center flex={false} >
+                            <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
+                            <Block flex={false}></Block>
+                            <Block flex={false} >
+                                <TextInput
+                                    style={styles.input2}
+                                    multiline={true}
+                                    value={commentBody}
+                                    onChangeText={(value) => setCommentBody(value)}
+                                    placeholder="Enter Your Comment"
+                                    numberOfLines={2} />
+                            </Block>
                         </Block>
-                    </Block>
-                }
+                        :
+                        <Block row center flex={false} >
+                            <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
+                            <Block flex={false} style={styles.dot}></Block>
+                            <Block flex={false} style={styles.com}>
+                                <Text textColor>{post?.cmntBody}</Text>
+                            </Block>
+                        </Block>
+                    }
 
-                {edit ?
-                    <TouchableOpacity onPress={onSubmitComment} style={styles.btn}>
-                        <Text white>Submit</Text>
-                    </TouchableOpacity> :
                     <Block row center flex={false}>
-                        <TouchableOpacity onPress={() => setEdit(true)}>
+                        <TouchableOpacity onPress={() => setEdit(!edit)}>
                             <AntDesign size={18} style={{ marginRight: 5 }} name="edit" />
                         </TouchableOpacity>
                         <AntDesign size={18} color="red" name="delete" />
                     </Block>
+                </Block>
+
+                {edit &&
+                    <TouchableOpacity onPress={onSubmitComment} style={styles.btn}>
+                        <Text white>Submit</Text>
+                    </TouchableOpacity>
                 }
 
             </Block>

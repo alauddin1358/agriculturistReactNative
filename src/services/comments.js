@@ -102,7 +102,7 @@ export const postCommentService = (id, cmntBody, callback) => async (
  */
 
 
-export const updateCommentService = (postId, commentId, callback) => async (
+export const updateCommentService = (postId, commentId, cmntBody, callback) => async (
     dispatch,
     getState
 ) => {
@@ -111,18 +111,22 @@ export const updateCommentService = (postId, commentId, callback) => async (
     const url = base_url + `/update_comment/${postId}/${commentId}`
     const token = await auth.getToken('accessToken')
 
-    const options = {
-        "Accept": 'application/json',
-        'Content-Type': 'application/json',
-    };
+    const body = {
+        cmntBody 
+    }
+
+    // const options = {
+    //     "Accept": 'application/json',
+    //     'Content-Type': 'application/json',
+    // };
 
     try {
-        const response = await httpRequest.post(
+        const response = await httpRequest.put(
             url,
             true,
             token,
-            false,
-            options
+            body,
+            // options
         )
 
         dispatch({
