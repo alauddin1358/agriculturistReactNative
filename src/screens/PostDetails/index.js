@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { ScrollView, Image, TextInput, TouchableOpacity,ActivityIndicator } from "react-native"
+import { ScrollView, Image, TextInput, TouchableOpacity, ActivityIndicator } from "react-native"
 import Block from '../../components/Block'
 import Text from '../../components/Text'
 import styles from './styles'
@@ -7,12 +7,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import AdsCarousel from '../Carousel'
 import { dateFormat } from "../../utils/common"
 import { Navbar } from "../../layouts/Navbar"
-import { postCommentService, updateCommentService } from "../../services/comments"
+import { postCommentService, updateCommentService, deleteCommentService } from "../../services/comments"
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
-import Comments from './comments'
 import { Loader } from "../../components/Loader"
 import { fetchSinglePost } from "../../services/post"
+import AntDesign from 'react-native-vector-icons/AntDesign'
+
 
 
 
@@ -27,19 +28,21 @@ export default PostDetails = (props) => {
 
     const [post, setPost] = useState({})
     const [commentBody, setCommentBody] = useState('')
-    const [cmntBody, setCmntBody] = useState(post?.cmntBody)
+    const [cmntBody, setCmntBody] = useState('')
     const [isLoading, setIsLoading] = useState(true)
-    const [isBtnLoading, setIsBtnLoading] = useState(true)
+    const [isBtnLoading, setIsBtnLoading] = useState(false)
+    const [isBtn2Loading, setIsBtn2Loading] = useState(false)
     const [commentId, setCommentId] = useState('')
-    const [edit, setEdit] = useState(false)
+    const [edit, setEdit] = useState(null)
 
 
     useEffect(() => {
         getSinglePost()
-    }, [])
+    }, [postId])
 
 
     const onSubmitComment = () => {
+        setIsBtnLoading(true)
         dispatch(postCommentService(postId, commentBody, (res, err) => {
             getSinglePost()
             setIsBtnLoading(false)
@@ -48,6 +51,7 @@ export default PostDetails = (props) => {
 
 
     const getSinglePost = () => {
+        setIsLoading(true)
         dispatch(fetchSinglePost(postId, (res, err) => {
             setPost(res?.data?.data?.post ? JSON.parse(res.data.data.post) : {})
             setIsLoading(false)
@@ -55,17 +59,24 @@ export default PostDetails = (props) => {
     }
 
     const onUpdateComment = () => {
+        setIsBtn2Loading(true)
         dispatch(updateCommentService(postId, commentId, cmntBody, (res, err) => {
-            setEdit(false)
+            setEdit(1)
+            setIsBtn2Loading(false)
             getSinglePost()
         }))
     }
 
-    const onEditPressed = (value) => {
-        setEdit(!edit)
-        setCommentId(value)
+    const onDeleteComment = () => {
+        dispatch(deleteCommentService(postId, commentId, cmntBody))
+        getSinglePost()
     }
 
+    const onPressEdit = (item) => {
+        setEdit(item._id.$oid)
+        setCmntBody(item.cmntBody)
+        setCommentId(item._id.$oid)
+    }
 
     return (
 
@@ -107,11 +118,55 @@ export default PostDetails = (props) => {
                                     placeholder="Enter Your Comment"
                                     numberOfLines={4} />
                                 <TouchableOpacity onPress={onSubmitComment} style={styles.btn}>
-                                    <Text white>Submit</Text>{isBtnLoading && <ActivityIndicator />}
+                                    <Text white>Submit</Text>{isBtnLoading && <ActivityIndicator color="white" />}
                                 </TouchableOpacity>
 
                                 {post && post?.comments.length > 0 && post.comments.map((item, i) => {
-                                    return <Comments post={item} postId={postId} key={i} />
+                                    return <Block block>
+                                        <Block flex={false} margin={[20, 0, 0]}>
+                                            <Block row center width flex={false}>
+                                                {edit == item._id.$oid ?
+                                                    <Block row center flex={false} >
+                                                        <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
+                                                        <Block flex={false}></Block>
+                                                        <Block flex={false} >
+                                                            <TextInput
+                                                                style={styles.input2}
+                                                                multiline={true}
+                                                                value={cmntBody}
+                                                                onChangeText={(value) => setCmntBody(value)}
+                                                                placeholder="Enter Your Comment"
+                                                                numberOfLines={2} />
+                                                        </Block>
+                                                    </Block>
+                                                    :
+                                                    <Block row center flex={false} >
+                                                        <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
+                                                        <Block flex={false} style={styles.dot}></Block>
+                                                        <Block flex={false} style={styles.com}>
+                                                            <Text textColor>{item?.cmntBody}</Text>
+                                                        </Block>
+                                                    </Block>
+                                                }
+
+                                                <Block row center flex={false}>
+                                                    <TouchableOpacity onPress={() => onPressEdit(item)}>
+                                                        <AntDesign size={18} style={{ marginRight: 5 }} name="edit" />
+                                                    </TouchableOpacity>
+                                                    <TouchableOpacity onPress={onDeleteComment}>
+                                                        <AntDesign size={18} color="red" name="delete" />
+                                                    </TouchableOpacity>
+                                                </Block>
+                                            </Block>
+
+                                            {edit == item._id.$oid &&
+                                                <TouchableOpacity onPress={onUpdateComment} style={styles.btn}>
+                                                    <Text white>Submit</Text>{isBtn2Loading && <ActivityIndicator color="white" />}
+                                                </TouchableOpacity>
+                                            }
+
+                                        </Block>
+                                    </Block>
                                 })}
 
                             </Block>

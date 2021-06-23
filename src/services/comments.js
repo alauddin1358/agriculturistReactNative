@@ -144,3 +144,41 @@ export const updateCommentService = (postId, commentId, cmntBody, callback) => a
         callback(null, error.response)
     }
 }
+
+
+/**
+ * Method: POST
+ */
+
+
+export const deleteCommentService = (postId, commentId) => async (
+    dispatch,
+    getState
+) => {
+    dispatch({ type: POST_COMMENT_PENDING })
+
+    const url = base_url + `/delete_comment/${postId}/${commentId}`
+    const token = await auth.getToken('accessToken')
+
+    try {
+        const response = await httpRequest.delete(
+            url,
+            true,
+            token,
+        )
+
+        dispatch({
+            type: POST_COMMENT_SUCCESS,
+            payload: response,
+        })
+
+        // callback && callback(response, null)
+    } catch (error) {
+        dispatch({
+            type: POST_COMMENT_FAIL,
+            payload: error.response,
+        })
+
+        // callback && callback(null, error.response)
+    }
+}
