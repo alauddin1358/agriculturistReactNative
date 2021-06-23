@@ -46,3 +46,43 @@ export const fetchPostsService = (callback) => async (
         callback(null, error.response)
     }
 }
+
+
+/**
+ * Method: GET
+ */
+
+
+export const fetchSinglePost = (id, callback) => async (
+    dispatch,
+    getState
+) => {
+    dispatch({ type: GET_POSTS_PENDING })
+
+    const url = base_url + `/get_post/${id}`
+    const token = await auth.getToken('accessToken')
+
+    try {
+        const response = await httpRequest.get(
+            url,
+            true,
+            token,
+            false,
+            null
+        )
+
+        dispatch({
+            type: GET_POSTS_SUCCESS,
+            payload: response,
+        })
+
+        callback(response, null)
+    } catch (error) {
+        dispatch({
+            type: GET_POSTS_FAIL,
+            payload: error.response,
+        })
+        console.log(error);
+        callback(null, error.response)
+    }
+}

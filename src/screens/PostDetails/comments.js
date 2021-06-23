@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 
 
 export default Comments = ({ post, postId }) => {
+
     const dispatch = useDispatch()
 
     const [edit, setEdit] = useState(false)
@@ -31,12 +32,12 @@ export default Comments = ({ post, postId }) => {
         }))
     }
 
-    
+
 
     return (
 
         <Block block>
-            <Block  flex={false} margin={[20, 0, 0]}>
+            <Block flex={false} margin={[20, 0, 0]}>
                 <Block row center width flex={false}>
                     {edit ?
                         <Block row center flex={false} >
