@@ -39,15 +39,14 @@ export default AdsCarousel = ({ navigation, carousel }) => {
     return (
 
         <Block flex={false} center middle>
-            {
-                isLoading ? <Loader /> :
-                    <Carousel
-                        ref={(c) => { carousel = c; }}
-                        data={ads}
-                        renderItem={renderAdsItem}
-                        sliderWidth={Dimensions.get('window').width}
-                        itemWidth={Dimensions.get('window').width - 20}
-                    />}
+
+            <Carousel
+                ref={(c) => { carousel = c; }}
+                data={ads}
+                renderItem={renderAdsItem}
+                sliderWidth={Dimensions.get('window').width}
+                itemWidth={Dimensions.get('window').width - 20}
+            />
         </Block>
 
     );

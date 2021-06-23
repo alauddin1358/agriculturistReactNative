@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { ScrollView, Image, TextInput, TouchableOpacity, ActivityIndicator } from "react-native"
+import { ScrollView, Image, TextInput, TouchableOpacity, ActivityIndicator, Modal } from "react-native"
 import Block from '../../components/Block'
 import Text from '../../components/Text'
 import styles from './styles'
@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { Loader } from "../../components/Loader"
 import { fetchSinglePost } from "../../services/post"
+import { PrimaryButton } from "../../components/Button"
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 
@@ -34,6 +35,7 @@ export default PostDetails = (props) => {
     const [isBtn2Loading, setIsBtn2Loading] = useState(false)
     const [commentId, setCommentId] = useState('')
     const [edit, setEdit] = useState(null)
+    const [modalVisible, setModalVisible] = useState(false)
 
 
     useEffect(() => {
@@ -68,14 +70,21 @@ export default PostDetails = (props) => {
     }
 
     const onDeleteComment = () => {
-        dispatch(deleteCommentService(postId, commentId, cmntBody))
-        getSinglePost()
+        setModalVisible(false)
+        dispatch(deleteCommentService(postId, commentId, (res, err) => {
+            getSinglePost()
+        }))
     }
 
     const onPressEdit = (item) => {
         setEdit(item._id.$oid)
         setCmntBody(item.cmntBody)
         setCommentId(item._id.$oid)
+    }
+
+    const onPressDelete = (item) => {
+        setCommentId(item._id.$oid)
+        setModalVisible(true)
     }
 
     return (
@@ -85,7 +94,7 @@ export default PostDetails = (props) => {
                 onPressProfile={() => navigation.navigate('profile')}
                 onPressDrawer={() => navigation.openDrawer()}
             />
-            <ScrollView block style={styles.container}>
+            <ScrollView block style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
                 {
                     isLoading ? <Loader /> :
                         <Block style={styles.block} flex={false}>
@@ -116,15 +125,16 @@ export default PostDetails = (props) => {
                                     value={commentBody}
                                     onChangeText={(value) => setCommentBody(value)}
                                     placeholder="Enter Your Comment"
+                                    placeholderTextColor="#d2d2d2"
                                     numberOfLines={4} />
                                 <TouchableOpacity onPress={onSubmitComment} style={styles.btn}>
-                                    <Text white>Submit</Text>{isBtnLoading && <ActivityIndicator color="white" />}
+                                    <Text white style={{ marginRight: 5 }}>Submit</Text>{isBtnLoading && <ActivityIndicator color="white" />}
                                 </TouchableOpacity>
 
                                 {post && post?.comments.length > 0 && post.comments.map((item, i) => {
-                                    return <Block block>
+                                    return <Block block key={i}>
                                         <Block flex={false} margin={[20, 0, 0]}>
-                                            <Block row center width flex={false}>
+                                            <Block width flex={false}>
                                                 {edit == item._id.$oid ?
                                                     <Block row center flex={false} >
                                                         <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
@@ -149,12 +159,14 @@ export default PostDetails = (props) => {
                                                     </Block>
                                                 }
 
-                                                <Block row center flex={false}>
-                                                    <TouchableOpacity onPress={() => onPressEdit(item)}>
+                                                <Block row bottom center flex={false} padding={[10]}>
+                                                    <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10 }} onPress={() => onPressEdit(item)}>
                                                         <AntDesign size={18} style={{ marginRight: 5 }} name="edit" />
+                                                        <Text>Edit</Text>
                                                     </TouchableOpacity>
-                                                    <TouchableOpacity onPress={onDeleteComment}>
-                                                        <AntDesign size={18} color="red" name="delete" />
+                                                    <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => onPressDelete(item)}>
+                                                        <AntDesign size={18} style={{ marginRight: 5 }} color="red" name="delete" />
+                                                        <Text>Delete</Text>
                                                     </TouchableOpacity>
                                                 </Block>
                                             </Block>
@@ -168,6 +180,31 @@ export default PostDetails = (props) => {
                                         </Block>
                                     </Block>
                                 })}
+
+                                <Modal
+                                    animationType="fade"
+                                    transparent={true}
+                                    visible={modalVisible}
+                                    onRequestClose={() => {
+                                        setModalVisible(!modalVisible);
+                                    }}
+                                >
+                                    <Block style={styles.centeredView} flex={1}>
+                                        <Block style={styles.modalView} center flex={false}>
+                                            <Text style={styles.modalText}>Want to delete comment!</Text>
+                                            <Block flex={false} row center>
+                                                <TouchableOpacity style={styles.btn3} onPress={() => {
+                                                    setModalVisible(false);
+                                                }}>
+                                                    <Text white>Cancel</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity style={styles.btn2} onPress={onDeleteComment}>
+                                                    <Text white>Confirm</Text>
+                                                </TouchableOpacity>
+                                            </Block>
+                                        </Block>
+                                    </Block>
+                                </Modal>
 
                             </Block>
                             <AdsCarousel />

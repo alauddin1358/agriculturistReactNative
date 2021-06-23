@@ -151,7 +151,7 @@ export const updateCommentService = (postId, commentId, cmntBody, callback) => a
  */
 
 
-export const deleteCommentService = (postId, commentId) => async (
+export const deleteCommentService = (postId, commentId, callback) => async (
     dispatch,
     getState
 ) => {
@@ -171,14 +171,12 @@ export const deleteCommentService = (postId, commentId) => async (
             type: POST_COMMENT_SUCCESS,
             payload: response,
         })
-
-        // callback && callback(response, null)
+        callback && callback(response, null)
     } catch (error) {
         dispatch({
             type: POST_COMMENT_FAIL,
             payload: error.response,
         })
-
-        // callback && callback(null, error.response)
+        callback && callback(null, error.response)
     }
 }

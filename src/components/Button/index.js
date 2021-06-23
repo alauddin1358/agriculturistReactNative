@@ -5,10 +5,10 @@ import Text from '../Text'
 import styles from './styles'
 
 
-export const PrimaryButton = ({ onPress, btnText, spinnerColor, spinnerSize, loading }) => {
+export const PrimaryButton = ({ onPress, btnStyle, btnText, spinnerColor, spinnerSize, loading }) => {
 
     return (
-        <TouchableOpacity disabled={loading} onPress={onPress} style={styles.btn}>
+        <TouchableOpacity disabled={loading} onPress={onPress} style={[styles.btn, btnStyle]}>
             <Text
                 center
                 bold
