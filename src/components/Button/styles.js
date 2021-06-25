@@ -12,6 +12,16 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         width:'100%'
     },
+    secondbtn: {
+        flexDirection: 'row',
+        backgroundColor: colors.primaryColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: colors.white,
+        borderRadius: 5,
+        paddingVertical: 8,
+        width:'100%'
+    },
     spinner: {
         marginLeft: 10
     },

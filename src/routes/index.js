@@ -12,6 +12,7 @@ import Dashboard from '../screens/Dashboard'
 import Profile from '../screens/Profile'
 import Friends from '../screens/Friends'
 import PostDetails from '../screens/PostDetails'
+import AddPost from '../screens/AddPost'
 
 
 const Drawer = createDrawerNavigator();
@@ -23,13 +24,14 @@ const Routes = props => {
     return (
 
 
-        <Drawer.Navigator drawerContent={props => <Sidebar {...props} />} drawerStyle={{ width: 150 }} initialRouteName="login">
+        <Drawer.Navigator drawerContent={props => <Sidebar {...props} />} drawerStyle={{ width: 150 }} initialRouteName="addPost">
             <Drawer.Screen options={{ swipeEnabled: false }} name="login" component={LoginScreen} />
             <Drawer.Screen options={{ swipeEnabled: false }} name="regi" component={Registration} />
             <Drawer.Screen name="profile" component={Profile} />
             <Drawer.Screen name="dashboard" component={Dashboard} />
             <Drawer.Screen name="friends" component={Friends} />
             <Drawer.Screen name="details" component={PostDetails} />
+            <Drawer.Screen name="addPost" component={AddPost} />
         </Drawer.Navigator>
 
     );

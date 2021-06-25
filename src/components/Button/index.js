@@ -38,3 +38,36 @@ PrimaryButton.defaultProps = {
     spinnerColor: '#000',
     spinnerSize: 'small',
 }
+
+export const SecondaryButton = ({ onPress, btnStyle, btnText, spinnerColor, spinnerSize, loading }) => {
+
+    return (
+        <TouchableOpacity disabled={loading} onPress={onPress} style={[styles.secondbtn, btnStyle]}>
+            <Text
+                center
+                size={16}
+                white
+            >
+                {btnText}
+            </Text>
+
+            {
+                loading &&
+                <ActivityIndicator
+                    color={spinnerColor}
+                    size={spinnerSize}
+                    style={styles.spinner} />
+            }
+        </TouchableOpacity>
+    )
+}
+
+SecondaryButton.propTypes = {
+    btnText: PropTypes.string,
+    loading: PropTypes.bool,
+}
+
+SecondaryButton.defaultProps = {
+    spinnerColor: '#fff',
+    spinnerSize: 'small',
+}
