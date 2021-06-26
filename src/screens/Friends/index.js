@@ -1,10 +1,18 @@
-import React from "react"
-import { Dimensions, ScrollView, Image, TouchableOpacity } from "react-native"
+import React, { useEffect, useState } from "react"
+import {
+    Dimensions, ScrollView, Image, TouchableOpacity, FlatList, ActivityIndicator
+} from "react-native"
+import Toast from 'react-native-simple-toast'
 import Block from '../../components/Block'
 import Text from '../../components/Text'
 import styles from './styles'
 import Carousel from 'react-native-snap-carousel'
 import { Navbar } from "../../layouts/Navbar"
+import { useDispatch } from "react-redux"
+import { getUsersService } from "../../services/user"
+import { Loader } from "../../components/Loader"
+import { addFriendService } from "../../services/friend"
+import { colors } from "../../styles/theme"
 
 
 
@@ -29,7 +37,26 @@ const ADS = [
 
 
 export default Friends = ({ navigation, _carousel }) => {
+    const dispatch = useDispatch()
+    const [peopleMayKnowList, setPeopleMayKnowList] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [addFriendLoading, setAddFriendLoading] = useState(false)
 
+    console.log('peopleMayKnowList', peopleMayKnowList);
+
+    useEffect(() => {
+        getPeopleYouMayKnow()
+    }, [])
+
+    const getPeopleYouMayKnow = () => {
+        setIsLoading(true)
+        dispatch(getUsersService((res, err) => {
+            setIsLoading(false)
+            if (res) {
+                setPeopleMayKnowList(res?.data?.data ? JSON.parse(res.data.data) : [])
+            }
+        }))
+    }
 
     const renderAdsItem = ({ item, index }) => {
 
@@ -37,7 +64,55 @@ export default Friends = ({ navigation, _carousel }) => {
             <Block style={styles.slide} margin={[30, 0]}>
                 <Image style={styles.ads} source={item.image} />
             </Block>
-        );
+        )
+    }
+
+    const renderPeopleYouMayKnow = ({ item, index }) => (
+        <Block row center style={styles.styleBlock} flex={false}>
+            <Block flex={false} margin={[0, 20, 0, 0]}>
+                <Image
+                    style={styles.avatar}
+                    source={item.image ? { uri: item.image } : require('../../assets/images/ala.jpeg')} />
+            </Block>
+            <Block flex={false}>
+                <Text bold size={19} textColor>
+                    {item.name}
+                </Text>
+                <TouchableOpacity
+                    style={
+                        [styles.btn,
+                        {
+                            backgroundColor: item.isFrndReqAccepted ? colors.gray3 : colors.primaryColor,
+                        }]
+                    }
+                    onPress={() => addFriend(item._id.$oid)}>
+                    <>
+                        <Text
+                            size={14}
+                            color={item.isFrndReqAccepted ? colors.black : colors.white}>
+                            {item.isFrndReqAccepted ? 'Cancel Request' : 'Add Friend'}
+                        </Text>
+
+                        {
+                            addFriendLoading && <ActivityIndicator
+                                style={{ marginLeft: 10 }}
+                                color={colors.white}
+                                size='small' />
+                        }
+                    </>
+                </TouchableOpacity>
+            </Block>
+        </Block>
+    )
+
+    const addFriend = id => {
+        dispatch(addFriendService(id, (res, err) => {
+            if (res?.data?.result) {
+                Toast.show(res?.data?.result?.message, Toast.LONG)
+                getPeopleYouMayKnow()
+            }
+
+        }))
     }
 
     return (
@@ -55,53 +130,18 @@ export default Friends = ({ navigation, _carousel }) => {
                     </Block>
                     <Block flex={false} style={styles.postBlock2}>
                         <Text style={styles.title}>People may you know</Text>
-                        <Block row center style={styles.styleBlock} flex={false}>
-                            <Block flex={false} margin={[0, 20, 0, 0]}>
-                                <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
-                            </Block>
-                            <Block width flex={false}>
-                                <Text bold size={19} textColor>Md Alauddin Ali</Text>
-                                <TouchableOpacity style={styles.btn}>
-                                    <Text size={14} white>Add Friend</Text>
-                                </TouchableOpacity>
-                            </Block>
-                        </Block>
-                        <Block row center style={styles.styleBlock} flex={false}>
-                            <Block flex={false} margin={[0, 20, 0, 0]}>
-                                <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
-                            </Block>
-                            <Block width flex={false}>
-                                <Text bold size={19} textColor>Md Alauddin Ali</Text>
-                                <TouchableOpacity style={styles.btn}>
-                                    <Text size={14} white>Add Friend</Text>
-                                </TouchableOpacity>
-                            </Block>
-                        </Block>
-                        <Block row center style={styles.styleBlock} flex={false}>
-                            <Block flex={false} margin={[0, 20, 0, 0]}>
-                                <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
-                            </Block>
-                            <Block width flex={false}>
-                                <Text bold size={19} textColor>Md Alauddin Ali</Text>
-                                <TouchableOpacity style={styles.btn}>
-                                    <Text size={14} white>Add Friend</Text>
-                                </TouchableOpacity>
-                            </Block>
-                        </Block>
-                        <Block row center style={styles.styleBlock} flex={false}>
-                            <Block flex={false} margin={[0, 20, 0, 0]}>
-                                <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
-                            </Block>
-                            <Block width flex={false}>
-                                <Text bold size={19} textColor>Md Alauddin Ali</Text>
-                                <TouchableOpacity style={styles.btn}>
-                                    <Text size={14} white>Add Friend</Text>
-                                </TouchableOpacity>
-                            </Block>
-                        </Block>
 
-
+                        {
+                            isLoading ? <Loader /> :
+                                <FlatList
+                                    showsVerticalScrollIndicator={false}
+                                    data={peopleMayKnowList}
+                                    renderItem={renderPeopleYouMayKnow}
+                                    keyExtractor={item => item._id.$oid.toString()}
+                                />
+                        }
                     </Block>
+
                     <Block center flex={false}>
                         <Carousel
                             ref={(c) => { _carousel = c; }}

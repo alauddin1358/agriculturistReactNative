@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#f7f8fb',
         padding: 10,
-        flex:1
+        flex: 1
     },
     postBlock: {
         backgroundColor: '#fff',
@@ -23,35 +23,36 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     post: {
-        paddingVertical:5,
-        fontSize:15
+        paddingVertical: 5,
+        fontSize: 15
     },
-  
-    ads:{
-        width:'100%',
-        height:200,
-        resizeMode:'cover'
+
+    ads: {
+        width: '100%',
+        height: 200,
+        resizeMode: 'cover'
     },
-    styleBlock:{
-        backgroundColor:colors.white,
-        padding:10,
-        margin:5,
-        elevation:4,
-        marginTop:20
+    styleBlock: {
+        backgroundColor: colors.white,
+        padding: 10,
+        margin: 5,
+        elevation: 4,
+        marginTop: 20
     },
-    avatar:{
-        width:100,
-        height:100,
-        borderRadius:100,
-        marginBottom:10
+    avatar: {
+        width: 100,
+        height: 100,
+        borderRadius: 100,
+        marginBottom: 10
     },
-    btn:{
-        backgroundColor:colors.primaryColor,
-        width:'35%',
-        alignItems:'center',
-        padding:5,
-        borderRadius:5,
-        marginTop:15
+    btn: {
+        backgroundColor: colors.primaryColor,
+        paddingHorizontal: 15,
+        paddingVertical: 5,
+        borderRadius: 5,
+        marginTop: 15,
+        flexDirection: 'row',
+        alignItems: 'center'
     },
 });
 
