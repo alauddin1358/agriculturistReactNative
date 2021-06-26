@@ -2,7 +2,9 @@ import { Config } from '../config/index'
 import httpRequest from '../utils/request'
 import auth from '../utils/auth'
 import {
-    GET_POSTS_PENDING, GET_POSTS_SUCCESS, GET_POSTS_FAIL
+    GET_POSTS_PENDING, GET_POSTS_SUCCESS, GET_POSTS_FAIL,
+    GET_POST_DETAILS_PENDING, GET_POST_DETAILS_SUCCESS, GET_POST_DETAILS_FAIL,
+    ADD_POST_PENDING, ADD_POST_SUCCESS, ADD_POST_FAIL,
 } from '../constant/postConstant'
 
 const base_url = Config.base_url
@@ -57,7 +59,7 @@ export const fetchSinglePost = (id, callback) => async (
     dispatch,
     getState
 ) => {
-    dispatch({ type: GET_POSTS_PENDING })
+    dispatch({ type: GET_POST_DETAILS_PENDING })
 
     const url = base_url + `/get_post/${id}`
     const token = await auth.getToken('accessToken')
@@ -72,17 +74,56 @@ export const fetchSinglePost = (id, callback) => async (
         )
 
         dispatch({
-            type: GET_POSTS_SUCCESS,
+            type: GET_POST_DETAILS_SUCCESS,
             payload: response,
         })
 
         callback(response, null)
     } catch (error) {
         dispatch({
-            type: GET_POSTS_FAIL,
+            type: GET_POST_DETAILS_FAIL,
             payload: error.response,
         })
         console.log(error);
+        callback(null, error.response)
+    }
+}
+
+
+/**
+ * Method: POST
+ */
+
+
+export const addPostService = (formData, callback) => async (
+    dispatch,
+    getState
+) => {
+    dispatch({ type: ADD_POST_PENDING })
+
+    const url = base_url + '/posts/null'
+    const token = await auth.getToken('accessToken')
+
+    try {
+        const response = await httpRequest.post(
+            url,
+            true,
+            token,
+            formData,
+        )
+
+        dispatch({
+            type: ADD_POST_SUCCESS,
+            payload: response,
+        })
+
+        callback(response, null)
+    } catch (error) {
+        dispatch({
+            type: ADD_POST_FAIL,
+            payload: error.response,
+        })
+
         callback(null, error.response)
     }
 }
