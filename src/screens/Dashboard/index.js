@@ -6,6 +6,7 @@ import Text from '../../components/Text'
 import styles from './styles'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import AdsCarousel from '../Carousel'
 import { Navbar } from "../../layouts/Navbar"
 import { fetchPostsService } from "../../services/post"
@@ -55,10 +56,18 @@ export default Dashboard = ({ navigation, carousel }) => {
                     <MaterialIcons style={{ marginRight: 5 }} name="person" />
                     <Text textColor size={12}>Author: {item?.user?.status || ''}</Text>
                 </Block>
-                <Block flex={false} row center>
+                <TouchableOpacity style={{flexDirection:'row', alignItems:'center'}}>
                     <FontAwesome style={{ marginRight: 5 }} name="comments" />
                     <Text textColor size={12}>Comment</Text>
-                </Block>
+                </TouchableOpacity>
+                <TouchableOpacity style={{flexDirection:'row', alignItems:'center'}}>
+                    <AntDesign style={{ marginRight: 5 }} name="edit" />
+                    <Text textColor size={12}>Edit</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{flexDirection:'row', alignItems:'center'}}>
+                    <AntDesign style={{ marginRight: 5 }} name="delete" />
+                    <Text textColor size={12}>Delete</Text>
+                </TouchableOpacity>
             </Block>
 
             <TouchableOpacity onPress={expandClick}>

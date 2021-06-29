@@ -23,6 +23,12 @@ export default Sidebar = ({ navigation }) => {
         setFiles(false)
         setFriends(false)
     }
+    const addPost = () => {
+        navigation.navigate('addPost')
+        setPost(false)
+        setFiles(false)
+        setFriends(false)
+    }
 
     const onPressFriends = () => {
         setPost(false)
@@ -60,7 +66,7 @@ export default Sidebar = ({ navigation }) => {
                 </TouchableOpacity>
                 {posts &&
                     <Block flex={false} style={styles.posts}>
-                        <TouchableOpacity style={{ padding: 5 }}>
+                        <TouchableOpacity onPress={addPost} style={{ padding: 5 }}>
                             <Text textColor>Add Posts</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{ padding: 5 }}>
