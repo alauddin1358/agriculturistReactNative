@@ -18,27 +18,8 @@ import AdsCarousel from '../Carousel'
 
 
 
-export default Friends = ({ navigation, _carousel }) => {
-    const dispatch = useDispatch()
-    const [peopleMayKnowList, setPeopleMayKnowList] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    const [addFriendLoading, setAddFriendLoading] = useState(false)
-
-    console.log('peopleMayKnowList', peopleMayKnowList);
-
-    useEffect(() => {
-        getPeopleYouMayKnow()
-    }, [])
-
-    const getPeopleYouMayKnow = () => {
-        setIsLoading(true)
-        dispatch(getUsersService((res, err) => {
-            setIsLoading(false)
-            if (res) {
-                setPeopleMayKnowList(res?.data?.data ? JSON.parse(res.data.data) : [])
-            }
-        }))
-    }
+export default FriendsList = ({ navigation, _carousel }) => {
+  
 
 
 

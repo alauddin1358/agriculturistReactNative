@@ -14,6 +14,7 @@ import Friends from '../screens/Friends'
 import PostDetails from '../screens/PostDetails'
 import AddPost from '../screens/AddPost'
 import AddFile from '../screens/AddFiles'
+import FriendsList from '../screens/FriendsList'
 
 
 const Drawer = createDrawerNavigator();
@@ -25,7 +26,7 @@ const Routes = props => {
     return (
 
 
-        <Drawer.Navigator drawerContent={props => <Sidebar {...props} />} drawerStyle={{ width: 150 }} initialRouteName="addFile">
+        <Drawer.Navigator drawerContent={props => <Sidebar {...props} />} drawerStyle={{ width: 150 }} initialRouteName="login">
             <Drawer.Screen options={{ swipeEnabled: false }} name="login" component={LoginScreen} />
             <Drawer.Screen options={{ swipeEnabled: false }} name="regi" component={Registration} />
             <Drawer.Screen name="profile" component={Profile} />
@@ -34,6 +35,7 @@ const Routes = props => {
             <Drawer.Screen name="details" component={PostDetails} />
             <Drawer.Screen name="addPost" component={AddPost} />
             <Drawer.Screen name="addFile" component={AddFile} />
+            <Drawer.Screen name="friendList" component={FriendsList} />
         </Drawer.Navigator>
 
     );
