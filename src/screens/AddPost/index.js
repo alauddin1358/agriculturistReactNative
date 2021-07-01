@@ -41,6 +41,13 @@ export default AddPost = props => {
             const formData = new FormData()
             formData.append('title', title)
             formData.append('body', body)
+            formData.append('user', {
+                'userId': singlePost._id.$oid,
+                'status': singlePost.user.status,
+                'image': singlePost.user.image
+            })
+            formData.append('comments', [])
+            formData.append('date', new Date())
 
             dispatch(addPostService(formData, (res, err) => {
                 setaddPostLoading(false)
@@ -56,9 +63,28 @@ export default AddPost = props => {
         if (checkPostValidation(title, body)) {
             setaddPostLoading(true)
 
-            const formData = new FormData()
-            formData.append('title', title)
-            formData.append('body', body)
+            const formData = {
+                title,
+                body,
+                user: {
+                    'userId': singlePost._id.$oid,
+                    'status': singlePost.user.status,
+                    'image': singlePost.user.image
+                },
+                comments: [],
+                date: new Date()
+            }
+
+            // const formData = new FormData()
+            // formData.append('title', title)
+            // formData.append('body', body)
+            // formData.append('user', {
+            //     'userId': singlePost._id.$oid,
+            //     'status': singlePost.user.status,
+            //     'image': singlePost.user.image
+            // })
+            // formData.append('comments', [])
+            // formData.append('date', new Date())
 
             dispatch(updatePostService(singlePost._id.$oid, formData, (res, err) => {
                 setaddPostLoading(false)

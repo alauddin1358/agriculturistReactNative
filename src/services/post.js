@@ -160,6 +160,7 @@ export const updatePostService = (postId, formData, callback) => async (
 
         callback(response, null)
     } catch (error) {
+        console.log('error', error);
         dispatch({
             type: UPDATE_POST_FAIL,
             payload: error.response,
