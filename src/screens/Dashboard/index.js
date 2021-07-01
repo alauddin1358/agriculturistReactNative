@@ -91,11 +91,11 @@ export default Dashboard = ({ navigation, carousel }) => {
     return (
 
         <Block block>
-            <Navbar
-                onPressProfile={() => navigation.navigate('profile')}
-                onPressDrawer={() => navigation.openDrawer()}
-            />
             <SafeAreaView style={styles.container} >
+                <Navbar
+                    onPressProfile={() => navigation.navigate('profile')}
+                    onPressDrawer={() => navigation.openDrawer()}
+                />
                 {
                     isLoading ? <Loader /> :
                         <>

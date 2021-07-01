@@ -46,6 +46,7 @@ const Navbar = ({ onPressDrawer, onPressProfile }) => {
                     </TouchableOpacity>
                 </Block>
             </Block>
+
             {application && <Block flex={false} style={styles.expandAppli}>
                 <TouchableOpacity style={{ paddingVertical: 5 }}>
                     <Text textColor>Pages</Text>
@@ -54,6 +55,7 @@ const Navbar = ({ onPressDrawer, onPressProfile }) => {
                     <Text textColor>Groups</Text>
                 </TouchableOpacity>
             </Block>}
+
             {search && <Block flex={false} style={styles.expandSea}>
                 <Block row center flex={false} style={styles.input}>
                     <TextInput
@@ -63,13 +65,12 @@ const Navbar = ({ onPressDrawer, onPressProfile }) => {
                     <FontAwesome color={colors.white} style={styles.searchBox} size={17} name="search" />
                 </Block>
             </Block>}
+
             {profile && <Block flex={false} style={styles.expandSea}>
-                <Block flex={false}>
-                    <TouchableOpacity style={styles.devide} onPress={onPressProfile}>
-                        <Ionicons name="person-circle-sharp" color={colors.borderColor} style={{ marginRight: 5 }} size={18} />
-                        <Text textColor>Profile</Text>
-                    </TouchableOpacity>
-                </Block>
+                <TouchableOpacity style={styles.devide} onPress={onPressProfile}>
+                    <Ionicons name="person-circle-sharp" color={colors.borderColor} style={{ marginRight: 5 }} size={18} />
+                    <Text textColor>Profile</Text>
+                </TouchableOpacity>
                 <TouchableOpacity style={{ paddingVertical: 5, flexDirection: 'row' }}>
                     <AntDesign name="logout" color={colors.borderColor} style={{ marginRight: 5 }} size={18} />
                     <Text textColor>Logout</Text>
