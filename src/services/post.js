@@ -5,6 +5,7 @@ import {
     GET_POSTS_PENDING, GET_POSTS_SUCCESS, GET_POSTS_FAIL,
     GET_POST_DETAILS_PENDING, GET_POST_DETAILS_SUCCESS, GET_POST_DETAILS_FAIL,
     ADD_POST_PENDING, ADD_POST_SUCCESS, ADD_POST_FAIL,
+    DELETE_POST_PENDING, DELETE_POST_SUCCESS, DELETE_POST_FAIL,
 } from '../constant/postConstant'
 
 const base_url = Config.base_url
@@ -121,6 +122,43 @@ export const addPostService = (formData, callback) => async (
     } catch (error) {
         dispatch({
             type: ADD_POST_FAIL,
+            payload: error.response,
+        })
+
+        callback(null, error.response)
+    }
+}
+
+/**
+ * Method: DELETE
+ */
+
+
+export const deletePostService = (postId, callback) => async (
+    dispatch,
+    getState
+) => {
+    dispatch({ type: DELETE_POST_PENDING })
+
+    const url = base_url + `/delete_post/${postId}`
+    const token = await auth.getToken('accessToken')
+
+    try {
+        const response = await httpRequest.delete(
+            url,
+            true,
+            token,
+        )
+
+        dispatch({
+            type: DELETE_POST_SUCCESS,
+            payload: response,
+        })
+
+        callback(response, null)
+    } catch (error) {
+        dispatch({
+            type: DELETE_POST_FAIL,
             payload: error.response,
         })
 
