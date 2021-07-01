@@ -5,6 +5,7 @@ import {
     GET_POSTS_PENDING, GET_POSTS_SUCCESS, GET_POSTS_FAIL,
     GET_POST_DETAILS_PENDING, GET_POST_DETAILS_SUCCESS, GET_POST_DETAILS_FAIL,
     ADD_POST_PENDING, ADD_POST_SUCCESS, ADD_POST_FAIL,
+    UPDATE_POST_PENDING, UPDATE_POST_SUCCESS, UPDATE_POST_FAIL,
     DELETE_POST_PENDING, DELETE_POST_SUCCESS, DELETE_POST_FAIL,
 } from '../constant/postConstant'
 
@@ -122,6 +123,45 @@ export const addPostService = (formData, callback) => async (
     } catch (error) {
         dispatch({
             type: ADD_POST_FAIL,
+            payload: error.response,
+        })
+
+        callback(null, error.response)
+    }
+}
+
+
+/**
+ * Method: Update
+ */
+
+
+export const updatePostService = (postId, formData, callback) => async (
+    dispatch,
+    getState
+) => {
+    dispatch({ type: UPDATE_POST_PENDING })
+
+    const url = base_url + `/posts/${postId}`
+    const token = await auth.getToken('accessToken')
+
+    try {
+        const response = await httpRequest.post(
+            url,
+            true,
+            token,
+            formData,
+        )
+
+        dispatch({
+            type: UPDATE_POST_SUCCESS,
+            payload: response,
+        })
+
+        callback(response, null)
+    } catch (error) {
+        dispatch({
+            type: UPDATE_POST_FAIL,
             payload: error.response,
         })
 

@@ -68,7 +68,7 @@ export default Dashboard = ({ navigation, carousel }) => {
                     <FontAwesome style={{ marginRight: 5 }} name="comments" />
                     <Text textColor size={12}>Comment</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => navigation.navigate('addPost', { post: item })}>
                     <AntDesign style={{ marginRight: 5 }} name="edit" />
                     <Text textColor size={12}>Edit</Text>
                 </TouchableOpacity>

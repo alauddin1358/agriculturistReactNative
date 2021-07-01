@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { ScrollView, TextInput } from "react-native"
 import Toast from 'react-native-simple-toast'
 import Block from '../../components/Block'
@@ -7,16 +7,32 @@ import styles from './styles'
 import { Navbar } from "../../layouts/Navbar"
 import AdsCarousel from '../Carousel'
 import { SecondaryButton } from '../../components/Button'
-import { addPostService } from "../../services/post"
+import { addPostService, updatePostService } from "../../services/post"
 import { useDispatch } from "react-redux"
 import checkPostValidation from "./validate"
+import { useNavigation } from "@react-navigation/native"
 
 
-export default AddPost = ({ navigation }) => {
+export default AddPost = props => {
     const dispatch = useDispatch()
+    const navigation = useNavigation()
+
+    const singlePost = props?.route?.params?.post
+
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
     const [addPostLoading, setaddPostLoading] = useState(false)
+
+    useEffect(() => {
+        setPostData()
+    }, [])
+
+    const setPostData = () => {
+        if (singlePost) {
+            setTitle(singlePost.title)
+            setBody(singlePost.body)
+        }
+    }
 
     const addPost = () => {
         if (checkPostValidation(title, body)) {
@@ -27,6 +43,24 @@ export default AddPost = ({ navigation }) => {
             formData.append('body', body)
 
             dispatch(addPostService(formData, (res, err) => {
+                setaddPostLoading(false)
+                if (res?.data?.result) {
+                    Toast.show(res?.data?.result?.message, Toast.LONG)
+                    navigation.navigate('dashboard')
+                }
+            }))
+        }
+    }
+
+    const updatePost = () => {
+        if (checkPostValidation(title, body)) {
+            setaddPostLoading(true)
+
+            const formData = new FormData()
+            formData.append('title', title)
+            formData.append('body', body)
+
+            dispatch(updatePostService(singlePost._id.$oid, formData, (res, err) => {
                 setaddPostLoading(false)
                 if (res?.data?.result) {
                     Toast.show(res?.data?.result?.message, Toast.LONG)
@@ -70,9 +104,9 @@ export default AddPost = ({ navigation }) => {
                     </Block>
                     <SecondaryButton
                         loading={addPostLoading}
-                        btnText="Add Post"
+                        btnText={singlePost ? 'Edit Post' : 'Add Post'}
                         btnStyle={{ width: '40%', marginBottom: 20 }}
-                        onPress={addPost} />
+                        onPress={singlePost ? updatePost : addPost} />
                 </Block>
                 <AdsCarousel />
             </ScrollView>
