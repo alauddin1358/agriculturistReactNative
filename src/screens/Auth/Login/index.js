@@ -45,7 +45,7 @@ export default LoginScreen = ({ navigation }) => {
             <SafeAreaView block style={styles.container} >
                 <ImageBackground style={styles.bgImg} source={require('../../../assets/images/green-bg-1.jpg')}>
                     <Block style={styles.loginBlock} center flex={false}>
-                        <Image style={styles.logo} source={require('../../../assets/images/Social_Fish2.png')} />
+                        <Image style={styles.logo} source={require('../../../assets/images/logo.jpeg')} />
                         <Text size={13} white>Login to Agriculturists</Text>
 
                         <PrimaryInput
@@ -74,7 +74,7 @@ export default LoginScreen = ({ navigation }) => {
                                 <Text white>Register here</Text>
                             </TouchableOpacity>
                         </Block>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=> navigation.navigate('forgot')}>
                             <Text white>Forgot Password ?</Text>
                         </TouchableOpacity>
                     </Block>

@@ -5,6 +5,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer'
 import Sidebar from '../layouts/Sidebar'
 
 import LoginScreen from '../screens/Auth/Login'
+import ForgotPassword from '../screens/Auth/Forgot'
 import Registration from '../screens/Auth/Registration'
 
 
@@ -27,6 +28,7 @@ const Routes = props => {
 
         <Drawer.Navigator drawerContent={props => <Sidebar {...props} />} drawerStyle={{ width: 150 }} initialRouteName="login">
             <Drawer.Screen options={{ swipeEnabled: false }} name="login" component={LoginScreen} />
+            <Drawer.Screen options={{ swipeEnabled: false }} name="forgot" component={ForgotPassword} />
             <Drawer.Screen options={{ swipeEnabled: false }} name="regi" component={Registration} />
             <Drawer.Screen name="profile" component={Profile} />
             <Drawer.Screen name="dashboard" component={Dashboard} />
