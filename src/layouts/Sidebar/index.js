@@ -48,6 +48,12 @@ export default Sidebar = ({ navigation }) => {
         setFiles(false)
         setFriends(false)
     }
+    const onPressShowFriend = () => {
+        navigation.navigate('friendsList')
+        setPost(false)
+        setFiles(false)
+        setFriends(false)
+    }
     const onPressAddFile = () => {
         navigation.navigate('addFile', { step: 1 })
         setPost(false)
@@ -100,7 +106,7 @@ export default Sidebar = ({ navigation }) => {
                         <TouchableOpacity style={{ padding: 5 }} onPress={onPressAddFriends}>
                             <Text textColor>Add Friends</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ padding: 5 }}>
+                        <TouchableOpacity style={{ padding: 5 }} onPress={onPressShowFriend}>
                             <Text textColor>Show My Friends</Text>
                         </TouchableOpacity>
                     </Block>

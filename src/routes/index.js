@@ -13,6 +13,7 @@ import Dashboard from '../screens/Dashboard'
 import Profile from '../screens/Profile'
 import EditProfile from '../screens/Profile/EditProfile'
 import Friends from '../screens/Friends'
+import FriendsList from '../screens/FriendsList'
 import PostDetails from '../screens/PostDetails'
 import AddPost from '../screens/AddPost'
 import AddFile from '../screens/AddFiles'
@@ -35,6 +36,7 @@ const Routes = props => {
             <Drawer.Screen name="editProfile" component={EditProfile} />
             <Drawer.Screen name="dashboard" component={Dashboard} />
             <Drawer.Screen name="friends" component={Friends} />
+            <Drawer.Screen name="friendsList" component={FriendsList} />
             <Drawer.Screen name="details" component={PostDetails} />
             <Drawer.Screen name="addPost" component={AddPost} />
             <Drawer.Screen name="addFile" component={AddFile} />
