@@ -48,6 +48,19 @@ export default Sidebar = ({ navigation }) => {
         setFiles(false)
         setFriends(false)
     }
+    const onPressAddFile = () => {
+        navigation.navigate('addFile', { step: 1 })
+        setPost(false)
+        setFiles(false)
+        setFriends(false)
+    }
+
+    const onPressShowFile = () => {
+        navigation.navigate('addFile', { step: 2 })
+        setPost(false)
+        setFiles(false)
+        setFriends(false)
+    }
 
     return (
 
@@ -94,10 +107,10 @@ export default Sidebar = ({ navigation }) => {
                 }
                 {files &&
                     <Block flex={false} style={styles.files}>
-                        <TouchableOpacity style={{ padding: 5 }}>
+                        <TouchableOpacity style={{ padding: 5 }} onPress={onPressAddFile}>
                             <Text textColor>Add Files</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ padding: 5 }}>
+                        <TouchableOpacity style={{ padding: 5 }} onPress={onPressShowFile}>
                             <Text textColor>Show My Files</Text>
                         </TouchableOpacity>
                     </Block>

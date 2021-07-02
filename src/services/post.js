@@ -97,21 +97,33 @@ export const fetchSinglePost = (id, callback) => async (
  */
 
 
-export const addPostService = (formData, callback) => async (
+export const addPostService = (id = null, title, body, callback) => async (
     dispatch,
     getState
 ) => {
     dispatch({ type: ADD_POST_PENDING })
 
-    const url = base_url + '/posts/null'
+    const url = base_url + `/posts/${id}`
     const token = await auth.getToken('accessToken')
+
+    const data = {
+        body,
+        title
+    }
+
+    const option = {
+        "Accept": 'application/json',
+        'Content-Type': 'application/json',
+    };
+
 
     try {
         const response = await httpRequest.post(
             url,
             true,
             token,
-            formData,
+            JSON.stringify(data),
+            option
         )
 
         dispatch({
@@ -145,12 +157,18 @@ export const updatePostService = (postId, formData, callback) => async (
     const url = base_url + `/posts/${postId}`
     const token = await auth.getToken('accessToken')
 
+    const option = {
+        "Accept": 'application/json',
+        'Content-Type': 'application/json',
+    };
+
     try {
         const response = await httpRequest.post(
             url,
             true,
             token,
-            formData,
+            JSON.stringify(formData),
+            option,
         )
 
         dispatch({

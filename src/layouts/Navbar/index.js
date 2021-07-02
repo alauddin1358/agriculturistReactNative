@@ -8,15 +8,51 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Text from '../../components/Text'
 import styles from './styles'
 import { colors } from '../../styles/theme'
+import { useNavigation } from '@react-navigation/native'
 
 
 
 
-const Navbar = ({ onPressDrawer, onPressProfile }) => {
+
+const Navbar = (props) => {
+
+    const navigation = useNavigation();
 
     const [application, setApplication] = useState(false)
     const [search, setSearch] = useState(false)
     const [profile, setProfile] = useState(false)
+
+    const onPressApplication = () => {
+        setApplication(!application)
+        setSearch(false)
+        setProfile(false)
+    }
+
+    const onPressSearch = () => {
+        setApplication(false)
+        setSearch(!search)
+        setProfile(false)
+    }
+
+    const onPressProfileIcon = () => {
+        setProfile(!profile)
+        setApplication(false)
+        setSearch(false)
+    }
+
+    const onPressProfile = () => {
+        navigation.navigate('profile')
+        setProfile(false)
+        setApplication(false)
+        setSearch(false)
+    }
+
+    const onPressDrawer = () => {
+        navigation.openDrawer()
+        setProfile(false)
+        setApplication(false)
+        setSearch(false)
+    }
 
     return (
 
@@ -26,13 +62,13 @@ const Navbar = ({ onPressDrawer, onPressProfile }) => {
                     <TouchableOpacity style={styles.bars} onPress={onPressDrawer}>
                         <FontAwesome color="#fff" size={15} name="bars" />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.application} onPress={() => setApplication(!application)}>
+                    <TouchableOpacity style={styles.application} onPress={onPressApplication}>
                         <Text color={colors.primaryColor}>Applications</Text>
                         <MaterialIcons size={17} color={colors.primaryColor} name="arrow-drop-down" />
                     </TouchableOpacity>
                 </Block>
                 <Block row center flex={false}>
-                    <TouchableOpacity style={{ marginHorizontal: 5 }} onPress={() => setSearch(!search)}>
+                    <TouchableOpacity style={{ marginHorizontal: 5 }} onPress={onPressSearch}>
                         <FontAwesome color={colors.borderColor} size={17} name="search" />
                     </TouchableOpacity>
                     <TouchableOpacity style={{ marginHorizontal: 5 }}>
@@ -41,7 +77,7 @@ const Navbar = ({ onPressDrawer, onPressProfile }) => {
                     <TouchableOpacity style={{ marginHorizontal: 5 }}>
                         <AntDesign name="mail" color={colors.borderColor} size={17} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ marginHorizontal: 5 }} onPress={() => setProfile(!profile)}>
+                    <TouchableOpacity style={{ marginHorizontal: 5 }} onPress={onPressProfileIcon}>
                         <Ionicons name="person-circle-sharp" color={colors.textColor} size={22} />
                     </TouchableOpacity>
                 </Block>

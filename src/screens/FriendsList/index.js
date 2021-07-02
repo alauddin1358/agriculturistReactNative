@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import {
-    Dimensions, ScrollView, Image, TouchableOpacity, FlatList, ActivityIndicator
+    SafeAreaView, ScrollView, Image, TouchableOpacity, FlatList, ActivityIndicator
 } from "react-native"
 import Toast from 'react-native-simple-toast'
 import Block from '../../components/Block'
@@ -19,7 +19,7 @@ import AdsCarousel from '../Carousel'
 
 
 export default FriendsList = ({ navigation, _carousel }) => {
-  
+
 
 
 
@@ -74,33 +74,35 @@ export default FriendsList = ({ navigation, _carousel }) => {
     return (
 
         <Block block>
-            <Navbar
-                onPressProfile={() => navigation.navigate('profile')}
-                onPressDrawer={() => navigation.openDrawer()}
-            />
-            <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
-                <Text textColor size={20}>Friends</Text>
-                <Block block >
-                    <Block flex={false} style={styles.postBlock2} margin={[0, 0, 20, 0]}>
-                        <Text style={styles.title}>Friend Requests</Text>
-                    </Block>
-                    <Block flex={false} style={styles.postBlock2}>
-                        <Text style={styles.title}>People may you know</Text>
+            <SafeAreaView style={styles.container}>
+                <Navbar
+                    onPressProfile={() => navigation.navigate('profile')}
+                    onPressDrawer={() => navigation.openDrawer()}
+                />
+                <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
+                    <Text textColor size={20}>Friends</Text>
+                    <Block block >
+                        <Block flex={false} style={styles.postBlock2} margin={[0, 0, 20, 0]}>
+                            <Text style={styles.title}>Friend Requests</Text>
+                        </Block>
+                        <Block flex={false} style={styles.postBlock2}>
+                            <Text style={styles.title}>People may you know</Text>
 
-                        {
-                            isLoading ? <Loader /> :
-                                <FlatList
-                                    showsVerticalScrollIndicator={false}
-                                    data={peopleMayKnowList}
-                                    renderItem={renderPeopleYouMayKnow}
-                                    keyExtractor={item => item._id.$oid.toString()}
-                                />
-                        }
-                    </Block>
+                            {
+                                isLoading ? <Loader /> :
+                                    <FlatList
+                                        showsVerticalScrollIndicator={false}
+                                        data={peopleMayKnowList}
+                                        renderItem={renderPeopleYouMayKnow}
+                                        keyExtractor={item => item._id.$oid.toString()}
+                                    />
+                            }
+                        </Block>
 
-                    <AdsCarousel />
-                </Block>
-            </ScrollView>
+                        <AdsCarousel />
+                    </Block>
+                </ScrollView>
+            </SafeAreaView>
         </Block>
 
     );

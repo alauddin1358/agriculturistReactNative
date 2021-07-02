@@ -64,18 +64,20 @@ export default Dashboard = ({ navigation, carousel }) => {
                     <MaterialIcons style={{ marginRight: 5 }} name="person" />
                     <Text textColor size={12}>Author: {item?.user?.status || ''}</Text>
                 </Block>
-                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <FontAwesome style={{ marginRight: 5 }} name="comments" />
-                    <Text textColor size={12}>Comment</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => navigation.navigate('addPost', { post: item })}>
-                    <AntDesign style={{ marginRight: 5 }} name="edit" />
-                    <Text textColor size={12}>Edit</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => deletePost(item._id.$oid)}>
-                    <AntDesign style={{ marginRight: 5 }} name="delete" />
-                    <Text textColor size={12}>Delete</Text>
-                </TouchableOpacity>
+                <Block flex={false} row center>
+                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginRight:10 }}>
+                        <FontAwesome style={{ marginRight: 5 }} name="comments" />
+                        <Text textColor size={12}>Comment</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginRight:10 }} onPress={() => navigation.navigate('addPost', { post: item })}>
+                        <AntDesign style={{ marginRight: 5 }} name="edit" />
+                        <Text textColor size={12}>Edit</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => deletePost(item._id.$oid)}>
+                        <AntDesign style={{ marginRight: 5 }} name="delete" />
+                        <Text textColor size={12}>Delete</Text>
+                    </TouchableOpacity>
+                </Block>
             </Block>
 
             <TouchableOpacity onPress={expandClick}>
