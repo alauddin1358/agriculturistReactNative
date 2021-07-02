@@ -15,7 +15,7 @@ export default ForgotPassword = ({ navigation }) => {
             <SafeAreaView block style={styles.container} >
                 <ImageBackground style={styles.bgImg} source={require('../../../assets/images/green-bg-1.jpg')}>
                     <Block style={styles.loginBlock} center flex={false}>
-                        <Image style={styles.logo} source={require('../../../assets/images/logo.jpeg')} />
+                        <Image style={styles.logo} source={require('../../../assets/logo.gif')} />
                         <Text size={13} white>Forgot Password</Text>
 
                         <PrimaryInput

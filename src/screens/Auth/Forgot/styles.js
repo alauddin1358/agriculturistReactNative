@@ -15,9 +15,9 @@ const styles = StyleSheet.create({
         borderRadius:10
     },
     logo:{
-        width:60,
-        height:60,
-        resizeMode:'contain'
+        width:100,
+        height:100,
+        resizeMode:'cover'
     },
 });
 
