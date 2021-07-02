@@ -11,6 +11,7 @@ import Registration from '../screens/Auth/Registration'
 
 import Dashboard from '../screens/Dashboard'
 import Profile from '../screens/Profile'
+import EditProfile from '../screens/Profile/EditProfile'
 import Friends from '../screens/Friends'
 import PostDetails from '../screens/PostDetails'
 import AddPost from '../screens/AddPost'
@@ -31,6 +32,7 @@ const Routes = props => {
             <Drawer.Screen options={{ swipeEnabled: false }} name="forgot" component={ForgotPassword} />
             <Drawer.Screen options={{ swipeEnabled: false }} name="regi" component={Registration} />
             <Drawer.Screen name="profile" component={Profile} />
+            <Drawer.Screen name="editProfile" component={EditProfile} />
             <Drawer.Screen name="dashboard" component={Dashboard} />
             <Drawer.Screen name="friends" component={Friends} />
             <Drawer.Screen name="details" component={PostDetails} />

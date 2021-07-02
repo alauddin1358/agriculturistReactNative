@@ -7,6 +7,18 @@ const styles = StyleSheet.create({
         padding: 10,
         flex:1
     },
+    pickerEdit:{
+        borderColor:colors.borderColor,
+    },
+    imgFile:{
+        backgroundColor:colors.white,
+        borderWidth:1,
+        borderColor:colors.borderColor,
+        width:'50%',
+        padding:10,
+        borderRadius:5,
+        marginBottom:30
+    },
     ads:{
         width:200,
         height:200,
@@ -50,7 +62,8 @@ const styles = StyleSheet.create({
     edit:{
         position:'absolute',
         top:10,
-        right:10
+        right:10,
+        zIndex:2222
     },
 });
 

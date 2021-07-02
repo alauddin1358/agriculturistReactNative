@@ -20,7 +20,25 @@ const PrimaryInput = ({ ...rest }) => {
     );
 }
 
+const ProfileInput = ({ title, ...rest }) => {
+
+    return (
+
+        <>
+            <Text size={15} bold style={{ paddingVertical: 5 }}>{title}</Text>
+            <TextInput
+                style={styles.profileInput}
+                placeholderTextColor="gray"
+                {...rest}
+            />
+        </>
+
+
+    );
+}
+
 
 export {
     PrimaryInput,
+    ProfileInput
 }

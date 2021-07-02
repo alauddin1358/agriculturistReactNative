@@ -9,6 +9,15 @@ const styles = StyleSheet.create({
         color:'#d2d2d2',
         marginVertical:5
     },
+    profileInput:{
+        borderWidth:1,
+        borderColor:colors.borderColor,
+        width:'100%',
+        backgroundColor:colors.white,
+        color:'#d2d2d2',
+        borderRadius:5,
+        marginVertical:5
+    },
 });
 
 export default styles;

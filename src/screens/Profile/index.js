@@ -29,7 +29,7 @@ const ADS = [
 ];
 
 
-export default Profile = props => {
+export default Profile = ({ navigation }) => {
 
     const [expand, setExpand] = useState(false)
 
@@ -64,12 +64,12 @@ export default Profile = props => {
                         <TouchableOpacity style={styles.btn2}>
                             <Text white bold>Message</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.camera}>
+                        <TouchableOpacity style={styles.camera}  onPress={() => navigation.navigate('editProfile')}>
                             <AntDesign name="camera" color="#fff" size={20} />
                         </TouchableOpacity>
                     </ImageBackground>
                     <Block flex={false} style={styles.infoblock}>
-                        <TouchableOpacity style={styles.edit}>
+                        <TouchableOpacity style={styles.edit} onPress={() => navigation.navigate('editProfile')}>
                             <Entypo name="edit" size={19} color={colors.primaryColor} />
                         </TouchableOpacity>
                         <Text bold style={{ padding: 10 }}>Personal Info</Text>
@@ -87,7 +87,7 @@ export default Profile = props => {
                         </Block>
                     </Block>
                     <Block flex={false} style={styles.infoblock}>
-                        <TouchableOpacity style={styles.edit}>
+                        <TouchableOpacity style={styles.edit} onPress={() => navigation.navigate('editProfile')}>
                             <Entypo name="edit" size={19} color={colors.primaryColor} />
                         </TouchableOpacity>
                         <Text bold style={{ padding: 10 }}>User Type</Text>
@@ -105,7 +105,7 @@ export default Profile = props => {
                         </Block>
                     </Block>
                     <Block flex={false} style={styles.infoblock}>
-                        <TouchableOpacity style={styles.edit}>
+                        <TouchableOpacity style={styles.edit} onPress={() => navigation.navigate('editProfile')}>
                             <Entypo name="edit" size={19} color={colors.primaryColor} />
                         </TouchableOpacity>
                         <Text bold style={{ padding: 10 }}>Other Info</Text>
