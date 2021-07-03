@@ -1,51 +1,40 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Dimensions, ScrollView, SafeAreaView, Image, TouchableOpacity, ImageBackground } from "react-native"
 import Block from '../../components/Block'
 import Text from '../../components/Text'
 import styles from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Entypo from 'react-native-vector-icons/Entypo'
-import Carousel from 'react-native-snap-carousel'
 import { colors } from "../../styles/theme"
 import { Navbar } from "../../layouts/Navbar"
+import { getUserInfoService } from '../../services/user'
+import { useDispatch } from "react-redux"
 
-const ADS = [
-    {
-        id: 1,
-        image: require('../../assets/images/download.jpeg')
-    },
-    {
-        id: 2,
-        image: require('../../assets/images/download.jpeg')
-    },
-    {
-        id: 3,
-        image: require('../../assets/images/download.jpeg')
-    },
-    {
-        id: 4,
-        image: require('../../assets/images/download.jpeg')
-    }
-];
+
 
 
 export default Profile = ({ navigation }) => {
+    const dispatch = useDispatch()
 
-    const [expand, setExpand] = useState(false)
+    const [userInfo, setUserInfo] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
+    const [addFriendLoading, setAddFriendLoading] = useState(false)
 
-    const expandClick = () => {
-        setExpand(!expand)
+    useEffect(() => {
+        getUserInfo()
+    }, [])
+
+    const getUserInfo = () => {
+        setIsLoading(true)
+        dispatch(getUserInfoService((res, err) => {
+            setIsLoading(false)
+            if (res) {
+                setUserInfo(res?.data?.data ? JSON.parse(res.data.data) : [])
+            }
+        }))
     }
 
-
-    const renderAdsItem = ({ item, index }) => {
-
-        return (
-            <Block style={styles.slide} margin={[30, 0, 30, 0]}>
-                <Image style={styles.ads} source={item.image} />
-            </Block>
-        );
-    }
+    console.log(userInfo);
 
     return (
 
@@ -64,67 +53,60 @@ export default Profile = ({ navigation }) => {
                         <TouchableOpacity style={styles.btn2}>
                             <Text white bold>Message</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.camera}  onPress={() => navigation.navigate('editProfile')}>
+                        <TouchableOpacity style={styles.camera} onPress={() => navigation.navigate('editProfile', { userInfo: userInfo })}>
                             <AntDesign name="camera" color="#fff" size={20} />
                         </TouchableOpacity>
                     </ImageBackground>
                     <Block flex={false} style={styles.infoblock}>
-                        <TouchableOpacity style={styles.edit} onPress={() => navigation.navigate('editProfile')}>
+                        <TouchableOpacity style={styles.edit} onPress={() => navigation.navigate('editProfile', { userInfo: userInfo })}>
                             <Entypo name="edit" size={19} color={colors.primaryColor} />
                         </TouchableOpacity>
                         <Text bold style={{ padding: 10 }}>Personal Info</Text>
                         <Block row width spaceBetween flex={false} padding={[10]}>
                             <Text size={12}>Name</Text>
-                            <Text textColor size={12}>Tasfique alam</Text>
+                            <Text textColor size={12}>{userInfo?.name}</Text>
                         </Block>
                         <Block row width spaceBetween flex={false} padding={[10]}>
                             <Text size={12}>Email</Text>
-                            <Text textColor size={12}>Tasfiquealam1@gmail.com</Text>
+                            <Text textColor size={12}>{userInfo?.email}</Text>
                         </Block>
                         <Block row width spaceBetween flex={false} padding={[10]}>
                             <Text size={12}>Phone</Text>
-                            <Text textColor size={12}>01652458575</Text>
+                            <Text textColor size={12}>{userInfo?.phone}</Text>
                         </Block>
                     </Block>
                     <Block flex={false} style={styles.infoblock}>
-                        <TouchableOpacity style={styles.edit} onPress={() => navigation.navigate('editProfile')}>
+                        <TouchableOpacity style={styles.edit} onPress={() => navigation.navigate('editProfile', { userInfo: userInfo })}>
                             <Entypo name="edit" size={19} color={colors.primaryColor} />
                         </TouchableOpacity>
                         <Text bold style={{ padding: 10 }}>User Type</Text>
                         <Block row width spaceBetween flex={false} padding={[10]}>
                             <Text size={12}>User Category</Text>
-                            <Text textColor size={12}>Student</Text>
+                            <Text textColor size={12}>{userInfo?.user_category}</Text>
                         </Block>
                         <Block row width spaceBetween flex={false} padding={[10]}>
                             <Text size={12}>Job</Text>
-                            <Text textColor size={12}></Text>
+                            <Text textColor size={12}>{userInfo?.job_type}</Text>
                         </Block>
                         <Block row width spaceBetween flex={false} padding={[10]}>
                             <Text size={12}>Specialization</Text>
-                            <Text textColor size={12}></Text>
+                            <Text textColor size={12}>{userInfo?.specialization_type}</Text>
                         </Block>
                     </Block>
-                    <Block flex={false} style={styles.infoblock}>
-                        <TouchableOpacity style={styles.edit} onPress={() => navigation.navigate('editProfile')}>
+                    <Block flex={false} style={styles.infoblock} margin={[10, 10, 50, 10]}>
+                        <TouchableOpacity style={styles.edit} onPress={() => navigation.navigate('editProfile', { userInfo: userInfo })}>
                             <Entypo name="edit" size={19} color={colors.primaryColor} />
                         </TouchableOpacity>
                         <Text bold style={{ padding: 10 }}>Other Info</Text>
                         <Block row width spaceBetween flex={false} padding={[10]}>
                             <Text size={12}>Address</Text>
-                            <Text textColor size={12}>Dhaka</Text>
+                            <Text textColor size={12}>{userInfo?.address}</Text>
                         </Block>
                         <Block row width spaceBetween flex={false} padding={[10]}>
                             <Text size={12}>Country</Text>
-                            <Text textColor size={12}>Bangladesh</Text>
+                            <Text textColor size={12}>{userInfo?.country}</Text>
                         </Block>
                     </Block>
-                    <Carousel
-                        ref={(c) => { _carousel = c; }}
-                        data={ADS}
-                        renderItem={renderAdsItem}
-                        sliderWidth={Dimensions.get('window').width}
-                        itemWidth={170}
-                    />
                 </ScrollView>
             </SafeAreaView>
         </Block>

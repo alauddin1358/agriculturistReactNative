@@ -45,3 +45,41 @@ export const getUsersService = (callback) => async (
         callback(null, error.response)
     }
 }
+/**
+ * Method: GET
+ */
+
+
+export const getUserInfoService = (callback) => async (
+    dispatch,
+    getState
+) => {
+    dispatch({ type: 'GET__USER__INFO_PENDING' })
+
+    const url = base_url + `/user`
+    const token = await auth.getToken('accessToken')
+
+    try {
+        const response = await httpRequest.get(
+            url,
+            true,
+            token,
+            false,
+            null
+        )
+
+        dispatch({
+            type: 'GET__USER__INFO_SUCCESS',
+            payload: response,
+        })
+
+        callback(response, null)
+    } catch (error) {
+        dispatch({
+            type: 'GET__USER__INFO_FAIL',
+            payload: error.response,
+        })
+        console.log(error);
+        callback(null, error.response)
+    }
+}

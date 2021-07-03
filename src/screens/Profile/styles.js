@@ -4,7 +4,7 @@ import { colors } from '../../styles/theme';
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#f7f8fb',
-        padding: 10,
+        margin: 10,
         flex:1
     },
     pickerEdit:{
