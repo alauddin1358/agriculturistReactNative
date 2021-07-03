@@ -3,7 +3,7 @@ import { TouchableOpacity, FlatList } from "react-native"
 import Block from '../../components/Block'
 import Text from '../../components/Text'
 import styles from './styles'
-import { fetchFilesService, downloadFileService } from '../../services/file'
+import { fetchFilesService } from '../../services/file'
 import { colors } from "../../styles/theme"
 import { useDispatch } from "react-redux"
 import { Loader } from "../../components/Loader"
