@@ -54,6 +54,7 @@ export default AddDocument = ({ navigation }) => {
             <SecondaryButton
                 btnText="Submit"
                 btnStyle={{ width: '40%', marginBottom: 20 }}
+                loading={loading}
                 onPress={addFile} />
         </Block>
 
