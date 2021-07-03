@@ -29,7 +29,6 @@ const client = (token = null) => {
             defaultOptions = {
                 headers: {
                     "Accept": 'application/json',
-                    // 'Content-Type': 'application/json',
                     'Content-Type': 'multipart/form-data',
                     ...options
                 },

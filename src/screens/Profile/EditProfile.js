@@ -1,19 +1,22 @@
 import React, { useState } from "react"
-import { Dimensions, ScrollView, SafeAreaView, Image, TouchableOpacity, ImageBackground } from "react-native"
+import { ScrollView, SafeAreaView, TouchableOpacity, Image, ImageBackground } from "react-native"
 import Block from '../../components/Block'
 import Text from '../../components/Text'
 import styles from './styles'
 import { ProfileInput } from '../../components/TextInput'
 import { SecondaryButton } from '../../components/Button'
-import { colors } from "../../styles/theme"
 import { Navbar } from "../../layouts/Navbar"
 import DropDownPicker from 'react-native-dropdown-picker'
 import data from './country.json'
-
-
+import { updatePersonalInfoService } from "../../services/user"
+import { useDispatch } from "react-redux"
+import ImagePicker from 'react-native-image-crop-picker'
+import RNFS from 'react-native-fs'
+import Toast from 'react-native-simple-toast'
 
 
 export default EditProfile = props => {
+    const dispatch = useDispatch()
 
     const userInfo = props?.route?.params?.userInfo
 
@@ -21,17 +24,15 @@ export default EditProfile = props => {
     const [userCategory, setUserCategory] = useState('')
     const [job, setJob] = useState('')
     const [specialization, setSpecialization] = useState('')
-    const [openUserCategory, setOpenUserCategory] = useState(false)
+    const [openStudentType, setOpenStudentType] = useState(false)
+    const [studentType, setStudentType] = useState(false)
     const [openJob, setOpenJob] = useState(false)
     const [openSpecialization, setOpenSpecialization] = useState(false)
-    const [openCountry, setOpenCountry] = useState(false)
     const [firstname, setFirstname] = useState('')
     const [middlename, setMiddlename] = useState('')
     const [lastname, setLastname] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
-    const [password, setPassword] = useState('')
-    const [passwordConfirm, setPasswordConfirm] = useState('')
     const [address, setAddress] = useState('')
     const [country, setCountry] = useState('')
     const [imageFile, setImageFile] = useState('')
@@ -41,6 +42,47 @@ export default EditProfile = props => {
     const [isLoading, setIsLoading] = useState(false)
 
     console.log('userinfo', userInfo);
+
+
+    const uploadAvatar = async () => {
+        const img = await ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: false
+        })
+
+        setImageFile(img)
+
+        const res = await RNFS.readFile(img.path, 'base64')
+        setImage(res)
+    }
+
+
+
+    const saveProfileInfo = () => {
+        const formData = {
+            firstName,
+            middlename,
+            lastname,
+            userCategory: userCategory,
+            studentType: studentType,
+            jobType: jobType,
+            specializationType: specializationType,
+            email,
+            phone,
+            address,
+            country,
+            image,
+        }
+
+        dispatch(updatePersonalInfoService(userinfo._id.$oid, formData, (res, err) => {
+
+            if (res?.data?.result) {
+                Toast.show(res?.data?.result?.message, Toast.LONG)
+                navigation.navigate('dashboard')
+            }
+        }))
+    }
 
     return (
 
@@ -75,14 +117,14 @@ export default EditProfile = props => {
                                 dropDownContainerStyle={styles.pickerInner}
                                 textStyle={{ color: 'gray' }}
                                 placeholder="Select Student"
-                                open={openUserCategory}
-                                setOpen={setOpenUserCategory}
+                                open={openStudentType}
+                                setOpen={setOpenStudentType}
                                 items={[
                                     { label: 'Bsc', value: 'Bsc' },
                                     { label: 'Msc', value: 'Msc' },
                                     { label: 'Phd', value: 'Phd' }
                                 ]}
-                                value={userCategory}
+                                value={studentType}
                                 setValue={setUserCategory}
                             />
                         </Block>
@@ -145,19 +187,25 @@ export default EditProfile = props => {
                                 dropDownContainerStyle={styles.pickerInner}
                                 textStyle={{ color: 'gray' }}
                                 placeholder="Select Country"
-                                open={openUserCategory}
-                                setOpen={setOpenUserCategory}
+                                open={openStudentType}
+                                setOpen={setStudentType}
                                 items={data && data}
                                 value={country}
                                 setValue={setCountry}
                             />
                         </Block>
                         <Text size={15} bold style={{ paddingVertical: 5 }}>Profile Image</Text>
-                        <TouchableOpacity style={styles.imgFile}>
+                        <Block>
+                            <Image source={{ uri: userInfo?.image }} style={{
+                                width: 100,
+                                height: 100,
+                            }} />
+                        </Block>
+                        <TouchableOpacity style={styles.imgFile} onPress={uploadAvatar}>
                             <Text>Select Image File</Text>
                         </TouchableOpacity>
 
-                        <SecondaryButton btnText="Save" />
+                        <SecondaryButton btnText="Save" onPress={saveProfileInfo} />
                     </Block>
                 </ScrollView>
             </SafeAreaView>
