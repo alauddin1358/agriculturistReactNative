@@ -1,17 +1,32 @@
 import React, { useState } from "react"
-import { ScrollView, TextInput, TouchableOpacity } from "react-native"
+import { TextInput, TouchableOpacity } from "react-native"
 import Toast from 'react-native-simple-toast'
 import Block from '../../components/Block'
 import Text from '../../components/Text'
 import styles from './styles'
-import { Navbar } from "../../layouts/Navbar"
-import AdsCarousel from '../Carousel'
 import { SecondaryButton } from '../../components/Button'
-import { colors } from "../../styles/theme"
+import { addFileService } from "../../services/file"
+import { useDispatch } from "react-redux"
 
 
 export default AddDocument = ({ navigation }) => {
+    const dispatch = useDispatch()
 
+    const [loading, setLoading] = useState(false)
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+
+    const addFile = () => {
+        setLoading(true)
+        const formData = {
+            title,
+            description,
+        }
+
+        dispatch(addFileService(formData, (res, err) => {
+            setLoading(false)
+        }))
+    }
 
 
     return (
@@ -21,12 +36,16 @@ export default AddDocument = ({ navigation }) => {
                 <TextInput
                     style={styles.titleBlock}
                     placeholder="Enter title"
+                    value={title}
+                    onChangeText={value => setTitle(value)}
                 />
             </Block>
             <Block flex={false} padding={[10, 0]}>
                 <TextInput
                     style={styles.titleBlock}
                     placeholder="Enter Description"
+                    value={description}
+                    onChangeText={value => setDescription(value)}
                 />
             </Block>
             <TouchableOpacity style={styles.upload}>
@@ -34,7 +53,8 @@ export default AddDocument = ({ navigation }) => {
             </TouchableOpacity>
             <SecondaryButton
                 btnText="Submit"
-                btnStyle={{ width: '40%', marginBottom: 20 }} />
+                btnStyle={{ width: '40%', marginBottom: 20 }}
+                onPress={addFile} />
         </Block>
 
     );
