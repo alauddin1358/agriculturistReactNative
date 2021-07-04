@@ -10,6 +10,14 @@ const styles = StyleSheet.create({
     pickerEdit:{
         borderColor:colors.borderColor,
     },
+    pickerInner:{
+        zIndex:99
+    },
+    img:{
+        width:200,
+        height:200,
+        alignSelf:'center'
+    },
     imgFile:{
         backgroundColor:colors.white,
         borderWidth:1,

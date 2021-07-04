@@ -7,6 +7,7 @@ import styles from './styles'
 import { SecondaryButton } from '../../components/Button'
 import { addFileService } from "../../services/file"
 import { useDispatch } from "react-redux"
+import DocumentPicker from 'react-native-document-picker';
 
 
 export default AddDocument = ({ navigation }) => {
@@ -15,17 +16,36 @@ export default AddDocument = ({ navigation }) => {
     const [loading, setLoading] = useState(false)
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+    const [pdf, setPdf] = useState('')
+    const [name, setName] = useState('')
 
     const addFile = () => {
         setLoading(true)
         const formData = {
             title,
             description,
+            file: pdf
         }
 
         dispatch(addFileService(formData, (res, err) => {
             setLoading(false)
         }))
+    }
+
+    const onPressDocument = async() =>{
+        try {
+            const res = await DocumentPicker.pick({
+              type: [DocumentPicker.types.pdf],
+            });
+           setPdf(res.uri)
+           setName(res.name)
+          } catch (err) {
+            if (DocumentPicker.isCancel(err)) {
+              // User cancelled the picker, exit any dialogs or menus and move on
+            } else {
+              throw err;
+            }
+          }
     }
 
 
@@ -48,8 +68,8 @@ export default AddDocument = ({ navigation }) => {
                     onChangeText={value => setDescription(value)}
                 />
             </Block>
-            <TouchableOpacity style={styles.upload}>
-                <Text textColor> Click here to select pdf file</Text>
+            <TouchableOpacity style={styles.upload} onPress={onPressDocument}>
+                <Text textColor>{name ? name : 'Click here to select pdf file'}</Text>
             </TouchableOpacity>
             <SecondaryButton
                 btnText="Submit"

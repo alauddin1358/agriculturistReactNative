@@ -13,33 +13,39 @@ import { useDispatch } from "react-redux"
 import ImagePicker from 'react-native-image-crop-picker'
 import RNFS from 'react-native-fs'
 import Toast from 'react-native-simple-toast'
+import { useNavigation } from '@react-navigation/native'
+
 
 
 export default EditProfile = props => {
     const dispatch = useDispatch()
+    const navigation = useNavigation();
+
 
     const userInfo = props?.route?.params?.userInfo
 
     const [expand, setExpand] = useState(false)
-    const [userCategory, setUserCategory] = useState('')
-    const [job, setJob] = useState('')
-    const [specialization, setSpecialization] = useState('')
+    const [userCategory, setUserCategory] = useState(userInfo?.user_category)
+    const [job, setJob] = useState(userInfo?.job_type)
+    const [specialization, setSpecialization] = useState(userInfo?.specialization_type)
     const [openStudentType, setOpenStudentType] = useState(false)
-    const [studentType, setStudentType] = useState(false)
+    const [studentType, setStudentType] = useState(userInfo?.student_type)
     const [openJob, setOpenJob] = useState(false)
     const [openSpecialization, setOpenSpecialization] = useState(false)
-    const [firstname, setFirstname] = useState('')
-    const [middlename, setMiddlename] = useState('')
-    const [lastname, setLastname] = useState('')
-    const [email, setEmail] = useState('')
-    const [phone, setPhone] = useState('')
-    const [address, setAddress] = useState('')
-    const [country, setCountry] = useState('')
-    const [imageFile, setImageFile] = useState('')
-    const [image, setImage] = useState('')
-    const [referrerName, setReferrerName] = useState('')
-    const [referrerEmail, setReferrerEmail] = useState('')
+    const [firstname, setFirstname] = useState(userInfo?.firstname)
+    const [middlename, setMiddlename] = useState(userInfo?.middlename)
+    const [lastname, setLastname] = useState(userInfo?.lastname)
+    const [email, setEmail] = useState(userInfo?.email)
+    const [phone, setPhone] = useState(userInfo?.phone)
+    const [address, setAddress] = useState(userInfo?.address)
+    const [country, setCountry] = useState(userInfo?.country)
+    const [imageFile, setImageFile] = useState(userInfo?.image)
+    const [image, setImage] = useState(userInfo?.image)
+    const [referrerName, setReferrerName] = useState(userInfo?.referrer_name)
+    const [referrerEmail, setReferrerEmail] = useState(userInfo?.referrer_email)
     const [isLoading, setIsLoading] = useState(false)
+    const [password, setPassword] = useState(userInfo?.password)
+    const [passwordConfirm, setPasswordConfirm] = useState(userInfo?.passwordconfirm)
 
     console.log('userinfo', userInfo);
 
@@ -50,7 +56,6 @@ export default EditProfile = props => {
             height: 400,
             cropping: false
         })
-
         setImageFile(img)
 
         const res = await RNFS.readFile(img.path, 'base64')
@@ -61,25 +66,32 @@ export default EditProfile = props => {
 
     const saveProfileInfo = () => {
         const formData = {
-            firstName,
+            firstname ,
             middlename,
             lastname,
-            userCategory: userCategory,
-            studentType: studentType,
-            jobType: jobType,
-            specializationType: specializationType,
+            userCategory,
+            studentType,
+            job,
+            specialization,
             email,
             phone,
             address,
             country,
             image,
+            password,
+            passwordConfirm,
+            referrerName,
+            referrerEmail
         }
 
-        dispatch(updatePersonalInfoService(userinfo._id.$oid, formData, (res, err) => {
+        dispatch(updatePersonalInfoService(userInfo._id.$oid, formData, (res, err) => {
 
-            if (res?.data?.result) {
-                Toast.show(res?.data?.result?.message, Toast.LONG)
-                navigation.navigate('dashboard')
+            if(res){
+                if (res?.data?.result?.isError == 'true') {
+                    Toast.show(res?.data?.result?.message, Toast.LONG)
+                }else{
+                    navigation.navigate('profile')
+                }
             }
         }))
     }
@@ -125,7 +137,7 @@ export default EditProfile = props => {
                                     { label: 'Phd', value: 'Phd' }
                                 ]}
                                 value={studentType}
-                                setValue={setUserCategory}
+                                setValue={setStudentType}
                             />
                         </Block>
                         <Block flex={false} margin={[0, 0, 10, 0]}>
@@ -196,7 +208,7 @@ export default EditProfile = props => {
                         </Block>
                         <Text size={15} bold style={{ paddingVertical: 5 }}>Profile Image</Text>
                         <Block>
-                            <Image source={{ uri: userInfo?.image }} style={{
+                            <Image source={{ uri: imageFile ? imageFile.path : userInfo?.image }} style={{
                                 width: 100,
                                 height: 100,
                             }} />
@@ -204,6 +216,17 @@ export default EditProfile = props => {
                         <TouchableOpacity style={styles.imgFile} onPress={uploadAvatar}>
                             <Text>Select Image File</Text>
                         </TouchableOpacity>
+                        <Block flex={false} margin={[0, 0, 30, 0]}>
+                            <ProfileInput
+                                title="Reffered by"
+                                value={referrerName}
+                                onChangeText={(val) => setReferrerName(val)}
+                            />
+                            <ProfileInput
+                                value={referrerEmail}
+                                onChangeText={(val) => setReferrerEmail(val)}
+                            />
+                        </Block>
 
                         <SecondaryButton btnText="Save" onPress={saveProfileInfo} />
                     </Block>
