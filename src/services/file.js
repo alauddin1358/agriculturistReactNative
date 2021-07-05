@@ -60,7 +60,7 @@ export const addFileService = (formData, callback) => async (
 ) => {
     dispatch({ type: ADD_FILE_PENDING })
 
-    const url = base_url + 'file_upload'
+    const url = base_url + '/file_upload'
     const token = await auth.getToken('accessToken')
 
     const data = {
@@ -97,5 +97,6 @@ export const addFileService = (formData, callback) => async (
         })
 
         callback(null, error.response)
+        console.log(error);
     }
 }
