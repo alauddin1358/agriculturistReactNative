@@ -65,31 +65,35 @@ export default EditProfile = props => {
 
 
     const saveProfileInfo = () => {
-        const formData = {
-            firstname ,
-            middlename,
-            lastname,
-            userCategory,
-            studentType,
-            job,
-            specialization,
-            email,
-            phone,
-            address,
-            country,
-            image,
-            password,
-            passwordConfirm,
-            referrerName,
-            referrerEmail
-        }
+
+        let formData = new FormData()
+        formData.append('firstname', firstname)
+        formData.append('middlename', middlename)
+        formData.append('lastname', lastname)
+        formData.append('user_category', userCategory)
+        formData.append('email', email)
+        formData.append('phone', phone)
+        formData.append('password', password)
+        formData.append('passwordconfirm', passwordConfirm)
+        formData.append('address', address)
+        formData.append('country', country)
+        formData.append('image', image)
+        formData.append('referrer_name', referrerName)
+        formData.append('referrer_email', referrerEmail)
+        formData.append('emailconfirm', false)
+        formData.append('job_type', job)
+        formData.append('student_type', studentType)
+        formData.append('viewImage', userInfo.image)
+        formData.append('file', '')
+        formData.append('specialization_type', specialization)
 
         dispatch(updatePersonalInfoService(userInfo._id.$oid, formData, (res, err) => {
 
-            if(res){
+            if (res) {
                 if (res?.data?.result?.isError == 'true') {
                     Toast.show(res?.data?.result?.message, Toast.LONG)
-                }else{
+                } else {
+                    Toast.show(res?.data?.result?.message, Toast.LONG)
                     navigation.navigate('profile')
                 }
             }

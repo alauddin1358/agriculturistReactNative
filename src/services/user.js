@@ -99,25 +99,6 @@ export const updatePersonalInfoService = (id, formData, callback) => async (
     const url = base_url + `/update/${id}`
     const token = await auth.getToken('accessToken')
 
-    const data = {
-        firstname: formData.firstname,
-        middlename: formData.middlename,
-        lastname: formData.lastname,
-        user_category: formData.userCategory,
-        student_type: formData.studentType,
-        job_type: formData.job,
-        specialization_type: formData.specialization,
-        email: formData.email,
-        phone: formData.phone,
-        address: formData.address,
-        country: formData.country,
-        image: formData.image,
-        password: formData.password,
-        passwordconfirm: formData.passwordConfirm,
-        referrer_name: formData.referrerName,
-        referrer_email: formData.referrerEmail,
-    }
-
     const option = {
         "Accept": 'application/json',
         'Content-Type': 'application/json',
@@ -129,7 +110,7 @@ export const updatePersonalInfoService = (id, formData, callback) => async (
             url,
             true,
             token,
-            JSON.stringify(data),
+            formData,
             option
         )
 
