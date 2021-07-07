@@ -65,11 +65,11 @@ export default Dashboard = ({ navigation, carousel }) => {
                     <Text textColor size={12}>Author: {item?.user?.status || ''}</Text>
                 </Block>
                 <Block flex={false} row center>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginRight:10 }}>
+                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
                         <FontAwesome style={{ marginRight: 5 }} name="comments" />
                         <Text textColor size={12}>Comment</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginRight:10 }} onPress={() => navigation.navigate('addPost', { post: item })}>
+                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }} onPress={() => navigation.navigate('addPost', { post: item })}>
                         <AntDesign style={{ marginRight: 5 }} name="edit" />
                         <Text textColor size={12}>Edit</Text>
                     </TouchableOpacity>
@@ -93,7 +93,7 @@ export default Dashboard = ({ navigation, carousel }) => {
     return (
 
         <Block block>
-            <SafeAreaView style={styles.container} >
+            <SafeAreaView style={{ flex: 1 }} >
                 <Navbar
                     onPressProfile={() => navigation.navigate('profile')}
                     onPressDrawer={() => navigation.openDrawer()}
@@ -101,28 +101,30 @@ export default Dashboard = ({ navigation, carousel }) => {
                 {
                     isLoading ? <Loader /> :
                         <>
-                            <Text textColor size={20}>Dashboard</Text>
-                            <Block style={styles.block} flex={false}>
-                                <FlatList
-                                    showsVerticalScrollIndicator={false}
-                                    data={posts}
-                                    renderItem={renderPostsItem}
-                                    keyExtractor={item => item._id.$oid.toString()}
-                                    ListHeaderComponent={
-                                        <Block flex={false} >
-                                            <Block flex={false} style={styles.postBlock2}>
-                                                <Text style={styles.title}>Posts</Text>
+                            <Block padding={[10]}>
+                                <Text textColor size={20}>Dashboard</Text>
+                                <Block style={styles.block} flex={false}>
+                                    <FlatList
+                                        showsVerticalScrollIndicator={false}
+                                        data={posts}
+                                        renderItem={renderPostsItem}
+                                        keyExtractor={item => item._id.$oid.toString()}
+                                        ListHeaderComponent={
+                                            <Block flex={false} >
+                                                <Block flex={false} style={styles.postBlock2}>
+                                                    <Text style={styles.title}>Posts</Text>
+                                                </Block>
                                             </Block>
-                                        </Block>
 
-                                    }
-                                    ListEmptyComponent={
-                                        <EmptyData text="No Posts Found" />
-                                    }
-                                    ListFooterComponent={
-                                        <AdsCarousel />
-                                    }
-                                />
+                                        }
+                                        ListEmptyComponent={
+                                            <EmptyData text="No Posts Found" />
+                                        }
+                                        ListFooterComponent={
+                                            <AdsCarousel />
+                                        }
+                                    />
+                                </Block>
                             </Block>
                         </>
                 }
