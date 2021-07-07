@@ -16,23 +16,27 @@ export default AddDocument = ({ navigation }) => {
     const dispatch = useDispatch()
 
     const [loading, setLoading] = useState(false)
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
+    const [title, setTitle] = useState('test')
+    const [description, setDescription] = useState('test')
     const [pdf, setPdf] = useState(null)
     const [binary, setBinary] = useState(null)
     const [name, setName] = useState('')
 
     const addFile = () => {
         setLoading(true)
-        const formData = {
-            title,
-            description,
-            filedata: pdf,
-            file:binary
-        }
+
+        let formData = new FormData()
+        formData.append('title', title)
+        formData.append('description', description)
+        formData.append('filedata', pdf)
+        formData.append('file', binary)
 
         dispatch(addFileService(formData, (res, err) => {
             setLoading(false)
+
+            if (res) {
+                Toast.show(res?.data?.result?.message, Toast.LONG)
+            }
         }))
     }
 

@@ -63,13 +63,6 @@ export const addFileService = (formData, callback) => async (
     const url = base_url + '/file_upload'
     const token = await auth.getToken('accessToken')
 
-    const data = {
-        file: formData.file,
-        title: formData.title,
-        description: formData.description,
-        filedata: formData.filedata,
-    }
-
     const option = {
         'Content-Type': 'application/json',
     };
@@ -80,7 +73,7 @@ export const addFileService = (formData, callback) => async (
             url,
             true,
             token,
-            JSON.stringify(data),
+            formData,
             option
         )
 

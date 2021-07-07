@@ -196,6 +196,7 @@ dependencies {
     implementation "com.android.support:design:26.1.0"
     implementation "com.android.support:appcompat-v7:26.1.0"
     implementation project(':react-native-fs')
+    implementation project(':react-native-document-picker')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
