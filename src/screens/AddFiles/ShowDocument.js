@@ -50,7 +50,7 @@ export default ShowDocument = ({ navigation }) => {
             fileCache: true,
             addAndroidDownloads: {
                 useDownloadManager: true,
-                notification: false,
+                notification: true,
                 path: PictureDir + "/ag_" + new Date(),
                 description: 'Downloading image.'
             }
