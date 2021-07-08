@@ -40,6 +40,37 @@ const styles = StyleSheet.create({
         width: '95%',
         left: 0
     },
+    notifyBlock: {
+        backgroundColor: colors.white,
+        elevation: 4,
+        marginVertical: 2,
+        marginRight: 40,
+        borderRadius: 5,
+        position: 'absolute',
+        zIndex: 1,
+        top: 50,
+        width: '85%',
+        left: 20
+    },
+    avatar:{
+        width:50,
+        height:50,
+        marginRight:20,
+        borderRadius:100
+    },
+    singleNotify:{
+         paddingVertical: 5, 
+         flexDirection: 'row', 
+         alignItems: 'center',
+         zIndex:99,
+         borderBottomWidth:1,
+         borderBottomColor:colors.borderColor 
+    },
+    header:{
+        backgroundColor:colors.primaryColor,
+        padding:5,
+        borderRadius:5
+    },
     expandSea: {
         backgroundColor: colors.white,
         elevation: 5,
@@ -52,6 +83,17 @@ const styles = StyleSheet.create({
         width: '85%',
         top:53,
         left: 10
+    },
+    notify:{
+        backgroundColor:colors.red,
+        borderRadius:100,
+        alignItems:'center',
+        width:15,
+        position:'absolute',
+        top:-10,
+        right:-5,
+        height:15,
+        justifyContent:'center'
     },
     input: {
         borderWidth: 1,
