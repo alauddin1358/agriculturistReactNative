@@ -103,7 +103,7 @@ export default EditProfile = props => {
     return (
 
         <Block block>
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={{ flex: 1 }}>
                 <Navbar />
                 <ScrollView block style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
                     <Text textColor size={20}>Edit Profile</Text>

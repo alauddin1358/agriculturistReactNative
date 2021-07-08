@@ -22,7 +22,7 @@ export default Profile = ({ navigation }) => {
 
     useEffect(() => {
         getUserInfo()
-    }, [])
+    }, [userInfo])
 
     const getUserInfo = () => {
         setIsLoading(true)
