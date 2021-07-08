@@ -24,8 +24,6 @@ export default Friends = ({ navigation, _carousel }) => {
     const [isLoading, setIsLoading] = useState(true)
     const [addFriendLoading, setAddFriendLoading] = useState(false)
 
-    console.log('peopleMayKnowList', peopleMayKnowList);
-
     useEffect(() => {
         getPeopleYouMayKnow()
     }, [])
