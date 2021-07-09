@@ -31,12 +31,9 @@ const Navbar = (props) => {
     const [application, setApplication] = useState(false)
     const [notification, setNotification] = useState(false)
     const [search, setSearch] = useState(false)
-    const [films, setFilms] = useState([
-        {
-            title: 'abc'
-        }
-    ]);
-    const [query, setQuery] = useState('');
+    const [films, setFilms] = useState([]);
+    const [filteredFilms, setFilteredFilms] = useState([]);
+    const [selectedValue, setSelectedValue] = useState([]);
     const [profile, setProfile] = useState(false)
 
     const onPressNotification = () => {
@@ -53,31 +50,31 @@ const Navbar = (props) => {
 
 
     useEffect(() => {
-
-        fetch(`https://swapi.co/api/films/`).then(res => res.json()).then((json) => {
-            console.log('results', results);
-            const { results: films } = json;
-            // setFilms(films)
-        });
-
+        fetch('https://aboutreact.herokuapp.com/getpost.php?offset=1')
+            .then((res) => res.json())
+            .then((json) => {
+                const { results: films } = json;
+                setFilms(films);
+                //setting the data in the films state
+            })
+            .catch((e) => {
+                alert(e);
+            });
     }, []);
 
 
-    useEffect(() => {
-        findFilm(query)
-    }, [query]);
-
-
-    console.log('query', query);
-
-
-    const findFilm = (q) => {
-        if (q === '') {
-            return [];
+    const findFilm = (query) => {
+        //method called everytime when we change the value of the input
+        if (query) {
+            //making a case insensitive regular expression to get similar value from the film json
+            const regex = new RegExp(`${query.trim()}`, 'i');
+            //setting the filtered film array according the query from the input
+            setFilteredFilms(films.filter((film) => film.title.search(regex) >= 0));
+        } else {
+            //if the query is null then return blank
+            setFilteredFilms([]);
         }
-        const regex = new RegExp(`${q.trim()}`, 'i');
-        return films.filter(film => film.title.search(regex) >= 0);
-    }
+    };
 
 
     const onPressApplication = () => {
@@ -185,24 +182,32 @@ const Navbar = (props) => {
             {search && <Block flex={false} style={styles.expandSea}>
                 <Block row center flex={false} style={styles.input}>
 
-                    <Block>
+                    <Block width flex={false}>
                         <Autocomplete
                             autoCapitalize="none"
                             autoCorrect={false}
-                            // containerStyle={}
-                            data={films.length === 1 && comp(query, films[0].title) ? [] : films}
-                            defaultValue={query}
-                            onChangeText={text => setQuery(text)}
-                            placeholder="Enter"
-                            renderItem={({ title, release_date }) => (
-                                <TouchableOpacity onPress={() => setQuery(title)}>
-                                    <Text>
-                                        {title} ({release_date.split('-')[0]})
-              </Text>
+                            containerStyle={{width:'100%', height:10, borderWidth:0}}
+                            //data to show in suggestion
+                            data={filteredFilms}
+                            //default value if you want to set something in input
+                            // defaultValue={
+                            //     JSON.stringify(selectedValue) === '[]' ? '' : selectedValue.title
+                            // }
+                            /*onchange of the text changing the state of the query which will trigger
+                            the findFilm method to show the suggestions*/
+                            onChangeText={(text) => findFilm(text)}
+                            placeholder="Enter the film title"
+                            renderItem={({ item }) => (
+                                //you can change the view you want to show in suggestion from here
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        setSelectedValue(item);
+                                        setFilteredFilms([]);
+                                    }}>
+                                    <Text style={styles.itemText}>{item.title}</Text>
                                 </TouchableOpacity>
                             )}
                         />
-                        {/* <Bloy */}
                     </Block>
 
 
