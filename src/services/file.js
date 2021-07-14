@@ -15,13 +15,13 @@ const base_url = Config.base_url
  */
 
 
-export const fetchFilesService = (callback) => async (
+export const fetchFilesService = (id,callback) => async (
     dispatch,
     getState
 ) => {
     dispatch({ type: GET_FILES_PENDING })
 
-    const url = base_url + '/getAllFiles/60b1fbf90f2d2ea3dd2dc72a'
+    const url = base_url + `/getAllFiles/${id}`
     const token = await auth.getToken('accessToken')
 
     try {
@@ -63,9 +63,7 @@ export const addFileService = (formData, callback) => async (
     const url = base_url + '/file_upload'
     const token = await auth.getToken('accessToken')
 
-    const option = {
-        'Content-Type': 'application/json',
-    };
+
 
 
     try {
@@ -73,8 +71,7 @@ export const addFileService = (formData, callback) => async (
             url,
             true,
             token,
-            formData,
-            option
+            JSON.stringify(formData),
         )
 
         dispatch({

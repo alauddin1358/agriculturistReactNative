@@ -4,36 +4,60 @@ import Block from '../../components/Block'
 import Text from '../../components/Text'
 import styles from './styles'
 import { fetchFilesService } from '../../services/file'
+import { getUserInfoService } from '../../services/user'
 import { colors } from "../../styles/theme"
 import { useDispatch } from "react-redux"
 import { Loader } from "../../components/Loader"
 import RNFetchBlob from 'rn-fetch-blob'
 import { Config } from "../../config"
+import { useNavigation } from '@react-navigation/native'
 
 
-export default ShowDocument = ({ navigation }) => {
+
+export default ShowDocument = (props) => {
+
+    const navigation = useNavigation();
+
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
     const [files, setFiles] = useState([])
+    const [userInfo, setUserInfo] = useState(null)
+
 
     console.log('files', files);
 
     useEffect(() => {
-        getFiles()
+        setTimeout(() => {
+            getFiles()
+        }, 3000);
+        getUserInfo()
     }, [])
 
+    const getUserInfo = () => {
+        setIsLoading(true)
+        dispatch(getUserInfoService((res, err) => {
+            setIsLoading(false)
+            if (res) {
+                setUserInfo(res?.data?.data ? JSON.parse(res.data.data) : [])
+            }
+        }))
+    }
+
     const getFiles = () => {
-        dispatch(fetchFilesService((res, err) => {
+        dispatch(fetchFilesService(userInfo?._id?.$oid, (res, err) => {
             setLoading(false)
             setFiles(res?.data?.data ? JSON.parse(res.data.data) : [])
         }))
     }
 
+    console.log('userInfo', userInfo);
+
     const renderFiles = ({ item, index }) => (
         <Block style={styles.table}>
             <Text style={styles.td}>{item.title}</Text>
             <Text style={styles.td}>{item.desc}</Text>
-            <TouchableOpacity style={styles.td}>
+            <TouchableOpacity style={styles.td} onPress={() => navigation.navigate('pdfView', { item })}>
                 <Text color={colors.primaryColor}>View</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.td} onPress={() => downloadFile(item.filename)}>
