@@ -63,7 +63,10 @@ export const addFileService = (formData, callback) => async (
     const url = base_url + '/file_upload'
     const token = await auth.getToken('accessToken')
 
-
+    const option = {
+        "Accept": 'application/json',
+        'Content-Type': 'application/json',
+    };
 
 
     try {
@@ -71,7 +74,7 @@ export const addFileService = (formData, callback) => async (
             url,
             true,
             token,
-            JSON.stringify(formData),
+            formData,
         )
 
         dispatch({
@@ -87,6 +90,6 @@ export const addFileService = (formData, callback) => async (
         })
 
         callback(null, error.response)
-        console.log(error);
+        console.log(error.response);
     }
 }

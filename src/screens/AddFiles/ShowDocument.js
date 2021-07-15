@@ -57,7 +57,7 @@ export default ShowDocument = (props) => {
         <Block style={styles.table}>
             <Text style={styles.td}>{item.title}</Text>
             <Text style={styles.td}>{item.desc}</Text>
-            <TouchableOpacity style={styles.td} onPress={() => navigation.navigate('pdfView', { item })}>
+            <TouchableOpacity style={styles.td} onPress={() => navigation.navigate('pdfScreen', { item })}>
                 <Text color={colors.primaryColor}>View</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.td} onPress={() => downloadFile(item.filename)}>

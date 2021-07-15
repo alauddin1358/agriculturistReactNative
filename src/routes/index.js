@@ -43,7 +43,7 @@ const Routes = props => {
             <Drawer.Screen name="details" component={PostDetails} />
             <Drawer.Screen name="addPost" component={AddPost} />
             <Drawer.Screen name="addFile" component={AddFile} />
-            <Drawer.Screen name="pdfView" component={PdfViewScreen} />
+            <Drawer.Screen name="pdfScreen" component={PdfViewScreen} />
         </Drawer.Navigator>
 
     );
