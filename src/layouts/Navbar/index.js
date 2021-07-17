@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { TextInput, TouchableOpacity, Image } from "react-native"
+import { FlatList, TouchableOpacity, Image } from "react-native"
 import Block from '../../components/Block'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -10,6 +10,9 @@ import styles from './styles'
 import { colors } from '../../styles/theme'
 import { useNavigation } from '@react-navigation/native'
 import Autocomplete from "react-native-autocomplete-input"
+import { useDispatch } from "react-redux"
+import { fetchNotificationService } from "../../services/notification"
+import EmptyData from "../../components/EmptyData"
 
 
 
@@ -25,9 +28,12 @@ const AutocompleteExample = (film) => {
 
 
 const Navbar = (props) => {
+    const dispatch = useDispatch()
 
     const navigation = useNavigation();
 
+    const [isLoading, setIsLoading] = useState(true)
+    const [notifications, setNotifications] = useState([])
     const [application, setApplication] = useState(false)
     const [notification, setNotification] = useState(false)
     const [search, setSearch] = useState(false)
@@ -43,6 +49,14 @@ const Navbar = (props) => {
         setNotification(!notification)
     }
 
+
+    const getNotifications = () => {
+        dispatch(fetchNotificationService((res, err) => {
+            setIsLoading(false)
+            setNotifications(res?.data?.data ? JSON.parse(res.data.data) : [])
+        }))
+    }
+
     console.log('films', films);
 
 
@@ -50,6 +64,8 @@ const Navbar = (props) => {
 
 
     useEffect(() => {
+        getNotifications()
+
         fetch('https://aboutreact.herokuapp.com/getpost.php?offset=1')
             .then((res) => res.json())
             .then((json) => {
@@ -114,6 +130,16 @@ const Navbar = (props) => {
         setNotification(false)
     }
 
+    const renderNotificationsItem = ({ item, index }) => (
+        <TouchableOpacity style={styles.singleNotify}>
+            <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
+            <Block flex={false}>
+                <Text bold size={16} color={colors.primaryColor}>Tasfique Alam</Text>
+                <Text bold>Wants to be your friend</Text>
+            </Block>
+        </TouchableOpacity>
+    )
+
     return (
 
         <Block flex={false}>
@@ -134,7 +160,7 @@ const Navbar = (props) => {
                     <TouchableOpacity style={{ marginHorizontal: 5 }} onPress={onPressNotification}>
                         <FontAwesome name="bell-o" color={colors.borderColor} size={17} />
                         <Block flex={false} style={styles.notify}>
-                            <Text size={11} white >1</Text>
+                            <Text size={11} white >{notifications?.length}</Text>
                         </Block>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ marginHorizontal: 5 }}>
@@ -152,20 +178,17 @@ const Navbar = (props) => {
                         <Text white>NOTIFICATION CENTER</Text>
                     </Block>
                     <Block flex={false} padding={[10]}>
-                        <TouchableOpacity style={styles.singleNotify}>
-                            <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
-                            <Block flex={false}>
-                                <Text bold size={16} color={colors.primaryColor}>Tasfique Alam</Text>
-                                <Text bold>Wants to be your friend</Text>
-                            </Block>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.singleNotify}>
-                            <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
-                            <Block flex={false}>
-                                <Text bold size={16} color={colors.primaryColor}>Tasfique Alam</Text>
-                                <Text bold>Wants to be your friend</Text>
-                            </Block>
-                        </TouchableOpacity>
+
+
+                        <FlatList
+                            showsVerticalScrollIndicator={false}
+                            data={notifications}
+                            renderItem={renderNotificationsItem}
+                            keyExtractor={item => item._id.$oid.toString()}
+                            ListEmptyComponent={
+                                <EmptyData text="No Notification" />
+                            }
+                        />
                     </Block>
                 </Block>
             }
@@ -186,7 +209,7 @@ const Navbar = (props) => {
                         <Autocomplete
                             autoCapitalize="none"
                             autoCorrect={false}
-                            containerStyle={{width:'100%', height:10, borderWidth:0}}
+                            containerStyle={{ width: '100%', height: 10, borderWidth: 0 }}
                             //data to show in suggestion
                             data={filteredFilms}
                             //default value if you want to set something in input
