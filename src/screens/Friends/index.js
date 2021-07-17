@@ -20,29 +20,31 @@ import AdsCarousel from '../Carousel'
 export default Friends = ({ navigation, _carousel }) => {
     const dispatch = useDispatch()
     const [peopleMayKnowList, setPeopleMayKnowList] = useState([])
-    const [friendReq, setFriendReq] = useState([])
+    const [friendRequestList, setfriendRequestList] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [addFriendLoading, setAddFriendLoading] = useState(false)
     const [acceptFriendLoading, setAcceptFriendLoading] = useState(false)
     const [deleteFriendLoading, setDeleteFriendLoading] = useState(false)
 
     useEffect(() => {
-        getPeopleYouMayKnow()
+        allFriend()
     }, [])
 
-    const getPeopleYouMayKnow = () => {
+    const allFriend = () => {
         setIsLoading(true)
         dispatch(getUsersService((res, err) => {
             setIsLoading(false)
-            if (res) {
-                setPeopleMayKnowList(res?.data?.data ? JSON.parse(res.data.data) : [])
-                setFriendReq(peopleMayKnowList.filter((item)=>item.isFrndReqAccepted == false))
+            if (res?.data?.data) {
+                const users = JSON.parse(res.data.data)
+                const youMayKnow = users.filter(people => people.isFrndReqAccepted == false)
+                console.log('youMayKnow', youMayKnow);
+                setPeopleMayKnowList(users || [])
             }
         }))
     }
 
-console.log('friendReq',friendReq);
-console.log('peopleMayKnowList',peopleMayKnowList);
+    console.log('friendReq', friendReq);
+    console.log('peopleMayKnowList', peopleMayKnowList);
 
     const renderPeopleYouMayKnow = ({ item, index }) => (
         <Block row center style={styles.styleBlock} flex={false}>
@@ -121,7 +123,7 @@ console.log('peopleMayKnowList',peopleMayKnowList);
                         </Text>
 
                         {
-                             acceptFriendLoading && <ActivityIndicator
+                            acceptFriendLoading && <ActivityIndicator
                                 style={{ marginLeft: 10 }}
                                 color={colors.white}
                                 size='small' />
@@ -178,7 +180,7 @@ console.log('peopleMayKnowList',peopleMayKnowList);
 
         }))
     }
-  
+
 
     return (
 

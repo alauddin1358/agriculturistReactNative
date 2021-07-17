@@ -17,29 +17,9 @@ import EmptyData from "../../components/EmptyData"
 
 
 
-
 export default FriendsList = ({ navigation, _carousel }) => {
 
-    const dispatch = useDispatch()
-    const [peopleMayKnowList, setPeopleMayKnowList] = useState([])
-    const [friendReq, setFriendReq] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-    const [addFriendLoading, setAddFriendLoading] = useState(false)
-
-    useEffect(() => {
-        getPeopleYouMayKnow()
-    }, [])
-
-    const getPeopleYouMayKnow = () => {
-        setIsLoading(true)
-        dispatch(getUsersService((res, err) => {
-            setIsLoading(false)
-            if (res) {
-                setPeopleMayKnowList(res?.data?.data ? JSON.parse(res.data.data) : [])
-                setFriendReq(peopleMayKnowList?.friends)
-            }
-        }))
-    }
 
     console.log('friendReq', friendReq);
     console.log('peopleMayKnowList', peopleMayKnowList);
@@ -65,7 +45,7 @@ export default FriendsList = ({ navigation, _carousel }) => {
                     <>
                         <Text
                             size={14}
-                            color={ colors.white}>
+                            color={colors.white}>
                             Unfriend
                         </Text>
 
