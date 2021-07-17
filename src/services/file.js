@@ -15,7 +15,7 @@ const base_url = Config.base_url
  */
 
 
-export const fetchFilesService = (id,callback) => async (
+export const fetchFilesService = (id, callback) => async (
     dispatch,
     getState
 ) => {
@@ -63,11 +63,6 @@ export const addFileService = (formData, callback) => async (
     const url = base_url + '/file_upload'
     const token = await auth.getToken('accessToken')
 
-    const option = {
-        "Accept": 'application/json',
-        'Content-Type': 'application/json',
-    };
-
 
     try {
         const response = await httpRequest.post(
@@ -84,6 +79,7 @@ export const addFileService = (formData, callback) => async (
 
         callback(response, null)
     } catch (error) {
+        console.log('error', error);
         dispatch({
             type: ADD_FILE_FAIL,
             payload: error.response,

@@ -20,7 +20,6 @@ export default ShowDocument = (props) => {
 
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(true)
-    const [isLoading, setIsLoading] = useState(true)
     const [files, setFiles] = useState([])
     const [userInfo, setUserInfo] = useState(null)
 
@@ -28,16 +27,17 @@ export default ShowDocument = (props) => {
     console.log('files', files);
 
     useEffect(() => {
-        setTimeout(() => {
-            getFiles()
-        }, 3000);
         getUserInfo()
     }, [])
 
+    useEffect(() => {
+        getFiles()
+    }, [userInfo])
+
     const getUserInfo = () => {
-        setIsLoading(true)
+        setLoading(true)
         dispatch(getUserInfoService((res, err) => {
-            setIsLoading(false)
+            setLoading(false)
             if (res) {
                 setUserInfo(res?.data?.data ? JSON.parse(res.data.data) : [])
             }
@@ -45,9 +45,10 @@ export default ShowDocument = (props) => {
     }
 
     const getFiles = () => {
+        setLoading(true)
         dispatch(fetchFilesService(userInfo?._id?.$oid, (res, err) => {
-            setLoading(false)
             setFiles(res?.data?.data ? JSON.parse(res.data.data) : [])
+            setLoading(false)
         }))
     }
 

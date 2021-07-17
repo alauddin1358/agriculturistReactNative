@@ -9,11 +9,13 @@ import { addFileService } from "../../services/file"
 import { useDispatch } from "react-redux"
 import DocumentPicker from 'react-native-document-picker'
 import RNFS from 'react-native-fs'
+import { useNavigation } from '@react-navigation/native'
 
 
 
-export default AddDocument = ({ navigation }) => {
+export default AddDocument = () => {
     const dispatch = useDispatch()
+    const navigation = useNavigation();
 
     const [loading, setLoading] = useState(false)
     const [title, setTitle] = useState('test')
@@ -22,7 +24,7 @@ export default AddDocument = ({ navigation }) => {
     const [binary, setBinary] = useState(null)
     const [name, setName] = useState('')
 
-    const addFile = () => {
+    const addFile = ({ navigate }) => {
         setLoading(true)
 
         let formData = new FormData()
@@ -35,6 +37,11 @@ export default AddDocument = ({ navigation }) => {
             setLoading(false)
 
             if (res) {
+                setTitle('')
+                setDescription('')
+                setPdf(null)
+                setBinary(null)
+                navigation.navigate('addFile', { step: 2 })
                 Toast.show(res?.data?.result?.message, Toast.LONG)
             }
         }))
@@ -46,8 +53,11 @@ export default AddDocument = ({ navigation }) => {
         try {
             const res = await DocumentPicker.pick({
                 type: [DocumentPicker.types.pdf],
-            });
-            setBinary(res.uri)
+            })
+
+            console.log('res', res);
+
+            setBinary(res)
             setPdf(await RNFS.readFile(res.uri, 'base64'))
             setName(res.name)
         } catch (err) {
