@@ -8,22 +8,40 @@ import Text from '../../components/Text'
 import styles from './styles'
 import { Navbar } from "../../layouts/Navbar"
 import { useDispatch } from "react-redux"
-import { getUsersService } from "../../services/user"
+import { getUserInfoService } from "../../services/user"
 import { Loader } from "../../components/Loader"
-import { rmFriendService, FriendService } from "../../services/friend"
+import { rmFriendService } from "../../services/friend"
 import { colors } from "../../styles/theme"
 import AdsCarousel from '../Carousel'
 import EmptyData from "../../components/EmptyData"
 
 
 
+
 export default FriendsList = ({ navigation, _carousel }) => {
 
+    const dispatch = useDispatch()
+    const [friendList, setFriendList] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [addFriendLoading, setAddFriendLoading] = useState(false)
 
-    console.log('friendReq', friendReq);
-    console.log('peopleMayKnowList', peopleMayKnowList);
-    const renderPeopleYouMayKnow = ({ item, index }) => (
+    useEffect(() => {
+        getFriends()
+    }, [])
+
+    const getFriends = () => {
+        setIsLoading(true)
+        dispatch(getUserInfoService((res, err) => {
+            setIsLoading(false)
+            if (res) {
+                const response = res?.data?.data ? JSON.parse(res.data.data) : []
+                setFriendList(response.friends)
+            }
+        }))
+    }
+
+
+    const renderFriends = ({ item, index }) => (
         <Block row center style={styles.styleBlock} flex={false}>
             <Block flex={false} margin={[0, 20, 0, 0]}>
                 <Image
@@ -65,7 +83,7 @@ export default FriendsList = ({ navigation, _carousel }) => {
         dispatch(rmFriendService(id, (res, err) => {
             if (res?.data?.result) {
                 Toast.show(res?.data?.result?.message, Toast.LONG)
-                getPeopleYouMayKnow()
+                getFriends()
             }
 
         }))
@@ -92,8 +110,8 @@ export default FriendsList = ({ navigation, _carousel }) => {
                                 isLoading ? <Loader /> :
                                     <FlatList
                                         showsVerticalScrollIndicator={false}
-                                        data={friendReq}
-                                        renderItem={renderPeopleYouMayKnow}
+                                        data={friendList}
+                                        renderItem={renderFriends}
                                         keyExtractor={item => item._id.$oid.toString()}
                                         ListEmptyComponent={
                                             <EmptyData text="No Friends Found" />

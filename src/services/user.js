@@ -38,6 +38,7 @@ export const getUsersService = (callback) => async (
 
         callback(response, null)
     } catch (error) {
+        console.log('error', error);
         dispatch({
             type: GET_ALL_USER_FAIL,
             payload: error.response,
