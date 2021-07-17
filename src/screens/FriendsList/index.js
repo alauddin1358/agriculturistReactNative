@@ -16,8 +16,6 @@ import AdsCarousel from '../Carousel'
 import EmptyData from "../../components/EmptyData"
 
 
-
-
 export default FriendsList = ({ navigation, _carousel }) => {
 
     const dispatch = useDispatch()
