@@ -71,12 +71,14 @@ export default ShowDocument = (props) => {
     const downloadFile = (filename) => {
         const { config, fs } = RNFetchBlob
         let PictureDir = fs.dirs.PictureDir
+
+        console.log('filename', filename);
         let options = {
             fileCache: true,
             addAndroidDownloads: {
                 useDownloadManager: true,
                 notification: true,
-                path: PictureDir + "/ag_" + new Date(),
+                path: PictureDir + "/ag_" + filename,
                 description: 'Downloading image.'
             }
         }
