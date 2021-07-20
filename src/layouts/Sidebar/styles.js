@@ -7,8 +7,9 @@ const styles = StyleSheet.create({
        alignItems:'center'
    },
    img:{
-       width:50,
-       height:50,
+       width:80,
+       height:80,
+       marginTop:30,
        resizeMode:'contain'
    },
    posts:{

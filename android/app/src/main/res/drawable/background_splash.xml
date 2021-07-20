@@ -4,10 +4,10 @@
     <item
         android:drawable="@color/splashscreen_bg"/>
 
-    <!-- <GifImageView
-        android:width="150dp"
-        android:height="300dp"
-        android:drawable="@mipmap/splash_icon"
-        android:gravity="center" /> -->
+    <item
+    android:width="300dp"
+    android:height="300dp"
+    android:drawable="@mipmap/splash_icon"
+    android:gravity="center" />
 
 </layer-list>

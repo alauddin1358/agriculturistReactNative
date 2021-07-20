@@ -72,7 +72,7 @@ export default Sidebar = ({ navigation }) => {
 
         <Block flex={1}>
             <Block flex={1} padding={[0, 5, 20, 5]} style={styles.sidebar}>
-                <Image style={styles.img} source={require('../../assets/images/Social_Fish2.png')} />
+                <Image style={styles.img} source={require('../../assets/logo.png')} />
                 <Text white bold size={16}>Agriculturist</Text>
 
                 <TouchableOpacity style={{ alignItems: 'center', marginTop: 40 }} onPress={() => navigation.navigate('dashboard')}>

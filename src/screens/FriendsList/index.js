@@ -8,7 +8,7 @@ import Text from '../../components/Text'
 import styles from './styles'
 import { Navbar } from "../../layouts/Navbar"
 import { useDispatch } from "react-redux"
-import { getUserInfoService } from "../../services/user"
+import { getUsersService } from "../../services/user"
 import { Loader } from "../../components/Loader"
 import { rmFriendService } from "../../services/friend"
 import { colors } from "../../styles/theme"
@@ -29,15 +29,17 @@ export default FriendsList = ({ navigation, _carousel }) => {
 
     const getFriends = () => {
         setIsLoading(true)
-        dispatch(getUserInfoService((res, err) => {
+        dispatch(getUsersService((res, err) => {
             setIsLoading(false)
-            if (res) {
-                const response = res?.data?.data ? JSON.parse(res.data.data) : []
-                setFriendList(response.friends)
+            if (res?.data?.data) {
+                const users = JSON.parse(res.data.data)
+                const youMayKnow = users.filter(people => people.isFrndReqAccepted == false)
+                console.log('youMayKnow', youMayKnow);
+                setFriendList(youMayKnow || [])
             }
         }))
     }
-
+console.log(friendList);
 
     const renderFriends = ({ item, index }) => (
         <Block row center style={styles.styleBlock} flex={false}>
@@ -110,7 +112,7 @@ export default FriendsList = ({ navigation, _carousel }) => {
                                         showsVerticalScrollIndicator={false}
                                         data={friendList}
                                         renderItem={renderFriends}
-                                        keyExtractor={item => item._id.$oid.toString()}
+                                        // keyExtractor={item => item.$id.$oid.toString()}
                                         ListEmptyComponent={
                                             <EmptyData text="No Friends Found" />
                                         }

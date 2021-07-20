@@ -38,12 +38,13 @@ export default Friends = ({ navigation, _carousel }) => {
                 const users = JSON.parse(res.data.data)
                 const youMayKnow = users.filter(people => people.isFrndReqAccepted == false)
                 console.log('youMayKnow', youMayKnow);
+                setfriendRequestList(youMayKnow || [])
                 setPeopleMayKnowList(users || [])
             }
         }))
     }
 
-    console.log('friendReq', friendReq);
+    console.log('friendReq', friendRequestList);
     console.log('peopleMayKnowList', peopleMayKnowList);
 
     const renderPeopleYouMayKnow = ({ item, index }) => (
@@ -89,7 +90,7 @@ export default Friends = ({ navigation, _carousel }) => {
         dispatch(addFriendService(id, (res, err) => {
             if (res?.data?.result) {
                 Toast.show(res?.data?.result?.message, Toast.LONG)
-                getPeopleYouMayKnow()
+                allFriend()
                 setAddFriendLoading(false)
             }
 
@@ -162,7 +163,8 @@ export default Friends = ({ navigation, _carousel }) => {
         dispatch(acceptFriendService(id, (res, err) => {
             if (res?.data?.result) {
                 Toast.show(res?.data?.result?.message, Toast.LONG)
-                getPeopleYouMayKnow()
+                allFriend()
+                navigation.navigate('friendsList')
                 setAcceptFriendLoading(false)
             }
 
@@ -174,7 +176,7 @@ export default Friends = ({ navigation, _carousel }) => {
         dispatch(deleteFriendService(id, (res, err) => {
             if (res?.data?.result) {
                 Toast.show(res?.data?.result?.message, Toast.LONG)
-                getPeopleYouMayKnow()
+                allFriend()
                 setDeleteFriendLoading(false)
             }
 
@@ -199,7 +201,7 @@ export default Friends = ({ navigation, _carousel }) => {
                                 isLoading ? <Loader /> :
                                     <FlatList
                                         showsVerticalScrollIndicator={false}
-                                        data={friendReq}
+                                        data={friendRequestList}
                                         renderItem={renderFriendReq}
                                         keyExtractor={item => item._id.$oid.toString()}
                                     />

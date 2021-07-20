@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { FlatList, TouchableOpacity, Image } from "react-native"
+import { FlatList, TouchableOpacity, Image, TextInput } from "react-native"
 import Block from '../../components/Block'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -29,6 +29,7 @@ const Navbar = (props) => {
     const [filteredFilms, setFilteredFilms] = useState([]);
     const [selectedValue, setSelectedValue] = useState([]);
     const [profile, setProfile] = useState(false)
+    const [typeSearch, setTypeSearch] = useState(true)
 
     const onPressNotification = () => {
         setApplication(false)
@@ -205,39 +206,26 @@ const Navbar = (props) => {
 
             {search && <Block flex={false} style={styles.expandSea}>
                 <Block row center flex={false} style={styles.input}>
-
-                    <Block width flex={false}>
-                        <Autocomplete
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            containerStyle={{ width: '100%', height: 10, borderWidth: 0 }}
-                            //data to show in suggestion
-                            data={filteredFilms}
-                            //default value if you want to set something in input
-                            // defaultValue={
-                            //     JSON.stringify(selectedValue) === '[]' ? '' : selectedValue.title
-                            // }
-                            /*onchange of the text changing the state of the query which will trigger
-                            the findFilm method to show the suggestions*/
-                            onChangeText={(text) => findFilm(text)}
-                            placeholder="Enter the film title"
-                            renderItem={({ item }) => (
-                                //you can change the view you want to show in suggestion from here
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        setSelectedValue(item);
-                                        setFilteredFilms([]);
-                                    }}>
-                                    <Text style={styles.itemText}>{item.title}</Text>
-                                </TouchableOpacity>
-                            )}
-                        />
-                    </Block>
-
-
+                    <TextInput
+                        style={{ height: 40, width: '100%' }}
+                        placeholder="Search for..."
+                        onFocus={() => setTypeSearch(true)}
+                    />
                     <FontAwesome color={colors.white} style={styles.searchBox} size={17} name="search" />
                 </Block>
             </Block>}
+
+            {typeSearch &&
+                <Block flex={false} style={styles.searchBlock}>
+                    <TouchableOpacity style={styles.singleSearch} onPress={redirectRequest}>
+                        <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
+                        <Block flex={false}>
+                            <Text bold size={16} color={colors.primaryColor}>Tasfique alam</Text>
+                        </Block>
+                    </TouchableOpacity>
+                </Block>
+
+            }
 
             {
                 profile && <Block flex={false} style={styles.expandSea}>

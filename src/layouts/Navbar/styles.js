@@ -52,6 +52,19 @@ const styles = StyleSheet.create({
         width: '85%',
         left: 20
     },
+    searchBlock: {
+        backgroundColor: colors.white,
+        elevation: 4,
+        marginVertical: 2,
+        marginRight: 40,
+        borderRadius: 5,
+        position: 'absolute',
+        zIndex: 1,
+        top: 105,
+        width: '85%',
+        left: 10,
+        padding:10,
+    },
     avatar:{
         width:50,
         height:50,
@@ -59,6 +72,14 @@ const styles = StyleSheet.create({
         borderRadius:100
     },
     singleNotify:{
+         paddingVertical: 5, 
+         flexDirection: 'row', 
+         alignItems: 'center',
+         zIndex:99,
+         borderBottomWidth:1,
+         borderBottomColor:colors.borderColor 
+    },
+    singleSearch:{
          paddingVertical: 5, 
          flexDirection: 'row', 
          alignItems: 'center',
