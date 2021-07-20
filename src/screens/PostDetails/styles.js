@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
         padding: 10,
         flex: 1
     },
+    container2: {
+        backgroundColor: '#f7f8fb',
+        flex: 1
+    },
     postBlock: {
         backgroundColor: '#f7f8fb',
         borderRadius: 5,

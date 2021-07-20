@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
         borderColor: colors.primaryColor,
         width: '60%',
         height: 30,
+        zIndex:9999,
         alignItems: 'center',
     },
     searchBox: {

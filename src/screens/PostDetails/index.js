@@ -102,9 +102,9 @@ export default PostDetails = (props) => {
     return (
 
         <Block block>
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={styles.container2}>
                 <Navbar />
-                <ScrollView block style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
+                <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
                     {
                         isLoading ? <Loader /> :
                             <Block style={styles.block} flex={false}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { SafeAreaView, FlatList, TouchableOpacity } from "react-native"
+import { SafeAreaView, FlatList, TouchableOpacity, ScrollView } from "react-native"
 import { useDispatch } from 'react-redux'
 import Block from '../../components/Block'
 import Text from '../../components/Text'
@@ -94,40 +94,39 @@ export default Dashboard = ({ navigation, carousel }) => {
 
         <Block block>
             <SafeAreaView style={{ flex: 1 }} >
-                <Navbar
-                    onPressProfile={() => navigation.navigate('profile')}
-                    onPressDrawer={() => navigation.openDrawer()}
-                />
-                {
-                    isLoading ? <Loader /> :
-                        <>
-                            <Block padding={[10]}>
-                                <Text textColor size={20}>Dashboard</Text>
-                                <Block style={styles.block} flex={false}>
-                                    <FlatList
-                                        showsVerticalScrollIndicator={false}
-                                        data={posts}
-                                        renderItem={renderPostsItem}
-                                        keyExtractor={item => item._id.$oid.toString()}
-                                        ListHeaderComponent={
-                                            <Block flex={false} >
-                                                <Block flex={false} style={styles.postBlock2}>
-                                                    <Text style={styles.title}>Posts</Text>
+                <Navbar />
+                <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+                    {
+                        isLoading ? <Loader /> :
+                            <>
+                                <Block padding={[10]}>
+                                    <Text textColor size={20}>Dashboard</Text>
+                                    <Block style={styles.block} flex={false}>
+                                        <FlatList
+                                            showsVerticalScrollIndicator={false}
+                                            data={posts}
+                                            renderItem={renderPostsItem}
+                                            keyExtractor={item => item._id.$oid.toString()}
+                                            ListHeaderComponent={
+                                                <Block flex={false} >
+                                                    <Block flex={false} style={styles.postBlock2}>
+                                                        <Text style={styles.title}>Posts</Text>
+                                                    </Block>
                                                 </Block>
-                                            </Block>
 
-                                        }
-                                        ListEmptyComponent={
-                                            <EmptyData text="No Posts Found" />
-                                        }
-                                        ListFooterComponent={
-                                            <AdsCarousel />
-                                        }
-                                    />
+                                            }
+                                            ListEmptyComponent={
+                                                <EmptyData text="No Posts Found" />
+                                            }
+                                            ListFooterComponent={
+                                                <AdsCarousel />
+                                            }
+                                        />
+                                    </Block>
                                 </Block>
-                            </Block>
-                        </>
-                }
+                            </>
+                    }
+                </ScrollView>
             </SafeAreaView>
         </Block>
 

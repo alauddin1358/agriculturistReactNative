@@ -9,7 +9,6 @@ import Text from '../../components/Text'
 import styles from './styles'
 import { colors } from '../../styles/theme'
 import { useNavigation } from '@react-navigation/native'
-import Autocomplete from "react-native-autocomplete-input"
 import { useDispatch } from "react-redux"
 import EmptyData from "../../components/EmptyData"
 import { getUsersService } from "../../services/user"
@@ -129,6 +128,14 @@ const Navbar = (props) => {
             </Block>
         </TouchableOpacity>
     )
+    const renderSearchItem = ({ item, index }) => (
+        <TouchableOpacity style={styles.singleSearch} onPress={redirectRequest}>
+            <Image style={styles.avatar2} source={item.image ? { uri: item.image } : require('../../assets/images/ala.jpeg')} />
+            <Block flex={false}>
+                <Text bold size={16} textColor>{item.name}</Text>
+            </Block>
+        </TouchableOpacity>
+    )
 
     return (
 
@@ -142,14 +149,6 @@ const Navbar = (props) => {
                         <Text color={colors.primaryColor}>Applications</Text>
                         <MaterialIcons size={17} color={colors.primaryColor} name="arrow-drop-down" />
                     </TouchableOpacity>
-
-                    <TextInput
-                        style={{ height: 40, width: '100%' }}
-                        placeholder="Search for..."
-                        onFocus={() => setTypeSearch(true)}
-                        value={search}
-                        onChangeText={onChangeSearch}
-                    />
                 </Block>
                 <Block row center flex={false}>
                     <TouchableOpacity style={{ marginHorizontal: 5 }} onPress={onPressSearch}>
@@ -201,25 +200,28 @@ const Navbar = (props) => {
 
             {openSearchBox && <Block flex={false} style={styles.expandSea}>
                 <Block row center flex={false} style={styles.input}>
-                    {/* <TextInput
-                        style={{ height: 40, width: '100%' }}
+                    <TextInput
+                        style={{ height: 40,zIndex:999999, width: '100%' }}
                         placeholder="Search for..."
                         onFocus={() => setTypeSearch(true)}
                         value={search}
                         onChangeText={onChangeSearch}
-                    /> */}
+                    />
                     <FontAwesome color={colors.white} style={styles.searchBox} size={17} name="search" />
                 </Block>
             </Block>}
 
             {typeSearch &&
                 <Block flex={false} style={styles.searchBlock}>
-                    <TouchableOpacity style={styles.singleSearch} onPress={redirectRequest}>
-                        <Image style={styles.avatar2} source={require('../../assets/images/ala.jpeg')} />
-                        <Block flex={false}>
-                            <Text bold size={16} textColor>Tasfique alam</Text>
-                        </Block>
-                    </TouchableOpacity>
+                    <FlatList
+                        showsVerticalScrollIndicator={false}
+                        data={searchedUsers}
+                        renderItem={renderSearchItem}
+                        keyExtractor={item => item._id.$oid.toString()}
+                        ListEmptyComponent={
+                            <EmptyData text="No User" />
+                        }
+                    />
                 </Block>
 
             }
