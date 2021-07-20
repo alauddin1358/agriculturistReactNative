@@ -71,6 +71,12 @@ const styles = StyleSheet.create({
         marginRight:20,
         borderRadius:100
     },
+    avatar2:{
+        width:40,
+        height:40,
+        marginRight:10,
+        borderRadius:100
+    },
     singleNotify:{
          paddingVertical: 5, 
          flexDirection: 'row', 

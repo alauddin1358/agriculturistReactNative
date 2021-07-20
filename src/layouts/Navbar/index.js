@@ -218,9 +218,9 @@ const Navbar = (props) => {
             {typeSearch &&
                 <Block flex={false} style={styles.searchBlock}>
                     <TouchableOpacity style={styles.singleSearch} onPress={redirectRequest}>
-                        <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
+                        <Image style={styles.avatar2} source={require('../../assets/images/ala.jpeg')} />
                         <Block flex={false}>
-                            <Text bold size={16} color={colors.primaryColor}>Tasfique alam</Text>
+                            <Text bold size={16} textColor>Tasfique alam</Text>
                         </Block>
                     </TouchableOpacity>
                 </Block>
