@@ -58,6 +58,7 @@ export default PostDetails = (props) => {
         setIsBtnLoading(true)
         dispatch(postCommentService(postId, commentBody, (res, err) => {
             getSinglePost()
+            setCommentBody('')
             setIsBtnLoading(false)
         }))
     }
