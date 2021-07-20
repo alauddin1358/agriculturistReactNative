@@ -20,24 +20,28 @@ const Navbar = (props) => {
 
     const navigation = useNavigation();
 
+    const [search, setSearch] = useState('')
     const [isLoading, setIsLoading] = useState(true)
+    const [searchedUsers, setSearchedUsers] = useState([])
+    const [allUsers, setAllUsers] = useState([])
     const [notifications, setNotifications] = useState([])
     const [application, setApplication] = useState(false)
     const [notification, setNotification] = useState(false)
-    const [search, setSearch] = useState(false)
-    const [films, setFilms] = useState([]);
-    const [filteredFilms, setFilteredFilms] = useState([]);
-    const [selectedValue, setSelectedValue] = useState([]);
+    const [openSearchBox, setOpenSearchBox] = useState(false)
     const [profile, setProfile] = useState(false)
-    const [typeSearch, setTypeSearch] = useState(true)
+    const [typeSearch, setTypeSearch] = useState(false)
+
+
+    useEffect(() => {
+        allFriend()
+    }, [])
 
     const onPressNotification = () => {
         setApplication(false)
-        setSearch(false)
+        setOpenSearchBox(false)
         setProfile(false)
         setNotification(!notification)
     }
-
 
     const allFriend = () => {
         setIsLoading(true)
@@ -45,59 +49,42 @@ const Navbar = (props) => {
             setIsLoading(false)
             if (res?.data?.data) {
                 const users = JSON.parse(res.data.data)
+                setAllUsers(users)
                 const friendRequest = users.filter(people => people.isFrndReqAccepted == false)
                 setNotifications(friendRequest || [])
             }
         }))
     }
 
-
-
-
-    const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
-
-
-    useEffect(() => {
-        allFriend()
-
-
-        fetch('https://aboutreact.herokuapp.com/getpost.php?offset=1')
-            .then((res) => res.json())
-            .then((json) => {
-                const { results: films } = json;
-                setFilms(films);
-                //setting the data in the films state
-            })
-            .catch((e) => {
-                alert(e);
-            });
-    }, []);
-
-
-    const findFilm = (query) => {
-        //method called everytime when we change the value of the input
-        if (query) {
-            //making a case insensitive regular expression to get similar value from the film json
-            const regex = new RegExp(`${query.trim()}`, 'i');
-            //setting the filtered film array according the query from the input
-            setFilteredFilms(films.filter((film) => film.title.search(regex) >= 0));
-        } else {
-            //if the query is null then return blank
-            setFilteredFilms([]);
+    const onChangeSearch = val => {
+        setSearch(val)
+        if (val === '') {
+            setTypeSearch(false)
+            setSearchedUsers([])
+            return
         }
-    };
+
+        const matchedUsers = allUsers.filter((obj) => JSON.stringify(obj.name).toLowerCase().includes(val.toLowerCase()))
+        if (matchedUsers.length > 0) {
+            setTypeSearch(true)
+        } else {
+            setTypeSearch(false)
+        }
+        setSearchedUsers(matchedUsers)
+
+    }
 
 
     const onPressApplication = () => {
         setApplication(!application)
-        setSearch(false)
+        setOpenSearchBox(false)
         setProfile(false)
         setNotification(false)
     }
 
     const onPressSearch = () => {
         setApplication(false)
-        setSearch(!search)
+        setOpenSearchBox(!openSearchBox)
         setProfile(false)
         setNotification(false)
     }
@@ -105,7 +92,7 @@ const Navbar = (props) => {
     const onPressProfileIcon = () => {
         setProfile(!profile)
         setApplication(false)
-        setSearch(false)
+        setOpenSearchBox(false)
         setNotification(false)
     }
 
@@ -113,7 +100,7 @@ const Navbar = (props) => {
         navigation.navigate('profile')
         setProfile(false)
         setApplication(false)
-        setSearch(false)
+        setOpenSearchBox(false)
         setNotification(false)
     }
 
@@ -121,7 +108,7 @@ const Navbar = (props) => {
         navigation.openDrawer()
         setProfile(false)
         setApplication(false)
-        setSearch(false)
+        setOpenSearchBox(false)
         setNotification(false)
     }
 
@@ -129,7 +116,7 @@ const Navbar = (props) => {
         navigation.navigate('friends')
         setProfile(false)
         setApplication(false)
-        setSearch(false)
+        setOpenSearchBox(false)
         setNotification(false)
     }
 
@@ -155,6 +142,14 @@ const Navbar = (props) => {
                         <Text color={colors.primaryColor}>Applications</Text>
                         <MaterialIcons size={17} color={colors.primaryColor} name="arrow-drop-down" />
                     </TouchableOpacity>
+
+                    <TextInput
+                        style={{ height: 40, width: '100%' }}
+                        placeholder="Search for..."
+                        onFocus={() => setTypeSearch(true)}
+                        value={search}
+                        onChangeText={onChangeSearch}
+                    />
                 </Block>
                 <Block row center flex={false}>
                     <TouchableOpacity style={{ marginHorizontal: 5 }} onPress={onPressSearch}>
@@ -204,13 +199,15 @@ const Navbar = (props) => {
                 </TouchableOpacity>
             </Block>}
 
-            {search && <Block flex={false} style={styles.expandSea}>
+            {openSearchBox && <Block flex={false} style={styles.expandSea}>
                 <Block row center flex={false} style={styles.input}>
-                    <TextInput
+                    {/* <TextInput
                         style={{ height: 40, width: '100%' }}
                         placeholder="Search for..."
                         onFocus={() => setTypeSearch(true)}
-                    />
+                        value={search}
+                        onChangeText={onChangeSearch}
+                    /> */}
                     <FontAwesome color={colors.white} style={styles.searchBox} size={17} name="search" />
                 </Block>
             </Block>}
