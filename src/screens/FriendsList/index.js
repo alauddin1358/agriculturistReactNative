@@ -8,7 +8,7 @@ import Text from '../../components/Text'
 import styles from './styles'
 import { Navbar } from "../../layouts/Navbar"
 import { useDispatch } from "react-redux"
-import { getUsersService } from "../../services/user"
+import { getUsersService, getUserInfoService } from "../../services/user"
 import { Loader } from "../../components/Loader"
 import { rmFriendService } from "../../services/friend"
 import { colors } from "../../styles/theme"
@@ -22,9 +22,12 @@ export default FriendsList = ({ navigation, _carousel }) => {
     const [friendList, setFriendList] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [addFriendLoading, setAddFriendLoading] = useState(false)
+    const [userInfo, setUserInfo] = useState(null)
+
 
     useEffect(() => {
         getFriends()
+        getUserInfo()
     }, [])
 
     const getFriends = () => {
@@ -33,13 +36,24 @@ export default FriendsList = ({ navigation, _carousel }) => {
             setIsLoading(false)
             if (res?.data?.data) {
                 const users = JSON.parse(res.data.data)
-                const youMayKnow = users.filter(people => people.isFrndReqAccepted == false)
+                const youMayKnow = users.filter(people => people._id.$oid == userInfo.filter(item => item.$id.$oid))
                 console.log('youMayKnow', youMayKnow);
                 setFriendList(youMayKnow || [])
             }
         }))
     }
-console.log(friendList);
+
+    const getUserInfo = () => {
+        dispatch(getUserInfoService((res, err) => {
+            if (res?.data?.data) {
+                const usersInfoFriend = JSON.parse(res.data.data)
+                const friends = usersInfoFriend.friends.filter(item => item.$id.$oid)
+                setUserInfo(friends)
+            }
+        }))
+    }
+
+    console.log('userInfo', userInfo);
 
     const renderFriends = ({ item, index }) => (
         <Block row center style={styles.styleBlock} flex={false}>
