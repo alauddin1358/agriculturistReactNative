@@ -19,18 +19,16 @@ import EmptyData from "../../components/EmptyData"
 export default Dashboard = ({ navigation, carousel }) => {
     const dispatch = useDispatch()
 
-    const [expand, setExpand] = useState(false)
+    const [expand, setExpand] = useState(null)
     const [posts, setPosts] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-
-    console.log('posts', posts);
 
     useEffect(() => {
         getPostList()
     }, [])
 
-    const expandClick = () => {
-        setExpand(!expand)
+    const expandClick = (item) => {
+        setExpand(item)
     }
 
     const getPostList = () => {
@@ -54,7 +52,7 @@ export default Dashboard = ({ navigation, carousel }) => {
                 <Text bold textColor style={styles.post}>{item.title}</Text>
             </TouchableOpacity>
 
-            <Text textColor center size={12} numberOfLines={expand ? null : 3} style={styles.des}>{item.body}</Text>
+            <Text textColor center size={12} numberOfLines={expand === item?._id?.$oid ? null : 3} style={styles.des}>{item.body}</Text>
             <Block flex={false}>
                 <Block flex={false} row center margin={[10, 0, 0]}>
                     <MaterialIcons style={{ marginRight: 5 }} name="date-range" />
@@ -79,12 +77,20 @@ export default Dashboard = ({ navigation, carousel }) => {
                     </TouchableOpacity>
                 </Block>
             </Block>
+            {expand === item?._id?.$oid ?
+                <TouchableOpacity onPress={() => expandClick(item)}>
+                    <Text style={{ color: 'blue', marginTop: 5 }}>
+                        Read Less
+                    </Text>
+                </TouchableOpacity> :
+                <TouchableOpacity onPress={() => expandClick(item._id.$oid)}>
+                    <Text style={{ color: 'blue', marginTop: 5 }}>
+                        Read More
+                    </Text>
+                </TouchableOpacity>
+            }
 
-            <TouchableOpacity onPress={expandClick}>
-                <Text style={{ color: 'blue', marginTop: 5 }}>
-                    {!expand ? 'Read more' : 'Read less'}
-                </Text>
-            </TouchableOpacity>
+
 
         </Block>
     );
