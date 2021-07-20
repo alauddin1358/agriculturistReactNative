@@ -22,7 +22,6 @@ export default AdsCarousel = ({ navigation, carousel }) => {
     const getAdsList = () => {
         dispatch(fetchAdsService((res, err) => {
             setIsLoading(false)
-            console.log('res', res);
             setAds(res?.data?.data ? JSON.parse(res.data.data) : [])
         }))
     }

@@ -4,6 +4,7 @@ import auth from '../utils/auth'
 import {
     GET_ALL_USER_PENDING, GET_ALL_USER_SUCCESS, GET_ALL_USER_FAIL,
     UPDATE_USER_PENDING, UPDATE_USER_SUCCESS, UPDATE_USER_FAIL,
+    GET_USER_INFO_PENDING, GET_USER_INFO_SUCCESS, GET_USER_INFO_FAIL,
 } from '../constant/userConstant'
 
 const base_url = Config.base_url
@@ -56,7 +57,7 @@ export const getUserInfoService = (callback) => async (
     dispatch,
     getState
 ) => {
-    dispatch({ type: 'GET__USER__INFO_PENDING' })
+    dispatch({ type: GET_USER_INFO_PENDING })
 
     const url = base_url + `/user`
     const token = await auth.getToken('accessToken')
@@ -71,14 +72,14 @@ export const getUserInfoService = (callback) => async (
         )
 
         dispatch({
-            type: 'GET__USER__INFO_SUCCESS',
+            type: GET_USER_INFO_SUCCESS,
             payload: response,
         })
 
         callback(response, null)
     } catch (error) {
         dispatch({
-            type: 'GET__USER__INFO_FAIL',
+            type: GET_USER_INFO_FAIL,
             payload: error.response,
         })
         console.log(error);

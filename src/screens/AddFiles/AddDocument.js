@@ -55,8 +55,6 @@ export default AddDocument = () => {
                 type: [DocumentPicker.types.pdf],
             })
 
-            console.log('res', res);
-
             setBinary(res)
             setPdf(await RNFS.readFile(res.uri, 'base64'))
             setName(res.name)

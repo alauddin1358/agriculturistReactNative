@@ -8,21 +8,17 @@ import AdsCarousel from '../Carousel'
 import { dateFormat } from "../../utils/common"
 import { Navbar } from "../../layouts/Navbar"
 import { postCommentService, updateCommentService, deleteCommentService } from "../../services/comments"
-import { useNavigation } from '@react-navigation/native'
 import { useDispatch } from 'react-redux'
 import { Loader } from "../../components/Loader"
 import { fetchSinglePost } from "../../services/post"
-import { PrimaryButton } from "../../components/Button"
 import AntDesign from 'react-native-vector-icons/AntDesign'
-
-
+import { getUserInfoService } from "../../services/user"
 
 
 
 export default PostDetails = (props) => {
 
     const dispatch = useDispatch()
-    const navigation = useNavigation();
 
     const postId = props?.route?.params?.post?._id?.$oid;
 
@@ -36,11 +32,26 @@ export default PostDetails = (props) => {
     const [commentId, setCommentId] = useState('')
     const [edit, setEdit] = useState(null)
     const [modalVisible, setModalVisible] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [userId, setUserId] = useState(null)
 
 
     useEffect(() => {
         getSinglePost()
+        getUserInfo()
     }, [postId])
+
+
+    const getUserInfo = () => {
+        setLoading(true)
+        dispatch(getUserInfoService((res, err) => {
+            setLoading(false)
+            if (res) {
+                const repponse = res?.data?.data ? JSON.parse(res.data.data) : {}
+                setUserId(repponse._id.$oid)
+            }
+        }))
+    }
 
 
     const onSubmitComment = () => {
@@ -91,7 +102,7 @@ export default PostDetails = (props) => {
 
         <Block block>
             <SafeAreaView style={styles.container}>
-                <Navbar/>
+                <Navbar />
                 <ScrollView block style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
                     {
                         isLoading ? <Loader /> :
@@ -157,16 +168,20 @@ export default PostDetails = (props) => {
                                                         </Block>
                                                     }
 
-                                                    <Block row bottom center flex={false} padding={[10]}>
-                                                        <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10 }} onPress={() => onPressEdit(item)}>
-                                                            <AntDesign size={18} style={{ marginRight: 5 }} name="edit" />
-                                                            <Text>Edit</Text>
-                                                        </TouchableOpacity>
-                                                        <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => onPressDelete(item)}>
-                                                            <AntDesign size={18} style={{ marginRight: 5 }} color="red" name="delete" />
-                                                            <Text>Delete</Text>
-                                                        </TouchableOpacity>
-                                                    </Block>
+                                                    {
+                                                        item?.user?.userId?.$oid == userId &&
+
+                                                        <Block row bottom center flex={false} padding={[10]}>
+                                                            <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10 }} onPress={() => onPressEdit(item)}>
+                                                                <AntDesign size={18} style={{ marginRight: 5 }} name="edit" />
+                                                                <Text>Edit</Text>
+                                                            </TouchableOpacity>
+                                                            <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => onPressDelete(item)}>
+                                                                <AntDesign size={18} style={{ marginRight: 5 }} color="red" name="delete" />
+                                                                <Text>Delete</Text>
+                                                            </TouchableOpacity>
+                                                        </Block>
+                                                    }
                                                 </Block>
 
                                                 {edit == item._id.$oid &&

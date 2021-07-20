@@ -11,20 +11,8 @@ import { colors } from '../../styles/theme'
 import { useNavigation } from '@react-navigation/native'
 import Autocomplete from "react-native-autocomplete-input"
 import { useDispatch } from "react-redux"
-import { fetchNotificationService } from "../../services/notification"
 import EmptyData from "../../components/EmptyData"
-
-
-
-const AutocompleteExample = (film) => {
-    const { title, director, opening_crawl, episode_id } = film;
-    return (
-        <Block>
-            <Text>{title}</Text>
-        </Block>
-    );
-}
-
+import { getUsersService } from "../../services/user"
 
 
 const Navbar = (props) => {
@@ -50,21 +38,27 @@ const Navbar = (props) => {
     }
 
 
-    const getNotifications = () => {
-        dispatch(fetchNotificationService((res, err) => {
+    const allFriend = () => {
+        setIsLoading(true)
+        dispatch(getUsersService((res, err) => {
             setIsLoading(false)
-            setNotifications(res?.data?.data ? JSON.parse(res.data.data) : [])
+            if (res?.data?.data) {
+                const users = JSON.parse(res.data.data)
+                const friendRequest = users.filter(people => people.isFrndReqAccepted == false)
+                setNotifications(friendRequest || [])
+            }
         }))
     }
 
-    console.log('films', films);
+
 
 
     const comp = (a, b) => a.toLowerCase().trim() === b.toLowerCase().trim();
 
 
     useEffect(() => {
-        getNotifications()
+        allFriend()
+
 
         fetch('https://aboutreact.herokuapp.com/getpost.php?offset=1')
             .then((res) => res.json())
@@ -130,11 +124,19 @@ const Navbar = (props) => {
         setNotification(false)
     }
 
+    const redirectRequest = () => {
+        navigation.navigate('friends')
+        setProfile(false)
+        setApplication(false)
+        setSearch(false)
+        setNotification(false)
+    }
+
     const renderNotificationsItem = ({ item, index }) => (
-        <TouchableOpacity style={styles.singleNotify}>
-            <Image style={styles.avatar} source={require('../../assets/images/ala.jpeg')} />
+        <TouchableOpacity style={styles.singleNotify} onPress={redirectRequest}>
+            <Image style={styles.avatar} source={item.image ? { uri: item.image } : require('../../assets/images/ala.jpeg')} />
             <Block flex={false}>
-                <Text bold size={16} color={colors.primaryColor}>Tasfique Alam</Text>
+                <Text bold size={16} color={colors.primaryColor}>{item.name}</Text>
                 <Text bold>Wants to be your friend</Text>
             </Block>
         </TouchableOpacity>
@@ -178,7 +180,6 @@ const Navbar = (props) => {
                         <Text white>NOTIFICATION CENTER</Text>
                     </Block>
                     <Block flex={false} padding={[10]}>
-
 
                         <FlatList
                             showsVerticalScrollIndicator={false}
