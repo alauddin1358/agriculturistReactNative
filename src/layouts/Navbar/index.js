@@ -199,11 +199,10 @@ const Navbar = (props) => {
             </Block>}
 
             {openSearchBox && <Block flex={false} style={styles.expandSea}>
-                <Block row center flex={false} style={styles.input}>
+                <Block row center width flex={false} style={styles.input}>
                     <TextInput
                         style={{ height: 40,zIndex:999999, width: '100%' }}
                         placeholder="Search for..."
-                        onFocus={() => setTypeSearch(true)}
                         value={search}
                         onChangeText={onChangeSearch}
                     />
