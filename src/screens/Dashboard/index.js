@@ -101,38 +101,35 @@ export default Dashboard = ({ navigation, carousel }) => {
         <Block block>
             <SafeAreaView style={{ flex: 1 }} >
                 <Navbar />
-                <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
-                    {
-                        isLoading ? <Loader /> :
-                            <>
-                                <Block padding={[10]}>
-                                    <Text textColor size={20}>Dashboard</Text>
-                                    <Block style={styles.block} flex={false}>
-                                        <FlatList
-                                            showsVerticalScrollIndicator={false}
-                                            data={posts}
-                                            renderItem={renderPostsItem}
-                                            keyExtractor={item => item._id.$oid.toString()}
-                                            ListHeaderComponent={
-                                                <Block flex={false} >
-                                                    <Block flex={false} style={styles.postBlock2}>
-                                                        <Text style={styles.title}>Posts</Text>
-                                                    </Block>
-                                                </Block>
 
-                                            }
-                                            ListEmptyComponent={
-                                                <EmptyData text="No Posts Found" />
-                                            }
-                                            ListFooterComponent={
-                                                <AdsCarousel />
-                                            }
-                                        />
-                                    </Block>
-                                </Block>
-                            </>
-                    }
-                </ScrollView>
+                {
+                    isLoading ? <Loader /> :
+                        <Block padding={[10]} block>
+                            <Text textColor size={20}>Dashboard</Text>
+                            <Block style={styles.block} flex={false}>
+                                <FlatList
+                                    showsVerticalScrollIndicator={false}
+                                    data={posts}
+                                    renderItem={renderPostsItem}
+                                    keyExtractor={item => item._id.$oid.toString()}
+                                    ListHeaderComponent={
+                                        <Block flex={false} >
+                                            <Block flex={false} style={styles.postBlock2}>
+                                                <Text style={styles.title}>Posts</Text>
+                                            </Block>
+                                        </Block>
+
+                                    }
+                                    ListEmptyComponent={
+                                        <EmptyData text="No Posts Found" />
+                                    }
+                                    ListFooterComponent={
+                                        <AdsCarousel />
+                                    }
+                                />
+                            </Block>
+                        </Block>
+                }
             </SafeAreaView>
         </Block>
 
