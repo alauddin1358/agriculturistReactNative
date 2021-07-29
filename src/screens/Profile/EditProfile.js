@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { ScrollView, SafeAreaView, TouchableOpacity, Image, ImageBackground } from "react-native"
 import Block from '../../components/Block'
 import Text from '../../components/Text'
@@ -16,6 +16,8 @@ import Toast from 'react-native-simple-toast'
 import { useNavigation } from '@react-navigation/native'
 
 
+console.log('data', data);
+
 
 export default EditProfile = props => {
     const dispatch = useDispatch()
@@ -24,30 +26,51 @@ export default EditProfile = props => {
 
     const userInfo = props?.route?.params?.userInfo
 
-    const [expand, setExpand] = useState(false)
-    const [userCategory, setUserCategory] = useState(userInfo?.user_category)
-    const [job, setJob] = useState(userInfo?.job_type)
-    const [specialization, setSpecialization] = useState(userInfo?.specialization_type)
+    const [userCategory, setUserCategory] = useState('')
+    const [job, setJob] = useState('')
+    const [specialization, setSpecialization] = useState('')
     const [openStudentType, setOpenStudentType] = useState(false)
-    const [studentType, setStudentType] = useState(userInfo?.student_type)
+    const [studentType, setStudentType] = useState('')
     const [openJob, setOpenJob] = useState(false)
     const [openSpecialization, setOpenSpecialization] = useState(false)
-    const [firstname, setFirstname] = useState(userInfo?.firstname)
-    const [middlename, setMiddlename] = useState(userInfo?.middlename)
-    const [lastname, setLastname] = useState(userInfo?.lastname)
-    const [email, setEmail] = useState(userInfo?.email)
-    const [phone, setPhone] = useState(userInfo?.phone)
-    const [address, setAddress] = useState(userInfo?.address)
-    const [country, setCountry] = useState(userInfo?.country)
-    const [imageFile, setImageFile] = useState(userInfo?.image)
-    const [image, setImage] = useState(userInfo?.image)
-    const [referrerName, setReferrerName] = useState(userInfo?.referrer_name)
-    const [referrerEmail, setReferrerEmail] = useState(userInfo?.referrer_email)
+    const [firstname, setFirstname] = useState('')
+    const [middlename, setMiddlename] = useState('')
+    const [lastname, setLastname] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [address, setAddress] = useState('')
+    const [country, setCountry] = useState('')
+    const [openCountry, setopenCountry] = useState('')
+    const [countries, setCountries] = useState(data)
+    const [imageFile, setImageFile] = useState({})
+    const [image, setImage] = useState('')
+    const [referrerName, setReferrerName] = useState('')
+    const [referrerEmail, setReferrerEmail] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const [password, setPassword] = useState(userInfo?.password)
-    const [passwordConfirm, setPasswordConfirm] = useState(userInfo?.passwordconfirm)
+    const [password, setPassword] = useState('')
+    const [passwordConfirm, setPasswordConfirm] = useState('')
 
-    console.log('userinfo', userInfo);
+    console.log('countries', countries);
+
+    useEffect(() => {
+        setUserCategory(userInfo?.user_category)
+        setJob(userInfo?.job_type)
+        setSpecialization(userInfo?.specialization_type)
+        setStudentType(userInfo?.student_type)
+        setFirstname(userInfo?.firstname)
+        setMiddlename(userInfo?.middlename)
+        setLastname(userInfo?.lastname)
+        setEmail(userInfo?.email)
+        setPhone(userInfo?.phone)
+        setAddress(userInfo?.address)
+        setCountry(userInfo?.country)
+        setImageFile(userInfo?.image)
+        setImage(userInfo?.image)
+        setReferrerName(userInfo?.referrer_name)
+        setReferrerEmail(userInfo?.referrer_email)
+        setPassword(userInfo?.password)
+        setPasswordConfirm(userInfo?.passwordconfirm)
+    }, [])
 
 
     const uploadAvatar = async () => {
@@ -94,7 +117,8 @@ export default EditProfile = props => {
                     Toast.show(res?.data?.result?.message, Toast.LONG)
                 } else {
                     Toast.show(res?.data?.result?.message, Toast.LONG)
-                    navigation.navigate('profile')
+                    // navigation.navigate('profile')
+                    navigation.push('profile')
                 }
             }
         }))
@@ -201,11 +225,13 @@ export default EditProfile = props => {
                             <DropDownPicker
                                 style={styles.pickerEdit}
                                 dropDownContainerStyle={styles.pickerInner}
+                                containerStyle={{}}
                                 textStyle={{ color: 'gray' }}
                                 placeholder="Select Country"
-                                open={openStudentType}
-                                setOpen={setStudentType}
-                                items={data && data}
+                                open={openCountry}
+                                setOpen={setopenCountry}
+                                items={countries}
+                                setItems={setCountries}
                                 value={country}
                                 setValue={setCountry}
                             />

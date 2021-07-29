@@ -5,73 +5,76 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#f7f8fb',
         margin: 10,
-        flex:1
+        flex: 1
     },
-    pickerEdit:{
-        borderColor:colors.borderColor,
+    pickerEdit: {
+        borderColor: colors.borderColor,
+        zIndex: 9,
+        overflow: 'scroll'
     },
-    pickerInner:{
-        zIndex:99
+    pickerInner: {
+        zIndex: 99,
+        overflow: 'scroll'
     },
-    img:{
-        width:200,
-        height:200,
-        alignSelf:'center'
+    img: {
+        width: 200,
+        height: 200,
+        alignSelf: 'center'
     },
-    imgFile:{
-        backgroundColor:colors.white,
-        borderWidth:1,
-        borderColor:colors.borderColor,
-        width:'50%',
-        padding:10,
-        borderRadius:5,
-        marginBottom:30
+    imgFile: {
+        backgroundColor: colors.white,
+        borderWidth: 1,
+        borderColor: colors.borderColor,
+        width: '50%',
+        padding: 10,
+        borderRadius: 5,
+        marginBottom: 30
     },
-    ads:{
-        width:200,
-        height:200,
-        resizeMode:'contain'
+    ads: {
+        width: 200,
+        height: 200,
+        resizeMode: 'contain'
     },
-    bgImg:{
-        width:'100%',
-        marginVertical:10,
-        height:250,
-        resizeMode:'contain',
-        alignItems:'center',
-        justifyContent:'center'
+    bgImg: {
+        width: '100%',
+        marginVertical: 10,
+        height: 250,
+        resizeMode: 'contain',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-    block:{
-        backgroundColor:colors.white,
-        borderRadius:5
+    block: {
+        backgroundColor: colors.white,
+        borderRadius: 5
     },
-    btn:{
-        backgroundColor:colors.primaryColor,
-        paddingVertical:5,
-        paddingHorizontal:20,
-        borderRadius:5
+    btn: {
+        backgroundColor: colors.primaryColor,
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        borderRadius: 5
     },
-    btn2:{
-        backgroundColor:colors.primaryColor,
-        paddingVertical:5,
-        paddingHorizontal:15,
-        borderRadius:5
+    btn2: {
+        backgroundColor: colors.primaryColor,
+        paddingVertical: 5,
+        paddingHorizontal: 15,
+        borderRadius: 5
     },
-    camera:{
-        position:'absolute',
-        top:10,
-        right:10
+    camera: {
+        position: 'absolute',
+        top: 10,
+        right: 10
     },
-    infoblock:{
-        margin:10,
-        backgroundColor:colors.white,
-        elevation:4,
-        borderRadius:5
+    infoblock: {
+        margin: 10,
+        backgroundColor: colors.white,
+        elevation: 4,
+        borderRadius: 5
     },
-    edit:{
-        position:'absolute',
-        top:10,
-        right:10,
-        zIndex:2222
+    edit: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        zIndex: 2222
     },
 });
 

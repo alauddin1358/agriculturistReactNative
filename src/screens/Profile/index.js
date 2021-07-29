@@ -34,8 +34,6 @@ export default Profile = ({ navigation }) => {
         }))
     }
 
-    console.log('userInfo', userInfo);
-
     return (
 
         <Block block>
