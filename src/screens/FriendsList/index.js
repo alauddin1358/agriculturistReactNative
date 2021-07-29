@@ -22,38 +22,33 @@ export default FriendsList = ({ navigation, _carousel }) => {
     const [friendList, setFriendList] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [addFriendLoading, setAddFriendLoading] = useState(false)
-    const [userInfo, setUserInfo] = useState(null)
-
 
     useEffect(() => {
         getFriends()
-        getUserInfo()
     }, [])
 
-    const getFriends = () => {
+    const getFriends = async () => {
         setIsLoading(true)
-        dispatch(getUsersService((res, err) => {
+        let userInfo = []
+
+        await dispatch(getUserInfoService((res, err) => {
+            if (res?.data?.data) {
+                const usersInfoFriend = JSON.parse(res.data.data)
+                userInfo = usersInfoFriend?.friends
+            }
+        }))
+
+        await dispatch(getUsersService((res, err) => {
             setIsLoading(false)
             if (res?.data?.data) {
                 const users = JSON.parse(res.data.data)
-                const youMayKnow = users.filter(people => people._id.$oid == userInfo.filter(item => item.$id.$oid))
-                console.log('youMayKnow', youMayKnow);
-                setFriendList(youMayKnow || [])
+                userInfo.filter((user, index) => {
+                    let friends = users.filter((people, i) => people._id.$oid == user.$id.$oid)
+                    setFriendList(friends || [])
+                })
             }
         }))
     }
-
-    const getUserInfo = () => {
-        dispatch(getUserInfoService((res, err) => {
-            if (res?.data?.data) {
-                const usersInfoFriend = JSON.parse(res.data.data)
-                const friends = usersInfoFriend.friends.filter(item => item.$id.$oid)
-                setUserInfo(friends)
-            }
-        }))
-    }
-
-    console.log('userInfo', userInfo);
 
     const renderFriends = ({ item, index }) => (
         <Block row center style={styles.styleBlock} flex={false}>
