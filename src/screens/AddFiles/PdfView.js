@@ -1,31 +1,21 @@
 import React from "react"
 import Block from '../../components/Block'
-import { useNavigation } from '@react-navigation/native'
 import PDFView from 'react-native-view-pdf';
-
-
-
 
 
 export default PdfViewScreen = (props) => {
 
-    const navigation = useNavigation();
-
-    console.log('props', props);
+    const base64 = props?.route?.params?.item?.filedata
 
     const resources = {
         file: Platform.OS === 'ios' ? 'downloadedDocument.pdf' : '/sdcard/Download/downloadedDocument.pdf',
         url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
-        base64: props?.route?.params?.item?.fileData,
-      };
+        base64
+    }
 
-      const resourceType = 'base64';
-
-
-    const base64 = props?.route?.params?.item?.fileData;
+    const resourceType = 'base64'
 
     return (
-
         <Block block>
             <PDFView
                 style={{ flex: 1 }}
@@ -36,5 +26,5 @@ export default PdfViewScreen = (props) => {
             />
         </Block>
 
-    );
+    )
 }

@@ -18,8 +18,8 @@ export default AddDocument = () => {
     const navigation = useNavigation();
 
     const [loading, setLoading] = useState(false)
-    const [title, setTitle] = useState('test')
-    const [description, setDescription] = useState('test')
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
     const [pdf, setPdf] = useState(null)
     const [binary, setBinary] = useState(null)
     const [name, setName] = useState('')

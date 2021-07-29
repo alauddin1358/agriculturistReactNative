@@ -24,8 +24,6 @@ export default ShowDocument = (props) => {
     const [userInfo, setUserInfo] = useState(null)
 
 
-    console.log('files', files);
-
     useEffect(() => {
         getUserInfo()
     }, [])
@@ -52,8 +50,6 @@ export default ShowDocument = (props) => {
         }))
     }
 
-    console.log('userInfo', userInfo);
-
     const renderFiles = ({ item, index }) => (
         <Block style={styles.table}>
             <Text style={styles.td}>{item.title}</Text>
@@ -72,7 +68,6 @@ export default ShowDocument = (props) => {
         const { config, fs } = RNFetchBlob
         let PictureDir = fs.dirs.PictureDir
 
-        console.log('filename', filename);
         let options = {
             fileCache: true,
             addAndroidDownloads: {
