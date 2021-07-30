@@ -102,10 +102,10 @@ export default Dashboard = ({ navigation, carousel }) => {
             <SafeAreaView style={{ flex: 1 }} >
                 <Navbar />
 
-                {
-                    isLoading ? <Loader /> :
-                        <Block padding={[10]} block>
-                            <Text textColor size={20}>Dashboard</Text>
+
+                <Block padding={[10]} block>
+                    {
+                        isLoading ? <Loader /> :
                             <Block style={styles.block} flex={false}>
                                 <FlatList
                                     showsVerticalScrollIndicator={false}
@@ -114,6 +114,7 @@ export default Dashboard = ({ navigation, carousel }) => {
                                     keyExtractor={item => item._id.$oid.toString()}
                                     ListHeaderComponent={
                                         <Block flex={false} >
+                                            <Text textColor size={20}>Dashboard</Text>
                                             <Block flex={false} style={styles.postBlock2}>
                                                 <Text style={styles.title}>Posts</Text>
                                             </Block>
@@ -128,8 +129,9 @@ export default Dashboard = ({ navigation, carousel }) => {
                                     }
                                 />
                             </Block>
-                        </Block>
-                }
+                    }
+                </Block>
+
             </SafeAreaView>
         </Block>
 

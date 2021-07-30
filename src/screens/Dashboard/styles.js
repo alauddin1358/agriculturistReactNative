@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f7f8fb',
         borderBottomWidth: 1,
         padding: 15,
+        marginTop:10,
         borderBottomColor: colors.borderColor
     },
     title: {
@@ -32,7 +33,6 @@ const styles = StyleSheet.create({
     block: {
         padding: 10,
         marginVertical:10,
-        flex:1,
         backgroundColor:colors.white,
         elevation:3,
         borderRadius:5
