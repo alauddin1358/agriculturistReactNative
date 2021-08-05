@@ -16,6 +16,7 @@ import Friends from '../screens/Friends'
 import FriendsList from '../screens/FriendsList'
 import PostDetails from '../screens/PostDetails'
 import AddPost from '../screens/AddPost'
+import EditPost from '../screens/EditPost'
 import AddFile from '../screens/AddFiles'
 import PdfViewScreen from '../screens/AddFiles/PdfView'
 
@@ -29,7 +30,7 @@ const Routes = props => {
         <Drawer.Navigator
             drawerContent={props => <Sidebar {...props} />}
             drawerStyle={{ width: 150 }}
-            initialRouteName="friends">
+            initialRouteName="dashboard">
 
             <Drawer.Screen options={{ swipeEnabled: false }} name="first" component={First} />
             <Drawer.Screen options={{ swipeEnabled: false }} name="login" component={LoginScreen} />
@@ -42,6 +43,7 @@ const Routes = props => {
             <Drawer.Screen name="friendsList" component={FriendsList} />
             <Drawer.Screen name="details" component={PostDetails} />
             <Drawer.Screen name="addPost" component={AddPost} />
+            <Drawer.Screen name="editPost" component={EditPost} />
             <Drawer.Screen name="addFile" component={AddFile} />
             <Drawer.Screen name="pdfScreen" component={PdfViewScreen} />
 

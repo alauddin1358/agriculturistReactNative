@@ -3,32 +3,49 @@ import { ScrollView, TextInput, SafeAreaView } from "react-native"
 import Toast from 'react-native-simple-toast'
 import Block from '../../components/Block'
 import Text from '../../components/Text'
-import styles from './styles'
 import { Navbar } from "../../layouts/Navbar"
 import AdsCarousel from '../Carousel'
 import { SecondaryButton } from '../../components/Button'
-import { addPostService } from "../../services/post"
+import { updatePostService } from "../../services/post"
 import { useDispatch } from "react-redux"
 import checkPostValidation from "./validate"
 import { useNavigation } from "@react-navigation/native"
+import styles from './styles'
 
 
-export default AddPost = props => {
+export default EditPost = props => {
     const dispatch = useDispatch()
     const navigation = useNavigation()
 
+    const singlePost = props?.route?.params?.post
+
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
-    const [addPostLoading, setaddPostLoading] = useState(false)
+    const [editPostLoading, setEditPostLoading] = useState(false)
 
-    const addPost = () => {
+    useEffect(() => {
+        setPostData()
+    }, [singlePost])
+
+    const setPostData = () => {
+        if (singlePost) {
+            setTitle(singlePost.title)
+            setBody(singlePost.body)
+        }
+    }
+
+
+    const updatePost = () => {
         if (checkPostValidation(title, body)) {
-            setaddPostLoading(true)
+            setEditPostLoading(true)
 
-            dispatch(addPostService(null, title, body, (res, err) => {
-                setaddPostLoading(false)
-                setTitle('')
-                setBody('')
+            const formData = {
+                title,
+                body,
+            }
+
+            dispatch(updatePostService(singlePost._id.$oid, formData, (res, err) => {
+                setEditPostLoading(false)
                 if (res?.data?.result) {
                     Toast.show(res?.data?.result?.message, Toast.LONG)
                     navigation.navigate('dashboard', { reload: true })
@@ -49,7 +66,7 @@ export default AddPost = props => {
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }} style={styles.container}>
                     <Block style={styles.block} flex={false}>
                         <Block flex={false} style={styles.postBlock2}>
-                            <Text style={styles.title}>Add Post</Text>
+                            <Text style={styles.title}>Edit Post</Text>
                         </Block>
                         <Block flex={false} padding={[20, 10]}>
                             <Text size={16} textColor>Title</Text>
@@ -71,10 +88,10 @@ export default AddPost = props => {
                             />
                         </Block>
                         <SecondaryButton
-                            loading={addPostLoading}
-                            btnText={'Add Post'}
+                            loading={editPostLoading}
+                            btnText={'Edit Post'}
                             btnStyle={{ width: '40%', marginBottom: 20 }}
-                            onPress={addPost} />
+                            onPress={updatePost} />
                     </Block>
                     <AdsCarousel />
                 </ScrollView>

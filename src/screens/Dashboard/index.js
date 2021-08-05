@@ -14,10 +14,14 @@ import { deletePostService, fetchPostsService } from "../../services/post"
 import { dateFormat } from "../../utils/common"
 import { Loader } from "../../components/Loader"
 import EmptyData from "../../components/EmptyData"
+import { useNavigation } from "@react-navigation/native"
 
 
-export default Dashboard = ({ navigation, carousel }) => {
+export default Dashboard = props => {
     const dispatch = useDispatch()
+    const navigation = useNavigation()
+
+    const reload = props?.route?.params?.reload
 
     const [expand, setExpand] = useState(null)
     const [posts, setPosts] = useState([])
@@ -25,7 +29,8 @@ export default Dashboard = ({ navigation, carousel }) => {
 
     useEffect(() => {
         getPostList()
-    }, [])
+    }, [reload])
+
 
     const expandClick = (item) => {
         setExpand(item)
@@ -67,7 +72,7 @@ export default Dashboard = ({ navigation, carousel }) => {
                         <FontAwesome style={{ marginRight: 5 }} name="comments" />
                         <Text textColor size={12}>Comment</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }} onPress={() => navigation.navigate('addPost', { post: item })}>
+                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }} onPress={() => navigation.navigate('editPost', { post: item })}>
                         <AntDesign style={{ marginRight: 5 }} name="edit" />
                         <Text textColor size={12}>Edit</Text>
                     </TouchableOpacity>

@@ -2,11 +2,21 @@ import { Config } from '../config/index'
 import httpRequest from '../utils/request'
 import auth from '../utils/auth'
 import {
-    GET_POSTS_PENDING, GET_POSTS_SUCCESS, GET_POSTS_FAIL,
-    GET_POST_DETAILS_PENDING, GET_POST_DETAILS_SUCCESS, GET_POST_DETAILS_FAIL,
-    ADD_POST_PENDING, ADD_POST_SUCCESS, ADD_POST_FAIL,
-    UPDATE_POST_PENDING, UPDATE_POST_SUCCESS, UPDATE_POST_FAIL,
-    DELETE_POST_PENDING, DELETE_POST_SUCCESS, DELETE_POST_FAIL,
+    GET_POSTS_PENDING,
+    GET_POSTS_SUCCESS,
+    GET_POSTS_FAIL,
+    GET_POST_DETAILS_PENDING,
+    GET_POST_DETAILS_SUCCESS,
+    GET_POST_DETAILS_FAIL,
+    ADD_POST_PENDING,
+    ADD_POST_SUCCESS,
+    ADD_POST_FAIL,
+    UPDATE_POST_PENDING,
+    UPDATE_POST_SUCCESS,
+    UPDATE_POST_FAIL,
+    DELETE_POST_PENDING,
+    DELETE_POST_SUCCESS,
+    DELETE_POST_FAIL,
 } from '../constant/postConstant'
 
 const base_url = Config.base_url
@@ -17,7 +27,7 @@ const base_url = Config.base_url
  */
 
 
-export const fetchPostsService = (callback) => async (
+export const fetchPostsService = (callback) => async(
     dispatch,
     getState
 ) => {
@@ -57,7 +67,7 @@ export const fetchPostsService = (callback) => async (
  */
 
 
-export const fetchSinglePost = (id, callback) => async (
+export const fetchSinglePost = (id, callback) => async(
     dispatch,
     getState
 ) => {
@@ -97,7 +107,7 @@ export const fetchSinglePost = (id, callback) => async (
  */
 
 
-export const addPostService = (id = null, title, body, callback) => async (
+export const addPostService = (id = null, title, body, callback) => async(
     dispatch,
     getState
 ) => {
@@ -148,7 +158,7 @@ export const addPostService = (id = null, title, body, callback) => async (
  */
 
 
-export const updatePostService = (postId, formData, callback) => async (
+export const updatePostService = (postId, formData, callback) => async(
     dispatch,
     getState
 ) => {
@@ -193,7 +203,7 @@ export const updatePostService = (postId, formData, callback) => async (
  */
 
 
-export const deletePostService = (postId, callback) => async (
+export const deletePostService = (postId, callback) => async(
     dispatch,
     getState
 ) => {
