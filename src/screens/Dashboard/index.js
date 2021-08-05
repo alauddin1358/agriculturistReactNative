@@ -68,7 +68,10 @@ export default Dashboard = props => {
                     <Text textColor size={12}>Author: {item?.user?.status || ''}</Text>
                 </Block>
                 <Block flex={false} row center>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}>
+                    <TouchableOpacity
+                        style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }}
+                        onPress={() => navigation.navigate('details', { post: item })}
+                    >
                         <FontAwesome style={{ marginRight: 5 }} name="comments" />
                         <Text textColor size={12}>Comment</Text>
                     </TouchableOpacity>

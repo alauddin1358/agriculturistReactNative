@@ -9,20 +9,30 @@ import { colors } from "../../styles/theme"
 import { Navbar } from "../../layouts/Navbar"
 import { getUserInfoService } from '../../services/user'
 import { useDispatch } from "react-redux"
+import { useNavigation } from "@react-navigation/native"
 
 
 
 
-export default Profile = ({ navigation }) => {
+export default Profile = props => {
     const dispatch = useDispatch()
+    const navigation = useNavigation()
+    const singleUser = props?.route?.params?.singleUser
+    console.log('singleUser', singleUser);
 
     const [userInfo, setUserInfo] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const [addFriendLoading, setAddFriendLoading] = useState(false)
 
+    console.log('userInfo', userInfo);
+
     useEffect(() => {
-        getUserInfo()
-    }, [userInfo])
+        if(singleUser) {
+            setUserInfo(singleUser)
+        } else {
+            getUserInfo()
+        }
+    }, [singleUser])
 
     const getUserInfo = () => {
         setIsLoading(true)
@@ -43,7 +53,7 @@ export default Profile = ({ navigation }) => {
                     <Text textColor size={20}>Profile</Text>
                     <ImageBackground imageStyle={{ borderRadius: 5 }} source={require('../../assets/images/green-bg-1.jpg')} style={styles.bgImg}>
                         <Block flex={false} style={styles.block}>
-                            <Image style={{ width: 150, height: 150 }} source={require('../../assets/images/user-profile.png')} />
+                            <Image style={{ width: 150, height: 150 }} source={userInfo.image ? {uri: userInfo.image} : require('../../assets/images/user-profile.png')} />
                         </Block>
                         <TouchableOpacity style={styles.btn}>
                             <Text white bold>Add Contact</Text>
@@ -51,14 +61,20 @@ export default Profile = ({ navigation }) => {
                         <TouchableOpacity style={styles.btn2}>
                             <Text white bold>Message</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.camera} onPress={() => navigation.navigate('editProfile', { userInfo })}>
-                            <AntDesign name="camera" color="#fff" size={20} />
-                        </TouchableOpacity>
+                        {
+                            !singleUser &&
+                            <TouchableOpacity style={styles.camera} onPress={() => navigation.navigate('editProfile', { userInfo })}>
+                                <AntDesign name="camera" color="#fff" size={20} />
+                            </TouchableOpacity>
+                        }
                     </ImageBackground>
                     <Block flex={false} style={styles.infoblock}>
-                        <TouchableOpacity style={styles.edit} onPress={() => navigation.navigate('editProfile', { userInfo })}>
-                            <Entypo name="edit" size={19} color={colors.primaryColor} />
-                        </TouchableOpacity>
+                        {
+                            !singleUser &&
+                            <TouchableOpacity style={styles.edit} onPress={() => navigation.navigate('editProfile', { userInfo })}>
+                                <Entypo name="edit" size={19} color={colors.primaryColor} />
+                            </TouchableOpacity>
+                        }
                         <Text bold style={{ padding: 10 }}>Personal Info</Text>
                         <Block row width spaceBetween flex={false} padding={[10]}>
                             <Text size={12}>Name</Text>
@@ -74,9 +90,12 @@ export default Profile = ({ navigation }) => {
                         </Block>
                     </Block>
                     <Block flex={false} style={styles.infoblock}>
+                        {
+                            !singleUser &&
                         <TouchableOpacity style={styles.edit} onPress={() => navigation.navigate('editProfile', { userInfo })}>
                             <Entypo name="edit" size={19} color={colors.primaryColor} />
                         </TouchableOpacity>
+                        }
                         <Text bold style={{ padding: 10 }}>User Type</Text>
                         <Block row width spaceBetween flex={false} padding={[10]}>
                             <Text size={12}>User Category</Text>
@@ -92,9 +111,12 @@ export default Profile = ({ navigation }) => {
                         </Block>
                     </Block>
                     <Block flex={false} style={styles.infoblock} margin={[10, 10, 50, 10]}>
+                        {
+                            !singleUser &&
                         <TouchableOpacity style={styles.edit} onPress={() => navigation.navigate('editProfile', { userInfo })}>
                             <Entypo name="edit" size={19} color={colors.primaryColor} />
                         </TouchableOpacity>
+                        }
                         <Text bold style={{ padding: 10 }}>Other Info</Text>
                         <Block row width spaceBetween flex={false} padding={[10]}>
                             <Text size={12}>Address</Text>

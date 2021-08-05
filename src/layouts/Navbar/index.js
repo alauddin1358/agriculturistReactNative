@@ -30,6 +30,7 @@ const Navbar = (props) => {
     const [profile, setProfile] = useState(false)
     const [typeSearch, setTypeSearch] = useState(false)
 
+    console.log('allUsers', allUsers);
 
     useEffect(() => {
         allFriend()
@@ -57,7 +58,7 @@ const Navbar = (props) => {
 
     const onChangeSearch = val => {
         setSearch(val)
-        if (val === '') {
+        if (val == '') {
             setTypeSearch(false)
             setSearchedUsers([])
             return
@@ -112,11 +113,21 @@ const Navbar = (props) => {
     }
 
     const redirectRequest = () => {
-        navigation.navigate('friends')
+        navigation.navigate('friends', profile)
         setProfile(false)
         setApplication(false)
         setOpenSearchBox(false)
         setNotification(false)
+    }
+
+    const redirectSearch = (singleUser) => {
+        console.log('hi');
+        navigation.navigate('profile', { singleUser })
+        setProfile(false)
+        setApplication(false)
+        setOpenSearchBox(false)
+        setNotification(false)
+        setTypeSearch(false)
     }
 
     const renderNotificationsItem = ({ item, index }) => (
@@ -129,7 +140,7 @@ const Navbar = (props) => {
         </TouchableOpacity>
     )
     const renderSearchItem = ({ item, index }) => (
-        <TouchableOpacity style={styles.singleSearch} onPress={redirectRequest}>
+        <TouchableOpacity style={styles.singleSearch} onPress={() => redirectSearch(item)}>
             <Image style={styles.avatar2} source={item.image ? { uri: item.image } : require('../../assets/images/ala.jpeg')} />
             <Block flex={false}>
                 <Text bold size={16} textColor>{item.name}</Text>
