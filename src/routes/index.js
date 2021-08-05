@@ -9,7 +9,6 @@ import LoginScreen from '../screens/Auth/Login'
 import ForgotPassword from '../screens/Auth/Forgot'
 import Registration from '../screens/Auth/Registration'
 
-
 import Dashboard from '../screens/Dashboard'
 import Profile from '../screens/Profile'
 import EditProfile from '../screens/Profile/EditProfile'
@@ -20,17 +19,18 @@ import AddPost from '../screens/AddPost'
 import AddFile from '../screens/AddFiles'
 import PdfViewScreen from '../screens/AddFiles/PdfView'
 
-
 const Drawer = createDrawerNavigator();
-
 
 
 const Routes = props => {
 
     return (
 
+        <Drawer.Navigator
+            drawerContent={props => <Sidebar {...props} />}
+            drawerStyle={{ width: 150 }}
+            initialRouteName="friends">
 
-        <Drawer.Navigator drawerContent={props => <Sidebar {...props} />} drawerStyle={{ width: 150 }} initialRouteName="login">
             <Drawer.Screen options={{ swipeEnabled: false }} name="first" component={First} />
             <Drawer.Screen options={{ swipeEnabled: false }} name="login" component={LoginScreen} />
             <Drawer.Screen options={{ swipeEnabled: false }} name="forgot" component={ForgotPassword} />
@@ -44,6 +44,7 @@ const Routes = props => {
             <Drawer.Screen name="addPost" component={AddPost} />
             <Drawer.Screen name="addFile" component={AddFile} />
             <Drawer.Screen name="pdfScreen" component={PdfViewScreen} />
+
         </Drawer.Navigator>
 
     );

@@ -8,12 +8,12 @@ import Text from '../../components/Text'
 import styles from './styles'
 import { Navbar } from "../../layouts/Navbar"
 import { useDispatch } from "react-redux"
-import { getUsersService } from "../../services/user"
+import { getUserInfoService, getUsersService } from "../../services/user"
 import { Loader } from "../../components/Loader"
 import { addFriendService, acceptFriendService, deleteFriendService } from "../../services/friend"
 import { colors } from "../../styles/theme"
 import AdsCarousel from '../Carousel'
-
+import EmptyData from "../../components/EmptyData"
 
 
 
@@ -26,26 +26,35 @@ export default Friends = ({ navigation, _carousel }) => {
     const [acceptFriendLoading, setAcceptFriendLoading] = useState(false)
     const [deleteFriendLoading, setDeleteFriendLoading] = useState(false)
 
+    console.log('friendRequestList', friendRequestList);
+
     useEffect(() => {
         allFriend()
     }, [])
 
-    const allFriend = () => {
-        setIsLoading(true)
-        dispatch(getUsersService((res, err) => {
+    const allFriend = async () => {
+
+        let userInfo = []
+
+        await dispatch(getUserInfoService((res, err) => {
+            setIsLoading(false)
+            if (res?.data?.data) {
+                const usersInfoFriend = JSON.parse(res.data.data)
+                userInfo = usersInfoFriend?.friend_pending
+            }
+        }))
+
+        await dispatch(getUsersService((res, err) => {
             setIsLoading(false)
             if (res?.data?.data) {
                 const users = JSON.parse(res.data.data)
-                const youMayKnow = users.filter(people => people.isFrndReqAccepted == false)
-                console.log('youMayKnow', youMayKnow);
-                setfriendRequestList(youMayKnow || [])
-                setPeopleMayKnowList(users || [])
+                userInfo?.length > 0 && userInfo.filter((user, index) => {
+                    let friends = users.filter((people, i) => people._id.$oid == user.$id.$oid)
+                    setfriendRequestList(friends || [])
+                })
             }
         }))
     }
-
-    console.log('friendReq', friendRequestList);
-    console.log('peopleMayKnowList', peopleMayKnowList);
 
     const renderPeopleYouMayKnow = ({ item, index }) => (
         <Block row center style={styles.styleBlock} flex={false}>
@@ -93,7 +102,6 @@ export default Friends = ({ navigation, _carousel }) => {
                 allFriend()
                 setAddFriendLoading(false)
             }
-
         }))
     }
 
@@ -115,7 +123,7 @@ export default Friends = ({ navigation, _carousel }) => {
                             backgroundColor: colors.primaryColor,
                         }]
                     }
-                    onPress={() => AcceptFriend(item._id.$oid)}>
+                    onPress={() => acceptFriend(item._id.$oid)}>
                     <>
                         <Text
                             size={14}
@@ -138,7 +146,7 @@ export default Friends = ({ navigation, _carousel }) => {
                             backgroundColor: colors.gray3,
                         }]
                     }
-                    onPress={() => DeleteFriend(item._id.$oid)}>
+                    onPress={() => deleteFriend(item._id.$oid)}>
                     <>
                         <Text
                             size={14}
@@ -158,7 +166,7 @@ export default Friends = ({ navigation, _carousel }) => {
         </Block>
     )
 
-    const AcceptFriend = id => {
+    const acceptFriend = id => {
         setAcceptFriendLoading(true)
         dispatch(acceptFriendService(id, (res, err) => {
             if (res?.data?.result) {
@@ -171,7 +179,7 @@ export default Friends = ({ navigation, _carousel }) => {
         }))
     }
 
-    const DeleteFriend = id => {
+    const deleteFriend = id => {
         setDeleteFriendLoading(true)
         dispatch(deleteFriendService(id, (res, err) => {
             if (res?.data?.result) {
@@ -204,6 +212,9 @@ export default Friends = ({ navigation, _carousel }) => {
                                         data={friendRequestList}
                                         renderItem={renderFriendReq}
                                         keyExtractor={item => item._id.$oid.toString()}
+                                        ListEmptyComponent={
+                                            <EmptyData text="No friend request!" />
+                                        }
                                     />
                             }
                         </Block>

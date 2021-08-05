@@ -13,10 +13,10 @@ import { loginService } from '../../../services/auth'
 export default LoginScreen = ({ navigation }) => {
     const dispatch = useDispatch()
 
-    // const [email, setEmail] = useState('tasfiquealam1@gmail.com')
-    // const [password, setPassword] = useState('alam123456')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('tasfiquealam1@gmail.com')
+    const [password, setPassword] = useState('alam123456')
+    // const [email, setEmail] = useState('')
+    // const [password, setPassword] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
     const submitLogin = () => {
