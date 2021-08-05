@@ -30,7 +30,7 @@ const Routes = props => {
         <Drawer.Navigator
             drawerContent={props => <Sidebar {...props} />}
             drawerStyle={{ width: 150 }}
-            initialRouteName="dashboard">
+            initialRouteName="addFile">
 
             <Drawer.Screen options={{ swipeEnabled: false }} name="first" component={First} />
             <Drawer.Screen options={{ swipeEnabled: false }} name="login" component={LoginScreen} />

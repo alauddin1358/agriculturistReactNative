@@ -3,7 +3,7 @@ import { TouchableOpacity, FlatList } from "react-native"
 import Block from '../../components/Block'
 import Text from '../../components/Text'
 import styles from './styles'
-import { fetchFilesService } from '../../services/file'
+import { deleteFileService, fetchFilesService } from '../../services/file'
 import { getUserInfoService } from '../../services/user'
 import { colors } from "../../styles/theme"
 import { useDispatch } from "react-redux"
@@ -11,7 +11,7 @@ import { Loader } from "../../components/Loader"
 import RNFetchBlob from 'rn-fetch-blob'
 import { Config } from "../../config"
 import { useNavigation } from '@react-navigation/native'
-
+import Toast from 'react-native-simple-toast'
 
 
 export default ShowDocument = (props) => {
@@ -50,6 +50,13 @@ export default ShowDocument = (props) => {
         }))
     }
 
+    const deleteFile = (fileId) => {
+        dispatch(deleteFileService(fileId, (res, err) => {
+            getFiles()
+            Toast.show(res?.data?.result?.message, Toast.LONG)
+        }))
+    }
+
     const renderFiles = ({ item, index }) => (
         <Block style={styles.table}>
             <Text style={styles.td}>{item.title}</Text>
@@ -59,6 +66,9 @@ export default ShowDocument = (props) => {
             </TouchableOpacity>
             <TouchableOpacity style={styles.td} onPress={() => downloadFile(item.filename)}>
                 <Text color={colors.primaryColor}>Download</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.td} onPress={() => deleteFile(item._id.$oid)}>
+                <Text color={colors.red}>Delete</Text>
             </TouchableOpacity>
         </Block>
     )
@@ -91,7 +101,8 @@ export default ShowDocument = (props) => {
                 <Text style={styles.td}>Title</Text>
                 <Text style={styles.td}>Description</Text>
                 <Text style={styles.td}>View File</Text>
-                <Text style={styles.td}>Download File</Text>
+                <Text style={styles.td}>Download</Text>
+                <Text style={styles.td}>Delete</Text>
             </Block>
 
             {

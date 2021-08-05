@@ -2,8 +2,15 @@ import { Config } from '../config/index'
 import httpRequest from '../utils/request'
 import auth from '../utils/auth'
 import {
-    GET_FILES_PENDING, GET_FILES_SUCCESS, GET_FILES_FAIL,
-    ADD_FILE_PENDING, ADD_FILE_SUCCESS, ADD_FILE_FAIL,
+    GET_FILES_PENDING,
+    GET_FILES_SUCCESS,
+    GET_FILES_FAIL,
+    ADD_FILE_PENDING,
+    ADD_FILE_SUCCESS,
+    ADD_FILE_FAIL,
+    DELETE_FILE_PENDING,
+    DELETE_FILE_SUCCESS,
+    DELETE_FILE_FAIL,
 } from '../constant/fileConstant'
 
 const base_url = Config.base_url
@@ -15,7 +22,7 @@ const base_url = Config.base_url
  */
 
 
-export const fetchFilesService = (id, callback) => async (
+export const fetchFilesService = (id, callback) => async(
     dispatch,
     getState
 ) => {
@@ -54,7 +61,7 @@ export const fetchFilesService = (id, callback) => async (
  */
 
 
-export const addFileService = (formData, callback) => async (
+export const addFileService = (formData, callback) => async(
     dispatch,
     getState
 ) => {
@@ -82,6 +89,46 @@ export const addFileService = (formData, callback) => async (
         console.log('error', error);
         dispatch({
             type: ADD_FILE_FAIL,
+            payload: error.response,
+        })
+
+        callback(null, error.response)
+        console.log(error.response);
+    }
+}
+
+/**
+ * Method: DELETE
+ */
+
+
+export const deleteFileService = (fileId, callback) => async(
+    dispatch,
+    getState
+) => {
+    dispatch({ type: DELETE_FILE_PENDING })
+
+    const url = base_url + `/fileDelete/${fileId}`
+    const token = await auth.getToken('accessToken')
+
+
+    try {
+        const response = await httpRequest.delete(
+            url,
+            true,
+            token,
+        )
+
+        dispatch({
+            type: DELETE_FILE_SUCCESS,
+            payload: response,
+        })
+
+        callback(response, null)
+    } catch (error) {
+        console.log('error', error);
+        dispatch({
+            type: DELETE_FILE_FAIL,
             payload: error.response,
         })
 
