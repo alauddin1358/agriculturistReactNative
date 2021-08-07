@@ -29,8 +29,6 @@ export default Dashboard = props => {
     const [isLoading, setIsLoading] = useState(true)
     const [userId, setUserId] = useState(null)
 
-    console.log('posts', posts);
-
     useEffect(() => {
         getPostList()
     }, [reload])

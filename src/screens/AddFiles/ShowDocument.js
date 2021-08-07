@@ -22,6 +22,7 @@ export default ShowDocument = (props) => {
     const [loading, setLoading] = useState(true)
     const [files, setFiles] = useState([])
     const [userInfo, setUserInfo] = useState(null)
+    const [userId, setUserId] = useState(null)
 
 
     useEffect(() => {
@@ -37,6 +38,8 @@ export default ShowDocument = (props) => {
         dispatch(getUserInfoService((res, err) => {
             setLoading(false)
             if (res) {
+                const repponse = res?.data?.data ? JSON.parse(res.data.data) : {}
+                setUserId(repponse._id.$oid)
                 setUserInfo(res?.data?.data ? JSON.parse(res.data.data) : [])
             }
         }))
@@ -67,9 +70,12 @@ export default ShowDocument = (props) => {
             <TouchableOpacity style={styles.td} onPress={() => downloadFile(item.filename)}>
                 <Text color={colors.primaryColor}>Download</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.td} onPress={() => deleteFile(item._id.$oid)}>
-                <Text color={colors.red}>Delete</Text>
-            </TouchableOpacity>
+                {
+                    item?.user?.userId?.$oid == userId && 
+                    <TouchableOpacity style={styles.td} onPress={() => deleteFile(item._id.$oid)}>
+                        <Text color={colors.red}>Delete</Text>
+                    </TouchableOpacity>
+                }
         </Block>
     )
 

@@ -68,6 +68,13 @@ export default Sidebar = ({ navigation }) => {
         setFriends(false)
     }
 
+    const onPressShowPosts = () => {
+        navigation.navigate('dashboard')
+        setPost(false)
+        setFiles(false)
+        setFriends(false)
+    }
+
     return (
 
         <Block flex={1}>
@@ -88,7 +95,7 @@ export default Sidebar = ({ navigation }) => {
                         <TouchableOpacity onPress={addPost} style={{ padding: 5 }}>
                             <Text textColor>Add Posts</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ padding: 5 }}>
+                        <TouchableOpacity style={{ padding: 5 }} onPress={onPressShowPosts}>
                             <Text textColor>Show My Posts</Text>
                         </TouchableOpacity>
                     </Block>
