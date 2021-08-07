@@ -11,6 +11,7 @@ import Toast from 'react-native-simple-toast'
 import AdsCarousel from '../Carousel'
 import { Navbar } from "../../layouts/Navbar"
 import { deletePostService, fetchPostsService } from "../../services/post"
+import { getUserInfoService } from "../../services/user"
 import { dateFormat } from "../../utils/common"
 import { Loader } from "../../components/Loader"
 import EmptyData from "../../components/EmptyData"
@@ -26,10 +27,27 @@ export default Dashboard = props => {
     const [expand, setExpand] = useState(null)
     const [posts, setPosts] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const [userId, setUserId] = useState(null)
+
+    console.log('posts', posts);
 
     useEffect(() => {
         getPostList()
     }, [reload])
+
+    useEffect(() => {
+        getUserInfo()
+    }, [])
+
+    
+    const getUserInfo = () => {
+        dispatch(getUserInfoService((res, err) => {
+            if (res) {
+                const repponse = res?.data?.data ? JSON.parse(res.data.data) : {}
+                setUserId(repponse._id.$oid)
+            }
+        }))
+    }
 
 
     const expandClick = (item) => {
@@ -75,14 +93,19 @@ export default Dashboard = props => {
                         <FontAwesome style={{ marginRight: 5 }} name="comments" />
                         <Text textColor size={12}>Comment</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }} onPress={() => navigation.navigate('editPost', { post: item })}>
-                        <AntDesign style={{ marginRight: 5 }} name="edit" />
-                        <Text textColor size={12}>Edit</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => deletePost(item._id.$oid)}>
-                        <AntDesign style={{ marginRight: 5 }} name="delete" />
-                        <Text textColor size={12}>Delete</Text>
-                    </TouchableOpacity>
+                    {
+                        item?.user?.userId?.$oid == userId && 
+                        <>
+                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginRight: 10 }} onPress={() => navigation.navigate('editPost', { post: item })}>
+                                <AntDesign style={{ marginRight: 5 }} name="edit" />
+                                <Text textColor size={12}>Edit</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => deletePost(item._id.$oid)}>
+                                <AntDesign style={{ marginRight: 5 }} name="delete" />
+                                <Text textColor size={12}>Delete</Text>
+                            </TouchableOpacity>
+                        </>
+                    }
                 </Block>
             </Block>
             {expand === item?._id?.$oid ?

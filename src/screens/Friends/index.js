@@ -37,7 +37,6 @@ export default Friends = ({ navigation, _carousel }) => {
         let userInfo = []
 
         await dispatch(getUserInfoService((res, err) => {
-            setIsLoading(false)
             if (res?.data?.data) {
                 const usersInfoFriend = JSON.parse(res.data.data)
                 userInfo = usersInfoFriend?.friend_pending
@@ -202,38 +201,35 @@ export default Friends = ({ navigation, _carousel }) => {
                 />
                 <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
                     <Text textColor size={20}>Friends</Text>
-                    <Block block >
-                        <Block flex={false} style={styles.postBlock2} margin={[0, 0, 20, 0]}>
-                            <Text style={styles.title}>Friend Requests</Text>
-                            {
-                                isLoading ? <Loader /> :
-                                    <FlatList
-                                        showsVerticalScrollIndicator={false}
-                                        data={friendRequestList}
-                                        renderItem={renderFriendReq}
-                                        keyExtractor={item => item._id.$oid.toString()}
-                                        ListEmptyComponent={
-                                            <EmptyData text="No friend request!" />
-                                        }
-                                    />
-                            }
-                        </Block>
-                        <Block flex={false} style={styles.postBlock2}>
-                            <Text style={styles.title}>People may you know</Text>
+                        {
+                            isLoading ? <Loader /> :
+                            <Block block >
+                                <Block flex={false} style={styles.postBlock2} margin={[0, 0, 20, 0]}>
+                                    <Text style={styles.title}>Friend Requests</Text>
+                                        <FlatList
+                                            showsVerticalScrollIndicator={false}
+                                            data={friendRequestList}
+                                            renderItem={renderFriendReq}
+                                            keyExtractor={item => item._id.$oid.toString()}
+                                            ListEmptyComponent={
+                                                <EmptyData text="No friend request!" />
+                                            }
+                                        />
+                                </Block>
+                                <Block flex={false} style={styles.postBlock2}>
+                                    <Text style={styles.title}>People may you know</Text>
 
-                            {
-                                isLoading ? <Loader /> :
-                                    <FlatList
-                                        showsVerticalScrollIndicator={false}
-                                        data={peopleMayKnowList}
-                                        renderItem={renderPeopleYouMayKnow}
-                                        keyExtractor={item => item._id.$oid.toString()}
-                                    />
-                            }
-                        </Block>
+                                        <FlatList
+                                            showsVerticalScrollIndicator={false}
+                                            data={peopleMayKnowList}
+                                            renderItem={renderPeopleYouMayKnow}
+                                            keyExtractor={item => item._id.$oid.toString()}
+                                        />
+                                </Block>
 
-                        <AdsCarousel />
-                    </Block>
+                                <AdsCarousel />
+                            </Block>
+                    }
                 </ScrollView>
             </SafeAreaView>
         </Block>
