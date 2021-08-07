@@ -33,6 +33,7 @@ export default PostDetails = (props) => {
     const [edit, setEdit] = useState(null)
     const [modalVisible, setModalVisible] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [showButtons, setShowButtons] = useState(true)
     const [userId, setUserId] = useState(null)
 
 
@@ -90,6 +91,7 @@ export default PostDetails = (props) => {
 
     const onPressEdit = (item) => {
         setEdit(item._id.$oid)
+        setShowButtons(false)
         setCmntBody(item.cmntBody)
         setCommentId(item._id.$oid)
     }
@@ -170,7 +172,7 @@ export default PostDetails = (props) => {
                                                     }
 
                                                     {
-                                                        item?.user?.userId?.$oid == userId &&
+                                                        item?.user?.userId?.$oid == userId && showButtons &&
 
                                                         <Block row bottom center flex={false} padding={[10]}>
                                                             <TouchableOpacity style={{ flexDirection: 'row', marginRight: 10 }} onPress={() => onPressEdit(item)}>
@@ -186,9 +188,19 @@ export default PostDetails = (props) => {
                                                 </Block>
 
                                                 {edit == item._id.$oid &&
-                                                    <TouchableOpacity onPress={onUpdateComment} style={styles.btn}>
-                                                        <Text white>Submit</Text>{isBtn2Loading && <ActivityIndicator color="white" />}
-                                                    </TouchableOpacity>
+                                                    <Block row bottom margin={[10, 0, 0]}>
+                                                        <TouchableOpacity onPress={() => {
+                                                                setEdit(1)
+                                                                setShowButtons(true)
+                                                            }}
+                                                        style={[styles.btn, { marginRight: 10, backgroundColor: 'red' }]}>
+                                                            <Text white>Cancel</Text>
+                                                        </TouchableOpacity>
+
+                                                        <TouchableOpacity onPress={onUpdateComment} style={styles.btn}>
+                                                            <Text white>Submit</Text>{isBtn2Loading && <ActivityIndicator color="white" />}
+                                                        </TouchableOpacity>
+                                                    </Block>
                                                 }
 
                                             </Block>
